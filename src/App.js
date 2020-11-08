@@ -23,8 +23,7 @@ const App = () => {
         </Route>
         <Route path="/login" exact>
           <LogIn />
-        </Route>
-        
+        </Route>        
         <Redirect to="/" />
       </Switch>
   </Router>
