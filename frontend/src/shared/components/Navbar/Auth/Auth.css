@@ -23,4 +23,8 @@
   border-radius: 2rem;
   color: white;
   background: #148cb8;
+  outline: none;
+}
+.Auth-Error {
+  color: white;
 }

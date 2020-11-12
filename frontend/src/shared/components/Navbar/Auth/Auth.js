@@ -14,9 +14,9 @@ import Input from "../../../components/FormElements/Input";
 
 const LogIn = (props) => {
   const auth = useContext(AuthContext);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, error, sendRequest } = useHttpClient();
 
-  const [formState, inputHandler, setFormData] = useForm(
+  const [formState, inputHandler] = useForm(
     props.isLogInMode
       ? {
           email: {
@@ -119,6 +119,7 @@ const LogIn = (props) => {
           errorText="Please enter a valid password, at least 6 characters."
           onInput={inputHandler}
         />
+        {error && <div className="Auth-Error">{error}</div>}
         <button className="Auth-Submit">
           {props.isLogInMode ? "Log In" : "Sign Up"}
         </button>
