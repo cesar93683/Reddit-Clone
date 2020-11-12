@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./Navbar.css";
 import Auth from "./Auth/Auth";
+import { AuthContext } from "../context/auth-context";
 
 const NavBar = () => {
-  const isLoggedIn = false;
+  const auth = useContext(AuthContext);
+
   const [logInMode, setLogInMode] = useState(false);
   const [signUpMode, setSignUpMode] = useState(false);
   const toggleLogInMode = () => {
@@ -21,10 +23,8 @@ const NavBar = () => {
       <Link className="NavBar-Home" to="/">
         Home
       </Link>
-      {isLoggedIn ? (
-        <Link to="/signout">
-          <button>Sign Out</button>
-        </Link>
+      {auth.isLoggedIn ? (
+        <button onClick={auth.logout}>Sign Out</button>
       ) : (
         <div className="NavBar-Auth">
           <div className="NavBar-LogInButton" onClick={toggleLogInMode}>
