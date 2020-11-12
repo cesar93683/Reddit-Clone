@@ -3,7 +3,7 @@ import "./Auth.css";
 
 const LogIn = () => {
   return (
-    <div className="Auth center">
+    <div className="Auth">
       <div className="Auth-Title">Log In</div>
       <form className="Auth-Form">
         <input

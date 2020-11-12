@@ -29,11 +29,11 @@ const NavBar = () => {
       ) : (
         <div>
           <button onClick={toggleLogInDropDown}>Log In</button>
-          <div className={logInDropDown ? "d-block" : "d-none"}>
+          <button onClick={toggleSignUpDropDown}>Sign Up</button>
+          <div className={logInDropDown ? "NavBar-DropDown" : "d-none"}>
             <LogIn />
           </div>
-          <button onClick={toggleSignUpDropDown}>Sign Up</button>
-          <div className={signUpDropDown ? "d-block" : "d-none"}>
+          <div className={signUpDropDown ? "NavBar-DropDown" : "d-none"}>
             <SignUp />
           </div>
         </div>
