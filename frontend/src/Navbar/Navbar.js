@@ -30,12 +30,8 @@ const NavBar = () => {
         <div>
           <button onClick={toggleLogInDropDown}>Log In</button>
           <button onClick={toggleSignUpDropDown}>Sign Up</button>
-          <div className={logInDropDown ? "NavBar-DropDown" : "d-none"}>
-            <LogIn />
-          </div>
-          <div className={signUpDropDown ? "NavBar-DropDown" : "d-none"}>
-            <SignUp />
-          </div>
+          <LogIn className={logInDropDown ? "NavBar-DropDown" : "d-none"} />
+          <SignUp className={signUpDropDown ? "NavBar-DropDown" : "d-none"} />
         </div>
       )}
     </div>

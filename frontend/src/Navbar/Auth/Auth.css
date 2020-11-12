@@ -2,6 +2,7 @@
   background-color: rgb(26, 26, 27);
   padding: 1.5rem 2rem;
   width: 20rem;
+  border-radius: 2rem;
 }
 .Auth-Title {
   color: white;

@@ -1,9 +1,9 @@
 import React from "react";
 import "./Auth.css";
 
-const SignUp = () => {
+const SignUp = (props) => {
   return (
-    <div className="Auth">
+    <div className={"Auth " + props.className}>
       <div className="Auth-Title">Sign Up</div>
       <form className="Auth-Form">
         <input
