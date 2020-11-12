@@ -9,6 +9,7 @@ import NavBar from "./Navbar/Navbar";
 import SignUp from "./Auth/SignUp";
 import LogIn from "./Auth/LogIn";
 import Home from "./Home/Home";
+import './App.css'
 
 
 const App = () => {

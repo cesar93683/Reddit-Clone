@@ -3,7 +3,7 @@ import "./Auth.css";
 
 const SignUp = () => {
   return (
-    <div className="Auth">
+    <div className="Auth center">
       <div className="Auth-Title">Sign Up</div>
       <form className="Auth-Form">
         <input
