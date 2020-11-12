@@ -2,15 +2,15 @@
   display: flex;
   width: 40rem;
   border: 1px solid;
-  background-color: rgb(26, 26, 27);
-  border-color: rgb(52, 53, 54);
+  background-color: var(--dark-gray);
+  border-color: var(--light-gray);
   border-radius: 0.25rem;
-  color: rgb(129, 131, 132);
+  color: var(--lightest-gray);
   cursor: pointer;
   margin-bottom: 0.625rem;
 }
 .Card:hover {
-  border-color: rgb(129, 131, 132);
+  border-color: var(--lightest-gray);
 }
 .Card-LeftSideBar {
   margin-top: 0.5rem;

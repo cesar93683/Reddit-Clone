@@ -1,5 +1,5 @@
 .Auth {
-  background-color: rgb(26, 26, 27);
+  background-color: var(--dark-gray);
   padding: 1.5rem 2rem;
   width: 20rem;
   border-radius: 2rem;
@@ -18,10 +18,10 @@
   font-size: 1rem;
   padding: 0.75rem 1.25rem;
   border-radius: 2rem;
-  border-color: rgb(52, 53, 54);
+  border-color: var(--light-gray);
   border-width: 1px;
   color: white;
-  background-color: rgb(26, 26, 27);
+  background-color: var(--dark-gray);
   outline: none;
 }
 .Auth-Submit {
