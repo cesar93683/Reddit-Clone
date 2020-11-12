@@ -8,18 +8,32 @@ import {
 import NavBar from "./Navbar/Navbar";
 import Home from "./Home/Home";
 import "./App.css";
+import { AuthContext } from "./context/auth-context";
+import { useAuth } from "./hooks/auth-hook";
 
 const App = () => {
+  const { token, login, logout, userId } = useAuth();
+
   return (
-    <Router>
-      <NavBar />
-      <Switch>
-        <Route path="/" exact>
-          <Home />
-        </Route>
-        <Redirect to="/" />
-      </Switch>
-    </Router>
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: !!token,
+        token: token,
+        userId: userId,
+        login: login,
+        logout: logout,
+      }}
+    >
+      <Router>
+        <NavBar />
+        <Switch>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+          <Redirect to="/" />
+        </Switch>
+      </Router>
+    </AuthContext.Provider>
   );
 };
 
