@@ -19,21 +19,25 @@ const NavBar = () => {
   };
   return (
     <div className="NavBar">
-      <Link to="/">
-        <button>Home</button>
+      <Link className="NavBar-Home" to="/">
+        Home
       </Link>
       {isLoggedIn ? (
         <Link to="/signout">
           <button>Sign Out</button>
         </Link>
       ) : (
-        <div>
-          <button onClick={toggleLogInDropDown}>Log In</button>
-          <button onClick={toggleSignUpDropDown}>Sign Up</button>
-          <LogIn className={logInDropDown ? "NavBar-DropDown" : "d-none"} />
-          <SignUp className={signUpDropDown ? "NavBar-DropDown" : "d-none"} />
+        <div className="NavBar-Auth">
+          <div className="NavBar-LogInButton" onClick={toggleLogInDropDown}>
+            Log In
+          </div>
+          <div className="NavBar-SignUpButton" onClick={toggleSignUpDropDown}>
+            Sign Up
+          </div>
         </div>
       )}
+      <LogIn className={logInDropDown ? "NavBar-DropDown" : "d-none"} />
+      <SignUp className={signUpDropDown ? "NavBar-DropDown" : "d-none"} />
     </div>
   );
 };

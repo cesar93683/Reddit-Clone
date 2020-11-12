@@ -1,11 +1,37 @@
 .NavBar {
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px;
+  background-color: rgb(26, 26, 27);
+  border-color: rgb(52, 53, 54);
+  padding: 0.5rem;
 }
-
 .NavBar-DropDown {
   display: block;
   position: absolute;
   background-color: #f9f9f9;
   right: 0;
+  top: 2.75rem;
+}
+.NavBar-Auth {
+  display: flex;
+  flex-direction: row;
+}
+
+.NavBar-LogInButton {
+  color: rgb(215, 218, 220);
+  border-color: rgb(215, 218, 220);
+  border-radius: 0.25rem;
+  border: 1px solid;
+  padding: 0.25rem 1rem;
+  cursor: pointer;
+}
+
+.NavBar-SignUpButton {
+  margin-left: 0.5rem;
+  color: rgb(26, 26, 27);
+  background-color: rgb(215, 218, 220);
+  border-radius: 0.25rem;
+  padding: 0.25rem 1rem;
+  cursor: pointer;
 }
