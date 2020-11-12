@@ -6,8 +6,8 @@ import {
   Switch
 } from 'react-router-dom';
 import NavBar from "./Navbar/Navbar";
-import SignUp from "./SignUp/SignUp";
-import LogIn from "./LogIn/LogIn";
+import SignUp from "./Auth/SignUp/SignUp";
+import LogIn from "./Auth/LogIn/LogIn";
 import Home from "./Home/Home";
 
 
