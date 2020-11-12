@@ -5,6 +5,7 @@
 .form-control label,
 .form-control input,
 .form-control textarea {
+  color: white;
   display: block;
 }
 
