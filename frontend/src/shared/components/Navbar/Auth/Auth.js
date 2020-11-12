@@ -5,12 +5,12 @@ import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
-} from "../../util/validators";
-import { useForm } from "../../hooks/form-hook";
-import { useHttpClient } from "../../hooks/http-hook";
-import { AuthContext } from "../../context/auth-context";
-import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
-import Input from "../../Input/Input";
+} from "../../../../util/validators";
+import { useForm } from "../../../hooks/form-hook";
+import { useHttpClient } from "../../../hooks/http-hook";
+import { AuthContext } from "../../../context/auth-context";
+import LoadingSpinner from "../../../components/UIElements/LoadingSpinner";
+import Input from "../../../components/FormElements/Input";
 
 const LogIn = (props) => {
   const auth = useContext(AuthContext);

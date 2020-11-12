@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./Navbar.css";
 import Auth from "./Auth/Auth";
-import { AuthContext } from "../context/auth-context";
+import { AuthContext } from "../../context/auth-context";
 
 const NavBar = () => {
   const auth = useContext(AuthContext);

@@ -5,11 +5,11 @@ import {
   Redirect,
   Switch,
 } from "react-router-dom";
-import NavBar from "./Navbar/Navbar";
+import NavBar from "./shared/components//Navbar/Navbar";
 import Home from "./Home/Home";
 import "./App.css";
-import { AuthContext } from "./context/auth-context";
-import { useAuth } from "./hooks/auth-hook";
+import { AuthContext } from "./shared/context/auth-context";
+import { useAuth } from "./shared/hooks/auth-hook";
 
 const App = () => {
   const { token, login, logout, userId } = useAuth();
