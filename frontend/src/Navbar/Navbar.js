@@ -1,17 +1,26 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 const NavBar = () => {
   const isLoggedIn = false;
   return (
-    <div className='NavBar'>
-      <div>Home</div>
+    <div className="NavBar">
+      <Link to="/">
+        <button>Home</button>
+      </Link>
       {isLoggedIn ? (
-        <button>Sign Out</button>
+        <Link to="/signout">
+          <button>Sign Out</button>
+        </Link>
       ) : (
         <div>
-          <button>Log In</button>
-          <button>Sign Up</button>
+          <Link to="/login">
+            <button>Log In</button>
+          </Link>
+          <Link to="/signup">
+            <button>Sign Up</button>
+          </Link>
         </div>
       )}
     </div>
