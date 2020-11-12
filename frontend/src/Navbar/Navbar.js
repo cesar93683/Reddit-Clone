@@ -2,20 +2,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./Navbar.css";
-import LogIn from "./Auth/LogIn";
-import SignUp from "./Auth/SignUp";
+import Auth from "./Auth/Auth";
 
 const NavBar = () => {
   const isLoggedIn = false;
-  const [logInDropDown, setLogInDropDown] = useState(false);
-  const [signUpDropDown, setSignUpDropDown] = useState(false);
-  const toggleLogInDropDown = () => {
-    setLogInDropDown(!logInDropDown);
-    setSignUpDropDown(false);
+  const [logInMode, setLogInMode] = useState(false);
+  const [signUpMode, setSignUpMode] = useState(false);
+  const toggleLogInMode = () => {
+    setLogInMode(!logInMode);
+    setSignUpMode(false);
   };
-  const toggleSignUpDropDown = () => {
-    setSignUpDropDown(!signUpDropDown);
-    setLogInDropDown(false);
+  const toggleSignUpMode = () => {
+    setSignUpMode(!signUpMode);
+    setLogInMode(false);
   };
   return (
     <div className="NavBar">
@@ -28,16 +27,18 @@ const NavBar = () => {
         </Link>
       ) : (
         <div className="NavBar-Auth">
-          <div className="NavBar-LogInButton" onClick={toggleLogInDropDown}>
+          <div className="NavBar-LogInButton" onClick={toggleLogInMode}>
             Log In
           </div>
-          <div className="NavBar-SignUpButton" onClick={toggleSignUpDropDown}>
+          <div className="NavBar-SignUpButton" onClick={toggleSignUpMode}>
             Sign Up
           </div>
         </div>
       )}
-      <LogIn className={logInDropDown ? "NavBar-DropDown" : "d-none"} />
-      <SignUp className={signUpDropDown ? "NavBar-DropDown" : "d-none"} />
+      <Auth
+        isLogInMode={logInMode}
+        className={logInMode || signUpMode ? "NavBar-DropDown" : "d-none"}
+      />
     </div>
   );
 };
