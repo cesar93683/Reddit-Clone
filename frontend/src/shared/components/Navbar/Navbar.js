@@ -18,6 +18,10 @@ const NavBar = () => {
     setSignUpMode(!signUpMode);
     setLogInMode(false);
   };
+  const closeDropDown = () => {
+    setSignUpMode(false);
+    setLogInMode(false);
+  };
   return (
     <div className="NavBar">
       <Link className="NavBar-Home" to="/">
@@ -37,6 +41,7 @@ const NavBar = () => {
       )}
       <Auth
         isLogInMode={logInMode}
+        closeDropDown={closeDropDown}
         className={logInMode || signUpMode ? "NavBar-DropDown" : "d-none"}
       />
     </div>

@@ -62,6 +62,7 @@ const LogIn = (props) => {
           }
         );
         auth.login(responseData.userId, responseData.token);
+        props.closeDropDown();
       } catch (err) {}
     } else {
       try {
@@ -79,6 +80,7 @@ const LogIn = (props) => {
         );
 
         auth.login(responseData.userId, responseData.token);
+        props.closeDropDown();
       } catch (err) {}
     }
   };

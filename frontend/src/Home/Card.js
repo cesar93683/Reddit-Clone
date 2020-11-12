@@ -19,7 +19,8 @@ const Card = (props) => {
         </div>
         <div className="Card-Title">{props.title}</div>
         <Link to="/" className="Card-NumComments">
-          {props.numComments} Comment{props.numComments === 1 ? "" : "s"}
+          {props.numComments} Comment
+          {parseInt(props.numComments) === 1 ? "" : "s"}
         </Link>
       </div>
     </div>
