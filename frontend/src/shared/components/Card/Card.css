@@ -2,13 +2,13 @@
   text-decoration: none;
   border: 1px solid;
   background-color: var(--dark-gray);
-  border-color: var(--light-gray);
+  border-color: var(--gray);
   border-radius: 0.25rem;
   margin-bottom: 0.5rem;
   padding: 0.5rem;
 }
 .Card__Linkable:hover {
-  border-color: var(--lightest-gray);
+  border-color: var(--light-gray);
 }
 .Card-Username-Link {
   color: inherit;
@@ -18,7 +18,7 @@
   text-decoration: underline;
 }
 .Card-Username {
-  color: var(--lightest-gray);
+  color: var(--light-gray);
   margin-bottom: 0.5rem;
 }
 .Card__Linkable .Card-Title {
@@ -38,7 +38,7 @@
   margin-bottom: 0.5rem;
 }
 .Card-NumComments {
-  color: var(--lightest-gray);
+  color: var(--light-gray);
   text-decoration: none;
 }
 .Card-BottomBar {

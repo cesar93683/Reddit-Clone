@@ -2,7 +2,7 @@
   width: 100%;
   resize: vertical;
   background-color: var(--dark-gray);
-  border: 1px solid var(--light-gray);
+  border: 1px solid var(--gray);
   color: white;
   min-height: 5rem;
   height: auto;
