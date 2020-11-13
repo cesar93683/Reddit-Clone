@@ -17,9 +17,7 @@ const User = () => {
         );
 
         setPosts(responseData.posts);
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     };
     fetchPosts();
   }, [sendRequest, userId]);

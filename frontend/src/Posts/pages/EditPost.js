@@ -40,9 +40,7 @@ const EditPost = () => {
         }
       );
       history.push("/posts/" + postId);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   const handleDescriptionChange = (event) => {
