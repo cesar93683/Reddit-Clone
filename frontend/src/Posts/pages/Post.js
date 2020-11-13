@@ -7,7 +7,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import Card from "../../shared/components/Card/Card";
 import "./Post.css";
 
-const PostItem = (props) => {
+const PostItem = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest } = useHttpClient();
   const [post, setLoadedPost] = useState();
@@ -23,7 +23,6 @@ const PostItem = (props) => {
     };
     fetchPost();
   }, [sendRequest]);
-
   return (
     <div className="Post center">
       {error && <div>{error}</div>}
@@ -43,7 +42,7 @@ const PostItem = (props) => {
             numComments={post.numComments}
             description={post.description}
             creatorId={post.creatorId}
-            usedId={post.usedId}
+            userId={auth.userId}
           />
         </div>
       )}

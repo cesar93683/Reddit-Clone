@@ -25,6 +25,7 @@
 }
 .Card-RightSideBar {
   margin: 0.5rem;
+  width: 100%;
 }
 .Card-Username-Link {
   color: inherit;
@@ -50,6 +51,17 @@
   color: var(--lightest-gray);
   text-decoration: none;
 }
+.Card-BottomBar {
+  display: flex;
+  justify-content: space-between;
+}
 .Card__Linkable .Card-NumComments:hover {
   text-decoration: underline;
+}
+.Card-ModifyButtons {
+  display: flex;
+}
+.Card-EditButton {
+}
+.Card-DeleteButton {
 }

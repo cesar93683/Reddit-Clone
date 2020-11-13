@@ -30,12 +30,21 @@ const Card = (props) => {
         </div>
         <div className="Card-Title">{title}</div>
         <div className="Card-Description">{description}</div>
-        <div className="Card-NumComments">
-          {numComments} Comment
-          {parseInt(numComments) === 1 ? "" : "s"}
+        <div className="Card-BottomBar">
+          <div className="Card-NumComments">
+            {numComments} Comment
+            {parseInt(numComments) === 1 ? "" : "s"}
+          </div>
+
+          {userId === creatorId && (
+            <div className="Card-ModifyButtons">
+              <Link className="Card-EditButton" to={`/post/${postId}/edit`}>
+                EDIT
+              </Link>
+              <div className="Card-DeleteButton">DELETE</div>
+            </div>
+          )}
         </div>
-        {userId === creatorId && <div to={`/post/${postId}/edit`}>EDIT</div>}
-        {userId === creatorId && <div>DELETE</div>}
       </div>
     </React.Fragment>
   );
