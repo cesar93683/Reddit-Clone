@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 const placeSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
-  votes: { type: Number, required: true },
   numComments: { type: Number, required: true },
   creatorUsername: { type: String, required: true },
   creator: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
@@ -14,7 +13,6 @@ const placeSchema = new Schema({
       comment: { type: String, required: true },
       creatorUsername: { type: String, required: true },
       creator: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
-      votes: { type: Number, required: true },
     },
   ],
 });

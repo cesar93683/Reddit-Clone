@@ -1,28 +1,14 @@
 .Card {
   text-decoration: none;
-  display: flex;
   border: 1px solid;
   background-color: var(--dark-gray);
   border-color: var(--light-gray);
   border-radius: 0.25rem;
   margin-bottom: 0.5rem;
+  padding: 0.5rem;
 }
 .Card__Linkable:hover {
   border-color: var(--lightest-gray);
-}
-.Card-LeftSideBar {
-  margin-top: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  width: 4rem;
-  align-items: center;
-}
-.Card-Votes {
-  color: white;
-}
-.Card-RightSideBar {
-  margin: 0.5rem;
-  width: 100%;
 }
 .Card-Username-Link {
   color: inherit;

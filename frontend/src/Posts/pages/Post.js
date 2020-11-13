@@ -77,7 +77,6 @@ const PostItem = () => {
             postId={post.id}
             title={post.title}
             creatorUsername={post.creatorUsername}
-            votes={post.votes}
             numComments={post.numComments}
             description={post.description}
             creator={post.creator}
@@ -91,7 +90,6 @@ const PostItem = () => {
               creator={comment.creator}
               creatorUsername={comment.creatorUsername}
               comment={comment.comment}
-              votes={comment.votes}
             />
           ))}
         </React.Fragment>

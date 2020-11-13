@@ -95,7 +95,6 @@ const createPost = async (req, res, next) => {
   const createdPost = new Post({
     title,
     description,
-    votes: 0,
     numComments: 0,
     creator: req.userData.userId,
     creatorUsername: user.username,
@@ -240,7 +239,6 @@ const newComment = async (req, res, next) => {
 
   post.comments.push({
     comment: req.body.comment,
-    votes: 0,
     creator: req.userData.userId,
     creatorUsername: user.username,
   });

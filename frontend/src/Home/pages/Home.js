@@ -39,7 +39,6 @@ const Home = () => {
             postId={post.id}
             title={post.title}
             creatorUsername={post.creatorUsername}
-            votes={post.votes}
             numComments={post.numComments}
             creator={post.creator}
             linkable
