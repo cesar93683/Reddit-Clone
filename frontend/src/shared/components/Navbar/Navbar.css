@@ -9,7 +9,7 @@
 }
 .NavBar-Home {
   text-decoration: none;
-  color: white;
+  color: var(--light-white);
   font-size: 1.5rem;
 }
 .NavBar-DropDown {
@@ -23,8 +23,8 @@
   flex-direction: row;
 }
 .NavBar-LogInButton {
-  color: white;
-  border-color: white;
+  color: var(--light-white);
+  border-color: var(--light-white);
   border-radius: 0.25rem;
   border: 1px solid;
   padding: 0.25rem 1rem;
@@ -33,7 +33,7 @@
 .NavBar-SignUpButton {
   margin-left: 0.5rem;
   color: var(--dark-gray);
-  background-color: white;
+  background-color: var(--light-white);
   border-radius: 0.25rem;
   padding: 0.25rem 1rem;
   cursor: pointer;

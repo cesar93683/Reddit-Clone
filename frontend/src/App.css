@@ -2,6 +2,7 @@
   --dark-gray: rgb(26, 26, 27);
   --gray: rgb(52, 53, 54);
   --light-gray: rgb(129, 131, 132);
+  --light-white: rgb(215, 218, 220);
 }
 body {
   background-color: black;

@@ -5,7 +5,7 @@
   border-radius: 2rem;
 }
 .Auth-Title {
-  color: white;
+  color: var(--light-white);
   font-size: 2rem;
   font-weight: 600;
 }
@@ -21,10 +21,10 @@
   padding: 0.65rem 2rem;
   border: none;
   border-radius: 2rem;
-  color: white;
+  color: var(--light-white);
   background: #148cb8;
   outline: none;
 }
 .Auth-Error {
-  color: white;
+  color: var(--light-white);
 }
