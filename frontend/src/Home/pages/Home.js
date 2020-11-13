@@ -23,11 +23,7 @@ const Home = () => {
   }, [sendRequest]);
 
   if (isLoading) {
-    return (
-      <div className="center">
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   if (!posts && !error) {

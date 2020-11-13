@@ -85,9 +85,10 @@ const LogIn = (props) => {
     }
   };
 
+  if (isLoading) return <LoadingSpinner />;
+
   return (
     <div className={"Auth " + props.className}>
-      {isLoading && <LoadingSpinner asOverlay />}
       <div className="Auth-Title">
         {props.isLogInMode ? "Log In" : "Sign Up"}
       </div>

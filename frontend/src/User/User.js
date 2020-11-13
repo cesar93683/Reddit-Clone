@@ -23,11 +23,7 @@ const User = () => {
   }, [sendRequest, userId]);
 
   if (isLoading) {
-    return (
-      <div className="center">
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   if (!posts && !error) {

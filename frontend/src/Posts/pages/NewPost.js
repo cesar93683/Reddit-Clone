@@ -49,10 +49,13 @@ const NewPost = () => {
     } catch (err) {}
   };
 
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <div>
       <form className="place-form" onSubmit={placeSubmitHandler}>
-        {isLoading && <LoadingSpinner asOverlay />}
         <Input
           id="title"
           element="input"

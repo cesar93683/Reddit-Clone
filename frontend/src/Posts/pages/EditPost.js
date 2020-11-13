@@ -48,11 +48,7 @@ const EditPost = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="center">
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   if (!post && !error) {
