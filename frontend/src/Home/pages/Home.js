@@ -30,7 +30,7 @@ const Home = () => {
     );
   }
 
-  if (!post && !error) {
+  if (!posts && !error) {
     return (
       <div className="center">
         <h2>An error occured.</h2>
