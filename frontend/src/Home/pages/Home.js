@@ -36,9 +36,9 @@ const Home = () => {
             key={post.id}
             id={post.id}
             title={post.title}
-            username={post.username}
+            username={post.creatorUsername}
             votes={post.votes}
-            numComments={post.comments.length}
+            numComments={post.numComments}
           />
         ))}
     </div>

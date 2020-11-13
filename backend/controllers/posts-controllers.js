@@ -77,15 +77,6 @@ const createPost = async (req, res, next) => {
     );
   }
 
-  const { title, description } = req.body;
-
-  const createdPost = new Post({
-    title,
-    description,
-    votes: "0",
-    creator: req.userData.userId,
-  });
-
   let user;
   try {
     user = await User.findById(req.userData.userId);
@@ -98,6 +89,17 @@ const createPost = async (req, res, next) => {
     const error = new HttpError("Could not find user for provided id.", 404);
     return next(error);
   }
+
+  const { title, description } = req.body;
+
+  const createdPost = new Post({
+    title,
+    description,
+    votes: 0,
+    numComments: 0,
+    creatorId: req.userData.userId,
+    creatorUsername: user.username,
+  });
 
   try {
     const sess = await mongoose.startSession();

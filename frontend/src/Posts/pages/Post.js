@@ -35,9 +35,9 @@ const PostItem = (props) => {
         <div style={{ color: "white" }}>
           <div>{loadedPost.title}</div>
           <div>{loadedPost.description}</div>
-          <div>{loadedPost.creator}</div>
+          <div>{loadedPost.creatorUsername}</div>
           <div>{loadedPost.votes}</div>
-          {auth.userId === loadedPost.creator && (
+          {auth.userId === loadedPost.creatorId && (
             <div to={`/post/${loadedPost.id}/edit`}>EDIT</div>
           )}
           {auth.userId === loadedPost.creatorId && <div>DELETE</div>}
