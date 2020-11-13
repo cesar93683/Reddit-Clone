@@ -5,14 +5,37 @@ import {
   Redirect,
   Switch,
 } from "react-router-dom";
-import NavBar from "./shared/components//Navbar/Navbar";
+import NavBar from "./shared/components/Navbar/Navbar";
 import Home from "./Home/Home";
 import "./App.css";
 import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
+import NewPost from "./Posts/pages/NewPost";
 
 const App = () => {
   const { token, login, logout, userId } = useAuth();
+  let routes;
+  if (token) {
+    routes = (
+      <Switch>
+        <Route path="/" exact>
+          <Home />
+        </Route>
+        <Route path="/post/new" exact>
+          <NewPost />
+        </Route>
+        <Redirect to="/" />
+      </Switch>
+    );
+  } else {
+    routes = (
+      <Switch>
+        <Route path="/" exact>
+          <Home />
+        </Route>
+      </Switch>
+    );
+  }
 
   return (
     <AuthContext.Provider
@@ -26,12 +49,7 @@ const App = () => {
     >
       <Router>
         <NavBar />
-        <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Redirect to="/" />
-        </Switch>
+        <main>{routes}</main>
       </Router>
     </AuthContext.Provider>
   );

@@ -28,7 +28,10 @@ const NavBar = () => {
         Home
       </Link>
       {auth.isLoggedIn ? (
-        <button onClick={auth.logout}>Sign Out</button>
+        <div>
+          <Link to="/post/new">New Post</Link>
+          <button onClick={auth.logout}>Sign Out</button>
+        </div>
       ) : (
         <div className="NavBar-Auth">
           <div className="NavBar-LogInButton" onClick={toggleLogInMode}>
