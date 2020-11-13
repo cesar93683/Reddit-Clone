@@ -18,6 +18,12 @@ router.post("/", [check("title").not().isEmpty()], postsControllers.createPost);
 
 router.patch("/:pid", postsControllers.updatePost);
 
+router.post(
+  "/:pid/newcomment",
+  [check("comment").not().isEmpty()],
+  postsControllers.newComment
+);
+
 router.delete("/:pid", postsControllers.deletePost);
 
 module.exports = router;

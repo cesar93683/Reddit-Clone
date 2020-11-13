@@ -59,7 +59,7 @@ const EditPost = () => {
     <React.Fragment>
       {post && (
         <form onSubmit={postUpdateSubmitHandler}>
-          <div style={{ color: "white" }}>{post.title}</div>
+          <div>{post.title}</div>
           <input
             type="text"
             value={description}

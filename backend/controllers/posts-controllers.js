@@ -203,9 +203,65 @@ const deletePost = async (req, res, next) => {
   res.status(200).json({ message: "Deleted post." });
 };
 
+const newComment = async (req, res, next) => {
+  const postId = req.params.pid;
+
+  let post;
+  try {
+    post = await Post.findById(postId);
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not find a post.",
+      500
+    );
+    return next(error);
+  }
+
+  if (!post) {
+    const error = new HttpError(
+      "Could not find post for the provided id.",
+      404
+    );
+    return next(error);
+  }
+
+  let user;
+  try {
+    user = await User.findById(req.userData.userId);
+  } catch (err) {
+    const error = new HttpError("Creating post failed, please try again.", 500);
+    return next(error);
+  }
+
+  if (!user) {
+    const error = new HttpError("Could not find user for provided id.", 404);
+    return next(error);
+  }
+
+  post.comments.push({
+    comment: req.body.comment,
+    votes: 0,
+    creator: req.userData.userId,
+    creatorUsername: user.username,
+  });
+
+  try {
+    await post.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Creating comment failed, please try again.",
+      500
+    );
+    return next(error);
+  }
+
+  res.status(200).json({ message: "Comment added." });
+};
+
 exports.getPostById = getPostById;
 exports.getPostsByUserId = getPostsByUserId;
 exports.createPost = createPost;
 exports.updatePost = updatePost;
 exports.deletePost = deletePost;
 exports.getPosts = getPosts;
+exports.newComment = newComment;

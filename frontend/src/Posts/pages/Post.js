@@ -5,7 +5,9 @@ import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import Card from "../../shared/components/Card/Card";
+import Comment from "../components/Comment";
 import "./Post.css";
+import CommentForm from "../components/CommentForm";
 
 const PostItem = () => {
   const auth = useContext(AuthContext);
@@ -40,6 +42,24 @@ const PostItem = () => {
     } catch (err) {}
   };
 
+  const onSubmitComment = async (comment) => {
+    try {
+      await sendRequest(
+        `http://localhost:5000/api/posts/${postId}/newcomment`,
+        "POST",
+        JSON.stringify({
+          comment,
+        }),
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -51,7 +71,7 @@ const PostItem = () => {
   return (
     <div className="Post center">
       {post && (
-        <div>
+        <React.Fragment>
           <Card
             key={post.id}
             postId={post.id}
@@ -64,7 +84,17 @@ const PostItem = () => {
             userId={auth.userId}
             onDelete={onDelete}
           />
-        </div>
+          {auth.isLoggedIn && <CommentForm onSubmit={onSubmitComment} />}
+          {post.comments.map((comment) => (
+            <Comment
+              key={comment.id}
+              creator={comment.creator}
+              creatorUsername={comment.creatorUsername}
+              comment={comment.comment}
+              votes={comment.votes}
+            />
+          ))}
+        </React.Fragment>
       )}
     </div>
   );
