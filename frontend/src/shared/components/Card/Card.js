@@ -13,7 +13,9 @@ const Card = (props) => {
     userId,
     description,
     linkable,
+    onDelete,
   } = props;
+
   const content = (
     <React.Fragment>
       <div className="Card-LeftSideBar">
@@ -41,7 +43,9 @@ const Card = (props) => {
               <Link className="Card-EditButton" to={`/post/${postId}/edit`}>
                 EDIT
               </Link>
-              <div className="Card-DeleteButton">DELETE</div>
+              <div onClick={onDelete} className="Card-DeleteButton">
+                DELETE
+              </div>
             </div>
           )}
         </div>

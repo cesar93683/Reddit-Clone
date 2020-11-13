@@ -11,18 +11,33 @@ const PostItem = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest } = useHttpClient();
   const [post, setLoadedPost] = useState();
-  const id = useParams().id;
+  const postId = useParams().id;
+
   useEffect(() => {
     const fetchPost = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/posts/" + id
+          "http://localhost:5000/api/posts/" + postId
         );
         setLoadedPost(responseData.post);
       } catch (err) {}
     };
     fetchPost();
   }, [sendRequest]);
+
+  const onDelete = async () => {
+    try {
+      await sendRequest(
+        `http://localhost:5000/api/posts/${postId}`,
+        "DELETE",
+        null,
+        {
+          Authorization: "Bearer " + auth.token,
+        }
+      );
+    } catch (err) {}
+  };
+
   return (
     <div className="Post center">
       {error && <div>{error}</div>}
@@ -43,6 +58,7 @@ const PostItem = () => {
             description={post.description}
             creatorId={post.creatorId}
             userId={auth.userId}
+            onDelete={onDelete}
           />
         </div>
       )}
