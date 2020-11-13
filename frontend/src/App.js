@@ -6,7 +6,7 @@ import {
   Switch,
 } from "react-router-dom";
 import NavBar from "./shared/components/Navbar/Navbar";
-import Home from "./Home/Home";
+import Home from "./Home/pages/Home";
 import "./App.css";
 import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
