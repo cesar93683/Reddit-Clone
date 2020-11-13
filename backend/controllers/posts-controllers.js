@@ -97,7 +97,7 @@ const createPost = async (req, res, next) => {
     description,
     votes: 0,
     numComments: 0,
-    creatorId: req.userData.userId,
+    creator: req.userData.userId,
     creatorUsername: user.username,
   });
 
@@ -164,7 +164,7 @@ const deletePost = async (req, res, next) => {
 
   let post;
   try {
-    post = await Post.findById(postId).populate("creatorId");
+    post = await Post.findById(postId).populate("creator");
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not delete post.",
@@ -178,7 +178,7 @@ const deletePost = async (req, res, next) => {
     return next(error);
   }
 
-  if (post.creatorId.id !== req.userData.userId) {
+  if (post.creator.id !== req.userData.userId) {
     const error = new HttpError(
       "You are not allowed to delete this post.",
       401
@@ -190,8 +190,8 @@ const deletePost = async (req, res, next) => {
     const sess = await mongoose.startSession();
     sess.startTransaction();
     await post.remove({ session: sess });
-    post.creatorId.posts.pull(post);
-    await post.creatorId.save({ session: sess });
+    post.creator.posts.pull(post);
+    await post.creator.save({ session: sess });
     await sess.commitTransaction();
   } catch (err) {
     const error = new HttpError(

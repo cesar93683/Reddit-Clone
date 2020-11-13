@@ -56,7 +56,7 @@ const PostItem = () => {
             votes={post.votes}
             numComments={post.numComments}
             description={post.description}
-            creatorId={post.creatorId}
+            creator={post.creator}
             userId={auth.userId}
             onDelete={onDelete}
           />
