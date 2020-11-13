@@ -23,7 +23,7 @@ const PostItem = () => {
       } catch (err) {}
     };
     fetchPost();
-  }, [sendRequest]);
+  }, [sendRequest, postId]);
 
   const onDelete = async () => {
     try {

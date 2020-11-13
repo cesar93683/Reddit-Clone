@@ -16,8 +16,8 @@ const Card = (props) => {
     onDelete,
   } = props;
 
-  const content = (
-    <React.Fragment>
+  return (
+    <div className={"Card" + (linkable ? " Card__Linkable" : "")}>
       <div className="Card-LeftSideBar">
         <img alt="Up Vote" src="https://via.placeholder.com/16x16" />
         <div className="Card-Votes">{votes}</div>
@@ -30,13 +30,26 @@ const Card = (props) => {
             {creatorUsername}
           </Link>
         </div>
-        <div className="Card-Title">{title}</div>
+        {linkable ? (
+          <Link className="Card-Title" to={"/posts/" + postId}>
+            {title}
+          </Link>
+        ) : (
+          <div className="Card-Title">{title}</div>
+        )}
         <div className="Card-Description">{description}</div>
         <div className="Card-BottomBar">
-          <div className="Card-NumComments">
-            {numComments} Comment
-            {parseInt(numComments) === 1 ? "" : "s"}
-          </div>
+          {linkable ? (
+            <Link className="Card-NumComments" to={"/posts/" + postId}>
+              {numComments} Comment
+              {parseInt(numComments) === 1 ? "" : "s"}
+            </Link>
+          ) : (
+            <div className="Card-NumComments">
+              {numComments} Comment
+              {parseInt(numComments) === 1 ? "" : "s"}
+            </div>
+          )}
 
           {onDelete && userId === creator && (
             <div className="Card-ModifyButtons">
@@ -50,14 +63,7 @@ const Card = (props) => {
           )}
         </div>
       </div>
-    </React.Fragment>
-  );
-  return linkable ? (
-    <Link to={"/posts/" + postId} className="Card Card__Linkable">
-      {content}
-    </Link>
-  ) : (
-    <div className="Card">{content}</div>
+    </div>
   );
 };
 

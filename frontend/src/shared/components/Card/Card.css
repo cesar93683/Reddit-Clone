@@ -7,9 +7,6 @@
   border-radius: 0.25rem;
   margin-bottom: 0.5rem;
 }
-.Card__Linkable {
-  cursor: pointer;
-}
 .Card__Linkable:hover {
   border-color: var(--lightest-gray);
 }
@@ -37,6 +34,13 @@
 .Card-Username {
   color: var(--lightest-gray);
   margin-bottom: 0.5rem;
+}
+.Card__Linkable .Card-Title {
+  text-decoration: none;
+  cursor: pointer;
+}
+.Card__Linkable .Card-Title:hover {
+  text-decoration: underline;
 }
 .Card-Title {
   color: white;
