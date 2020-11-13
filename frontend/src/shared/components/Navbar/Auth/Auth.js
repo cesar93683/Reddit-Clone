@@ -1,49 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./Auth.css";
 
-import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_MINLENGTH,
-  VALIDATOR_REQUIRE,
-} from "../../../util/validators";
-import { useForm } from "../../../hooks/form-hook";
 import { useHttpClient } from "../../../hooks/http-hook";
 import { AuthContext } from "../../../context/auth-context";
 import LoadingSpinner from "../../../components/UIElements/LoadingSpinner";
-import Input from "../../../components/FormElements/Input";
 
-const LogIn = (props) => {
+const Auth = (props) => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest } = useHttpClient();
-
-  const [formState, inputHandler] = useForm(
-    props.isLogInMode
-      ? {
-          email: {
-            value: "",
-            isValid: false,
-          },
-          password: {
-            value: "",
-            isValid: false,
-          },
-        }
-      : {
-          email: {
-            value: "",
-            isValid: false,
-          },
-          username: {
-            value: "",
-            isValid: false,
-          },
-          password: {
-            value: "",
-            isValid: false,
-          },
-        },
-    false
-  );
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();
@@ -54,8 +21,8 @@ const LogIn = (props) => {
           "http://localhost:5000/api/users/login",
           "POST",
           JSON.stringify({
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
+            email,
+            password,
           }),
           {
             "Content-Type": "application/json",
@@ -70,9 +37,9 @@ const LogIn = (props) => {
           "http://localhost:5000/api/users/signup",
           "POST",
           JSON.stringify({
-            email: formState.inputs.email.value,
-            username: formState.inputs.username.value,
-            password: formState.inputs.password.value,
+            email,
+            username,
+            password,
           }),
           {
             "Content-Type": "application/json",
@@ -85,6 +52,18 @@ const LogIn = (props) => {
     }
   };
 
+  const handleEmail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handleUsername = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handlePasssword = (event) => {
+    setPassword(event.target.value);
+  };
+
   if (isLoading) return <LoadingSpinner />;
 
   return (
@@ -93,35 +72,11 @@ const LogIn = (props) => {
         {props.isLogInMode ? "Log In" : "Sign Up"}
       </div>
       <form className="Auth-Form" onSubmit={authSubmitHandler}>
-        <Input
-          element="input"
-          id="email"
-          type="email"
-          label="E-Mail"
-          validators={[VALIDATOR_EMAIL()]}
-          errorText="Please enter a valid email address."
-          onInput={inputHandler}
-        />
+        <input type="email" value={email} onChange={handleEmail} />
         {!props.isLogInMode && (
-          <Input
-            element="input"
-            id="username"
-            type="text"
-            label="Username"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please enter a username."
-            onInput={inputHandler}
-          />
+          <input type="text" value={username} onChange={handleUsername} />
         )}
-        <Input
-          element="input"
-          id="password"
-          type="password"
-          label="Password"
-          validators={[VALIDATOR_MINLENGTH(6)]}
-          errorText="Please enter a valid password, at least 6 characters."
-          onInput={inputHandler}
-        />
+        <input type="password" value={password} onChange={handlePasssword} />
         {error && <div className="Auth-Error">{error}</div>}
         <button className="Auth-Submit">
           {props.isLogInMode ? "Log In" : "Sign Up"}
@@ -131,4 +86,4 @@ const LogIn = (props) => {
   );
 };
 
-export default LogIn;
+export default Auth;
