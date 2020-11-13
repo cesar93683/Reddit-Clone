@@ -65,7 +65,7 @@ const getPostsByUserId = async (req, res, next) => {
   }
 
   res.json({
-    posts: userWithPosts.posts.map((post) => posts.toObject({ getters: true })),
+    posts: userWithPosts.posts.map((post) => post.toObject({ getters: true })),
   });
 };
 

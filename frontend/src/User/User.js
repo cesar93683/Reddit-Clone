@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from "react";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import Card from "../../shared/components/Card/Card";
-import "./Home.css";
+import { useParams } from "react-router-dom";
+import Card from "../shared/components/Card/Card";
+import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
+import { useHttpClient } from "../shared/hooks/http-hook";
 
-import { useHttpClient } from "../../shared/hooks/http-hook";
-
-const Home = () => {
+const User = () => {
   const { isLoading, error, sendRequest } = useHttpClient();
   const [loadedPosts, setLoadedPosts] = useState();
+  const userId = useParams().userId;
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/posts"
+          "http://localhost:5000/api/posts/user/" + userId
         );
 
         setLoadedPosts(responseData.posts);
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
     };
     fetchPosts();
-  }, [sendRequest]);
+  }, [sendRequest, userId]);
 
   return (
     <div className="Home center">
@@ -48,4 +50,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default User;

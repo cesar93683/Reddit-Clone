@@ -13,6 +13,7 @@ import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
 import NewPost from "./Posts/pages/NewPost";
 import EditPost from "./Posts/pages/EditPost";
+import User from "./User/User";
 
 const App = () => {
   const { token, login, logout, userId } = useAuth();
@@ -32,6 +33,9 @@ const App = () => {
         <Route path="/posts/:postId/edit" exact>
           <EditPost />
         </Route>
+        <Route path="/users/:userId" exact>
+          <User />
+        </Route>
         <Redirect to="/" />
       </Switch>
     );
@@ -41,8 +45,11 @@ const App = () => {
         <Route path="/" exact>
           <Home />
         </Route>
-        <Route path="/posts/:id" exact>
+        <Route path="/posts/:postId" exact>
           <Post />
+        </Route>
+        <Route path="/users/:userId" exact>
+          <User />
         </Route>
         <Redirect to="/" />
       </Switch>

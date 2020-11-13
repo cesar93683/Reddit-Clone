@@ -26,7 +26,7 @@ const Card = (props) => {
       <div className="Card-RightSideBar">
         <div className="Card-Username">
           Posted by{" "}
-          <Link className="Card-Username-Link" to="/">
+          <Link className="Card-Username-Link" to={"/users/" + creator}>
             {creatorUsername}
           </Link>
         </div>
