@@ -8,7 +8,7 @@ const User = require("../models/user");
 const getPosts = async (req, res, next) => {
   let posts;
   try {
-    posts = await Post.find({});
+    posts = await Post.find({}, "-comments -description");
   } catch (err) {
     const error = new HttpError(
       "Fetching users failed, please try again later.",
