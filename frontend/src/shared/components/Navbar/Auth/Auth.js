@@ -64,7 +64,12 @@ const Auth = (props) => {
     setPassword(event.target.value);
   };
 
-  if (isLoading) return <LoadingSpinner />;
+  if (isLoading)
+    return (
+      <div className={"Auth " + props.className}>
+        <LoadingSpinner />
+      </div>
+    );
 
   return (
     <div className={"Auth " + props.className}>
