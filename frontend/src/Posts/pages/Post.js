@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { AuthContext } from "../../shared/context/auth-context";
@@ -12,6 +12,8 @@ const PostItem = () => {
   const { isLoading, error, sendRequest } = useHttpClient();
   const [post, setLoadedPost] = useState();
   const postId = useParams().id;
+
+  const history = useHistory();
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -35,6 +37,7 @@ const PostItem = () => {
           Authorization: "Bearer " + auth.token,
         }
       );
+      history.push("/");
     } catch (err) {}
   };
 
