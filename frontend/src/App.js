@@ -6,6 +6,7 @@ import {
   Switch,
 } from "react-router-dom";
 import NavBar from "./shared/components/Navbar/Navbar";
+import Post from "./Posts/pages/Post";
 import Home from "./Home/pages/Home";
 import "./App.css";
 import { AuthContext } from "./shared/context/auth-context";
@@ -24,6 +25,9 @@ const App = () => {
         <Route path="/post/new" exact>
           <NewPost />
         </Route>
+        <Route path="/posts/:id" exact>
+          <Post />
+        </Route>
         <Redirect to="/" />
       </Switch>
     );
@@ -33,6 +37,10 @@ const App = () => {
         <Route path="/" exact>
           <Home />
         </Route>
+        <Route path="/posts/:id" exact>
+          <Post />
+        </Route>
+        <Redirect to="/" />
       </Switch>
     );
   }

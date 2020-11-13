@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Card = (props) => {
   return (
-    <div className="Card">
+    <Link to={"/posts/" + props.id} className="Card">
       <div className="Card-LeftSideBar">
         <img alt="Up Vote" src="https://via.placeholder.com/16x16" />
         <div className="Card-Votes">{props.votes}</div>
@@ -23,7 +23,7 @@ const Card = (props) => {
           {parseInt(props.numComments) === 1 ? "" : "s"}
         </Link>
       </div>
-    </div>
+    </Link>
   );
 };
 

@@ -23,6 +23,7 @@ const Home = () => {
   }, [sendRequest]);
   return (
     <div className="Home center">
+      {error && <div>{error}</div>}
       {isLoading && (
         <div className="center">
           <LoadingSpinner />
@@ -37,7 +38,7 @@ const Home = () => {
             title={post.title}
             username={post.username}
             votes={post.votes}
-            numComments={post.numComments}
+            numComments={post.comments.length}
           />
         ))}
     </div>
