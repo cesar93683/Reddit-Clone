@@ -11,8 +11,7 @@ const PostItem = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest } = useHttpClient();
   const [post, setLoadedPost] = useState();
-  const postId = useParams().id;
-
+  const postId = useParams().postId;
   const history = useHistory();
 
   useEffect(() => {

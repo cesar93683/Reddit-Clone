@@ -1,31 +1,23 @@
 const express = require("express");
 const { check } = require("express-validator");
 
-const placesControllers = require("../controllers/posts-controllers");
+const postsControllers = require("../controllers/posts-controllers");
 const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
 
-router.get("/", placesControllers.getPosts);
+router.get("/", postsControllers.getPosts);
 
-router.get("/:pid", placesControllers.getPostById);
+router.get("/:pid", postsControllers.getPostById);
 
-router.get("/user/:uid", placesControllers.getPostsByUserId);
+router.get("/user/:uid", postsControllers.getPostsByUserId);
 
 router.use(checkAuth);
 
-router.post(
-  "/",
-  [check("title").not().isEmpty()],
-  placesControllers.createPost
-);
+router.post("/", [check("title").not().isEmpty()], postsControllers.createPost);
 
-router.patch(
-  "/:pid",
-  [check("title").not().isEmpty()],
-  placesControllers.updatePost
-);
+router.patch("/:pid", postsControllers.updatePost);
 
-router.delete("/:pid", placesControllers.deletePost);
+router.delete("/:pid", postsControllers.deletePost);
 
 module.exports = router;

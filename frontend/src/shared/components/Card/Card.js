@@ -53,7 +53,7 @@ const Card = (props) => {
 
           {onDelete && userId === creator && (
             <div className="Card-ModifyButtons">
-              <Link className="Card-EditButton" to={`/post/${postId}/edit`}>
+              <Link className="Card-EditButton" to={`/posts/${postId}/edit`}>
                 EDIT
               </Link>
               <div onClick={onDelete} className="Card-DeleteButton">

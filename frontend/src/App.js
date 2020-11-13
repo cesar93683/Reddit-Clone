@@ -12,6 +12,7 @@ import "./App.css";
 import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
 import NewPost from "./Posts/pages/NewPost";
+import EditPost from "./Posts/pages/EditPost";
 
 const App = () => {
   const { token, login, logout, userId } = useAuth();
@@ -25,8 +26,11 @@ const App = () => {
         <Route path="/post/new" exact>
           <NewPost />
         </Route>
-        <Route path="/posts/:id" exact>
+        <Route path="/posts/:postId" exact>
           <Post />
+        </Route>
+        <Route path="/posts/:postId/edit" exact>
+          <EditPost />
         </Route>
         <Redirect to="/" />
       </Switch>

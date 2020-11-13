@@ -124,7 +124,7 @@ const updatePost = async (req, res, next) => {
     );
   }
 
-  const { title, description } = req.body;
+  const { description } = req.body;
   const postId = req.params.pid;
 
   let post;
@@ -143,7 +143,6 @@ const updatePost = async (req, res, next) => {
     return next(error);
   }
 
-  post.title = title;
   post.description = description;
 
   try {
