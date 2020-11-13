@@ -27,11 +27,7 @@ const User = () => {
   }
 
   if (!posts && !error) {
-    return (
-      <div className="center">
-        <h2>An error occured.</h2>
-      </div>
-    );
+    return <h2>An error occured.</h2>;
   }
   return (
     <div className="Home center">
