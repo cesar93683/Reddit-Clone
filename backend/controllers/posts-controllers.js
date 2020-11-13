@@ -5,6 +5,20 @@ const HttpError = require("../models/http-error");
 const Post = require("../models/posts");
 const User = require("../models/user");
 
+const getPosts = async (req, res, next) => {
+  let posts;
+  try {
+    posts = await Post.find({});
+  } catch (err) {
+    const error = new HttpError(
+      "Fetching users failed, please try again later.",
+      500
+    );
+    return next(error);
+  }
+  res.json({ posts: posts.map((post) => post.toObject({ getters: true })) });
+};
+
 const getPostById = async (req, res, next) => {
   const postId = req.params.pid;
 
@@ -64,11 +78,11 @@ const createPost = async (req, res, next) => {
   }
 
   const { title, description } = req.body;
-  console.log();
 
   const createdPost = new Post({
     title,
     description,
+    votes: "0",
     creator: req.userData.userId,
   });
 
@@ -193,3 +207,4 @@ exports.getPostsByUserId = getPostsByUserId;
 exports.createPost = createPost;
 exports.updatePost = updatePost;
 exports.deletePost = deletePost;
+exports.getPosts = getPosts;

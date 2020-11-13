@@ -1,38 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 import Card from "./Card.js";
 import "./Home.css";
 
+import { useHttpClient } from "../shared/hooks/http-hook";
+
 const Home = () => {
-  const items = [
-    {
-      id: "1",
-      title:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
-      username: "username",
-      votes: "1",
-      numComments: "100",
-    },
-    {
-      id: "2",
-      title:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore",
-      username: "username",
-      votes: "11100",
-      numComments: "1",
-    },
-  ];
+  const { isLoading, error, sendRequest } = useHttpClient();
+  const [loadedPosts, setLoadedPosts] = useState();
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const responseData = await sendRequest(
+          "http://localhost:5000/api/posts"
+        );
+
+        setLoadedPosts(responseData.posts);
+      } catch (err) {}
+    };
+    fetchPosts();
+  }, [sendRequest]);
   return (
     <div className="Home center">
-      {items.map((item) => (
-        <Card
-          key={item.id}
-          id={item.id}
-          title={item.title}
-          username={item.username}
-          votes={item.votes}
-          numComments={item.numComments}
-        />
-      ))}
+      {isLoading && (
+        <div className="center">
+          <LoadingSpinner />
+        </div>
+      )}
+      {!isLoading &&
+        loadedPosts &&
+        loadedPosts.map((post) => (
+          <Card
+            key={post.id}
+            id={post.id}
+            title={post.title}
+            username={post.username}
+            votes={post.votes}
+            numComments={post.numComments}
+          />
+        ))}
     </div>
   );
 };

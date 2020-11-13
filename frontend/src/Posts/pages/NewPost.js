@@ -11,9 +11,9 @@ import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 
-const NewPlace = () => {
+const NewPost = () => {
   const auth = useContext(AuthContext);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, error, sendRequest } = useHttpClient();
   const [formState, inputHandler] = useForm(
     {
       title: {
@@ -33,13 +33,6 @@ const NewPlace = () => {
   const placeSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-      // const formData = new FormData();
-      // formData.append("title", formState.inputs.title.value);
-      // formData.append("description", formState.inputs.description.value);
-      // await sendRequest("http://localhost:5000/api/posts", "POST", formData, {
-      //   Authorization: "Bearer " + auth.token,
-      // });
-      console.log(1);
       await sendRequest(
         "http://localhost:5000/api/posts",
         "POST",
@@ -52,7 +45,6 @@ const NewPlace = () => {
           Authorization: "Bearer " + auth.token,
         }
       );
-      console.log(2);
       history.push("/");
     } catch (err) {}
   };
@@ -74,16 +66,17 @@ const NewPlace = () => {
           id="description"
           element="textarea"
           label="Description"
-          validators={[VALIDATOR_MINLENGTH(5)]}
-          errorText="Please enter a valid description (at least 5 characters)."
+          validators={[VALIDATOR_MINLENGTH(0)]}
+          errorText="Please enter a valid description (at least 0 characters)."
           onInput={inputHandler}
         />
+        {error && <div className="Auth-Error">{error}</div>}
         <button type="submit" disabled={!formState.isValid}>
-          ADD PLACE
+          New Post
         </button>
       </form>
     </div>
   );
 };
 
-export default NewPlace;
+export default NewPost;
