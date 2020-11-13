@@ -38,7 +38,7 @@ const Card = (props) => {
             {parseInt(numComments) === 1 ? "" : "s"}
           </div>
 
-          {userId === creator && (
+          {onDelete && userId === creator && (
             <div className="Card-ModifyButtons">
               <Link className="Card-EditButton" to={`/post/${postId}/edit`}>
                 EDIT

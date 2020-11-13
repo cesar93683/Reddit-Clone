@@ -40,7 +40,6 @@ const Home = () => {
             votes={post.votes}
             numComments={post.numComments}
             creator={post.creator}
-            usedId={post.usedId}
             linkable
           />
         ))}
