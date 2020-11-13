@@ -1,4 +1,5 @@
 .Card {
+  text-decoration: none;
   display: flex;
   width: 40rem;
   border: 1px solid;
