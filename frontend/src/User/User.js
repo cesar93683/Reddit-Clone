@@ -6,7 +6,7 @@ import { useHttpClient } from "../shared/hooks/http-hook";
 
 const User = () => {
   const { isLoading, error, sendRequest } = useHttpClient();
-  const [loadedPosts, setLoadedPosts] = useState();
+  const [posts, setPosts] = useState();
   const userId = useParams().userId;
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const User = () => {
           "http://localhost:5000/api/posts/user/" + userId
         );
 
-        setLoadedPosts(responseData.posts);
+        setPosts(responseData.posts);
       } catch (err) {
         console.log(err);
       }
@@ -24,17 +24,25 @@ const User = () => {
     fetchPosts();
   }, [sendRequest, userId]);
 
+  if (isLoading) {
+    return (
+      <div className="center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (!post && !error) {
+    return (
+      <div className="center">
+        <h2>An error occured.</h2>
+      </div>
+    );
+  }
   return (
     <div className="Home center">
-      {error && <div>{error}</div>}
-      {isLoading && (
-        <div className="center">
-          <LoadingSpinner />
-        </div>
-      )}
-      {!isLoading &&
-        loadedPosts &&
-        loadedPosts.map((post) => (
+      {posts &&
+        posts.map((post) => (
           <Card
             key={post.id}
             postId={post.id}

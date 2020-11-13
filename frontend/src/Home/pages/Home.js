@@ -7,7 +7,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 
 const Home = () => {
   const { isLoading, error, sendRequest } = useHttpClient();
-  const [loadedPosts, setLoadedPosts] = useState();
+  const [posts, setPosts] = useState();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -16,23 +16,32 @@ const Home = () => {
           "http://localhost:5000/api/posts"
         );
 
-        setLoadedPosts(responseData.posts);
+        setPosts(responseData.posts);
       } catch (err) {}
     };
     fetchPosts();
   }, [sendRequest]);
 
+  if (isLoading) {
+    return (
+      <div className="center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (!post && !error) {
+    return (
+      <div className="center">
+        <h2>An error occured.</h2>
+      </div>
+    );
+  }
+
   return (
     <div className="Home center">
-      {error && <div>{error}</div>}
-      {isLoading && (
-        <div className="center">
-          <LoadingSpinner />
-        </div>
-      )}
-      {!isLoading &&
-        loadedPosts &&
-        loadedPosts.map((post) => (
+      {posts &&
+        posts.map((post) => (
           <Card
             key={post.id}
             postId={post.id}

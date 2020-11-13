@@ -60,13 +60,14 @@ const EditPost = () => {
   if (!post && !error) {
     return (
       <div className="center">
-        <h2>Could not find post!</h2>
+        <h2>An error occured.</h2>
       </div>
     );
   }
+
   return (
     <React.Fragment>
-      {!isLoading && post && (
+      {post && (
         <form onSubmit={postUpdateSubmitHandler}>
           <div style={{ color: "white" }}>{post.title}</div>
           <input

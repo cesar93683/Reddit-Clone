@@ -40,15 +40,25 @@ const PostItem = () => {
     } catch (err) {}
   };
 
+  if (isLoading) {
+    return (
+      <div className="center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (!post && !error) {
+    return (
+      <div className="center">
+        <h2>An error occured.</h2>
+      </div>
+    );
+  }
+
   return (
     <div className="Post center">
-      {error && <div>{error}</div>}
-      {isLoading && (
-        <div className="center">
-          <LoadingSpinner />
-        </div>
-      )}
-      {!isLoading && post && (
+      {post && (
         <div>
           <Card
             key={post.id}
