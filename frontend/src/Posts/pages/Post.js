@@ -68,6 +68,8 @@ const PostItem = () => {
     return <h2>An error occured.</h2>;
   }
 
+  const subcontent = <React.Fragment></React.Fragment>;
+
   return (
     <div className="Post center">
       {post && (
@@ -82,16 +84,19 @@ const PostItem = () => {
             creator={post.creator}
             userId={auth.userId}
             onDelete={onDelete}
+            subcontent={subcontent}
           />
-          {auth.isLoggedIn && <CommentForm onSubmit={onSubmitComment} />}
-          {post.comments.map((comment) => (
-            <Comment
-              key={comment.id}
-              creator={comment.creator}
-              creatorUsername={comment.creatorUsername}
-              comment={comment.comment}
-            />
-          ))}
+          <div className="Post__CommentSection">
+            {auth.isLoggedIn && <CommentForm onSubmit={onSubmitComment} />}
+            {post.comments.map((comment) => (
+              <Comment
+                key={comment.id}
+                creator={comment.creator}
+                creatorUsername={comment.creatorUsername}
+                comment={comment.comment}
+              />
+            ))}
+          </div>
         </React.Fragment>
       )}
     </div>

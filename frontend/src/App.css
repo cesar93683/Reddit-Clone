@@ -4,7 +4,7 @@
   --lightest-gray: rgb(129, 131, 132);
 }
 body {
-  /* background-color: black; */
+  background-color: black;
   margin: 0;
 }
 .center {
