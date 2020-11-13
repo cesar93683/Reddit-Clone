@@ -1,16 +1,16 @@
 .Card {
   text-decoration: none;
   display: flex;
-  width: 40rem;
   border: 1px solid;
   background-color: var(--dark-gray);
   border-color: var(--light-gray);
   border-radius: 0.25rem;
-  color: var(--lightest-gray);
-  cursor: pointer;
-  margin-bottom: 0.625rem;
+  margin-bottom: 0.5rem;
 }
-.Card:hover {
+.Card__Linkable {
+  cursor: pointer;
+}
+.Card__Linkable:hover {
   border-color: var(--lightest-gray);
 }
 .Card-LeftSideBar {
@@ -34,7 +34,7 @@
   text-decoration: underline;
 }
 .Card-Username {
-  font-size: 0.9rem;
+  color: var(--lightest-gray);
   margin-bottom: 0.5rem;
 }
 .Card-Title {
@@ -42,10 +42,14 @@
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
 }
+.Card-Description {
+  color: white;
+  margin-bottom: 0.5rem;
+}
 .Card-NumComments {
-  color: inherit;
+  color: var(--lightest-gray);
   text-decoration: none;
 }
-.Card-NumComments:hover {
+.Card__Linkable .Card-NumComments:hover {
   text-decoration: underline;
 }

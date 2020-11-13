@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import Card from "../components/Card.js";
+import Card from "../../shared/components/Card/Card";
 import "./Home.css";
 
 import { useHttpClient } from "../../shared/hooks/http-hook";
@@ -34,11 +34,14 @@ const Home = () => {
         loadedPosts.map((post) => (
           <Card
             key={post.id}
-            id={post.id}
+            postId={post.id}
             title={post.title}
-            username={post.creatorUsername}
+            creatorUsername={post.creatorUsername}
             votes={post.votes}
             numComments={post.numComments}
+            creatorId={post.creatorId}
+            usedId={post.usedId}
+            linkable
           />
         ))}
     </div>
