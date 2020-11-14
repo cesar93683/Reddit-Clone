@@ -1,8 +1,8 @@
 import React from "react";
 
-import "./LoadingSpinner.css";
+import "./LoadingSpinner.scss";
 
-const LoadingSpinner = (props) => {
+const LoadingSpinner = () => {
   return (
     <div className="LoadingSpinner center">
       <div className="lds-dual-ring center" />;

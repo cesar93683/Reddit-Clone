@@ -1,0 +1,30 @@
+.NavBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid;
+  background-color: var(--dark-gray);
+  border-color: var(--gray);
+  padding: 0.5rem;
+}
+.NavBar-Home {
+  text-decoration: none;
+  color: var(--light-white);
+  font-size: 1.5rem;
+}
+.NavBar-DropDown {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 2.8rem;
+}
+.NavBar-RightButtons {
+  display: flex;
+  flex-direction: row;
+}
+.NavBar__NewPostButton {
+  margin-right: 1rem;
+}
+.NavBar__SignUpButton {
+  margin-left: 0.5rem;
+}

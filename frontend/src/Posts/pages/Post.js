@@ -6,7 +6,7 @@ import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import Card from "../../shared/components/Card/Card";
 import Comment from "../components/Comment";
-import "./Post.css";
+import "./Post.scss";
 import CommentForm from "../components/CommentForm";
 
 const PostItem = () => {

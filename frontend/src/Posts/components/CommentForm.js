@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./CommentForm.css";
+import "./CommentForm.scss";
 
 const CommentForm = (props) => {
   const [comment, setComment] = useState("");

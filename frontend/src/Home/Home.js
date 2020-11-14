@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 import Card from "../shared/components/Card/Card";
-import "./Home.css";
+import "./Home.scss";
 
 import { useHttpClient } from "../shared/hooks/http-hook";
 

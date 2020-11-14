@@ -8,7 +8,6 @@ import {
 import NavBar from "./shared/components/Navbar/Navbar";
 import Post from "./Posts/pages/Post";
 import Home from "./Home/Home";
-import "./App.css";
 import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
 import NewPost from "./Posts/pages/NewPost";

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import "./Auth.css";
+import "./Auth.scss";
 
 import { useHttpClient } from "../../../hooks/http-hook";
 import { AuthContext } from "../../../context/auth-context";

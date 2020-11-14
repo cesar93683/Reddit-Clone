@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import "./Navbar.css";
+import "./Navbar.scss";
 import Auth from "./Auth/Auth";
 import { AuthContext } from "../../context/auth-context";
 

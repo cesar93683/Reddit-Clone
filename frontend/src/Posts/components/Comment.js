@@ -1,5 +1,5 @@
 import React from "react";
-import "./Comment.css";
+import "./Comment.scss";
 import { Link } from "react-router-dom";
 
 const Comment = (props) => {

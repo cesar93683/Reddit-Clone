@@ -1,0 +1,47 @@
+:root {
+  --dark-gray: rgb(26, 26, 27);
+  --gray: rgb(52, 53, 54);
+  --light-gray: rgb(129, 131, 132);
+  --light-white: rgb(215, 218, 220);
+}
+body {
+  background-color: black;
+  margin: 0;
+}
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+.d-none {
+  display: none;
+}
+.d-block {
+  display: block;
+}
+* {
+  font-family: "IBM Plex Sans", Arial, sans-serif;
+}
+
+.btn {
+  padding: 0.25rem 1rem;
+  cursor: pointer;
+  outline: none;
+  border-radius: 0.25rem;
+  text-decoration: none;
+}
+
+.btn-blue {
+  color: var(--light-white);
+  border: none;
+  background-color: #148cb8;
+}
+.btn-white {
+  color: var(--dark-gray);
+  border: none;
+  background-color: var(--light-white);
+}
+.btn-outline-white {
+  color: var(--light-white);
+  border: 1px solid;
+  border-color: var(--light-white);
+}
