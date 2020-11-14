@@ -1,0 +1,8 @@
+{
+  "env": {
+    "DB_USER": "user",
+    "DB_PASSWORD": "r2Lmp0tL2ejNmoyv",
+    "DB_NAME": "Cluster0",
+    "JWT_KEY": "supersecret_dont_share"
+  }
+}
