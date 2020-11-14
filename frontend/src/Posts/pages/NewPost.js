@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
+import "./EditPost";
 
 const NewPost = () => {
   const auth = useContext(AuthContext);
@@ -59,7 +60,7 @@ const NewPost = () => {
           Description
         </label>
         <textarea
-          className="Form-Input"
+          className="Form__TextArea"
           type="text"
           id="description"
           value={description}

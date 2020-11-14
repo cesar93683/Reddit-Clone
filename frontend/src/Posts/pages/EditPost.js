@@ -72,7 +72,7 @@ const EditPost = () => {
                 Description
               </label>
               <textarea
-                className="Form-Input"
+                className="Form__TextArea"
                 type="text"
                 id="description"
                 value={description}

@@ -10,6 +10,16 @@
   font-weight: 600;
   margin-bottom: 0.25rem;
 }
+.Form__TextArea {
+  width: 100%;
+  resize: vertical;
+  color: var(--light-white);
+  min-height: 5rem;
+  height: auto;
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
+  background-color: var(--light);
+}
 .Form-Form {
   display: flex;
   flex-direction: column;
