@@ -42,7 +42,7 @@ const NewPost = () => {
   }
 
   return (
-    <div className="main-content Form">
+    <div className="Form">
       <div className="Form-Title">New Post</div>
       <form className="Form-Form" onSubmit={postSubmitHandler}>
         <label className="text-light" for="title">

@@ -54,7 +54,7 @@ const EditPost = () => {
   return (
     <React.Fragment>
       {post && (
-        <div className="main-content">
+        <div>
           <div className="Form">
             <div className="Form-Title">Edit Post</div>
             <form className="Form-Form" onSubmit={postUpdateSubmitHandler}>

@@ -68,10 +68,8 @@ const PostItem = () => {
     return <h2>An error occured.</h2>;
   }
 
-  const subcontent = <React.Fragment></React.Fragment>;
-
   return (
-    <div className="main-content">
+    <div>
       {post && (
         <React.Fragment>
           <Card
@@ -84,7 +82,6 @@ const PostItem = () => {
             creator={post.creator}
             userId={auth.userId}
             onDelete={onDelete}
-            subcontent={subcontent}
           />
           <div className="Post__CommentSection">
             {auth.isLoggedIn && <CommentForm onSubmit={onSubmitComment} />}

@@ -13,6 +13,7 @@ import { useAuth } from "./shared/hooks/auth-hook";
 import NewPost from "./Posts/pages/NewPost";
 import EditPost from "./Posts/pages/EditPost";
 import User from "./User/User";
+import "./App.scss";
 
 const App = () => {
   const { token, login, logout, userId } = useAuth();
@@ -67,7 +68,7 @@ const App = () => {
     >
       <Router>
         <NavBar />
-        <main>{routes}</main>
+        <main className="App">{routes}</main>
       </Router>
     </AuthContext.Provider>
   );
