@@ -4,7 +4,7 @@
   border-radius: 0.25rem;
   border: 1px solid var(--gray);
 }
-.Form-Title {
+.Form__Title {
   color: var(--light);
   font-size: 2rem;
   font-weight: 600;
@@ -20,11 +20,11 @@
   margin-bottom: 0.25rem;
   background-color: var(--light);
 }
-.Form-Form {
+.Form__Form {
   display: flex;
   flex-direction: column;
 }
-.Form-Input {
+.Form__Input {
   font-size: 1.25rem;
   margin-bottom: 0.25rem;
   background-color: var(--light);

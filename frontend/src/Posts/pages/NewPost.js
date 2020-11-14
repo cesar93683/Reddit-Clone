@@ -44,13 +44,13 @@ const NewPost = () => {
 
   return (
     <div className="Form">
-      <div className="Form-Title">New Post</div>
-      <form className="Form-Form" onSubmit={postSubmitHandler}>
+      <div className="Form__Title">New Post</div>
+      <form className="Form__Form" onSubmit={postSubmitHandler}>
         <label className="text-light" for="title">
           Title
         </label>
         <input
-          className="Form-Input"
+          className="Form__Input"
           type="text"
           id="title"
           value={title}
