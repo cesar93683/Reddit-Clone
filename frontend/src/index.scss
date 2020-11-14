@@ -3,6 +3,8 @@
   --gray: rgb(52, 53, 54);
   --light-gray: rgb(129, 131, 132);
   --light-white: rgb(215, 218, 220);
+  --blue: rgb(0, 103, 215);
+  --red: rgb(220, 53, 69);
 }
 body {
   background-color: black;
@@ -21,7 +23,6 @@ body {
 * {
   font-family: "IBM Plex Sans", Arial, sans-serif;
 }
-
 .btn {
   padding: 0.25rem 1rem;
   cursor: pointer;
@@ -29,11 +30,15 @@ body {
   border-radius: 0.25rem;
   text-decoration: none;
 }
-
 .btn-blue {
   color: var(--light-white);
   border: none;
-  background-color: #148cb8;
+  background-color: var(--blue);
+}
+.btn-red {
+  color: var(--light-white);
+  border: none;
+  background-color: var(--red);
 }
 .btn-white {
   color: var(--dark-gray);

@@ -46,10 +46,10 @@ const Card = (props) => {
 
         {onDelete && userId === creator && (
           <div className="Card-ModifyButtons">
-            <Link className="Card-EditButton" to={`/posts/${postId}/edit`}>
+            <Link className="btn btn-blue" to={`/posts/${postId}/edit`}>
               EDIT
             </Link>
-            <div onClick={onDelete} className="Card-DeleteButton">
+            <div onClick={onDelete} className="btn btn-red Card__DeleteButton">
               DELETE
             </div>
           </div>
