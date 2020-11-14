@@ -7,7 +7,7 @@ const Comment = (props) => {
   const { creatorUsername, creator, comment, dateCreated, currentDate } = props;
 
   return (
-    <div className="Comment">
+    <div className="mb-3">
       <div className="d-flex">
         <Link className="Comment__Username" to={"/users/" + creator}>
           {creatorUsername}
