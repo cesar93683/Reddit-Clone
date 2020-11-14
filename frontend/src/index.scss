@@ -24,6 +24,11 @@ body {
 }
 * {
   font-family: "IBM Plex Sans", Arial, sans-serif;
+  box-sizing: border-box;
+}
+.main-content {
+  width: 40rem;
+  margin: 0.5rem auto;
 }
 .btn {
   font-size: 1rem;

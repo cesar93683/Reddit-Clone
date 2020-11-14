@@ -54,34 +54,36 @@ const EditPost = () => {
   return (
     <React.Fragment>
       {post && (
-        <div className="NewPost Form">
-          <div className="Form-Title">Edit Post</div>
-          <form className="Form-Form" onSubmit={postUpdateSubmitHandler}>
-            <label className="text-light" for="title">
-              Title
-            </label>
-            <input
-              className="Form-Input"
-              type="text"
-              id="title"
-              value={post.title}
-              disabled
-            />
-            <label className="text-light" for="description">
-              Description
-            </label>
-            <textarea
-              className="Form-Input"
-              type="text"
-              id="description"
-              value={description}
-              onChange={handleDescriptionChange}
-            />
-            {error && <div className="Form-Error">{error}</div>}
-            <button className="btn btn-primary" type="submit">
-              Update Post
-            </button>
-          </form>
+        <div className="main-content">
+          <div className="Form">
+            <div className="Form-Title">Edit Post</div>
+            <form className="Form-Form" onSubmit={postUpdateSubmitHandler}>
+              <label className="text-light" for="title">
+                Title
+              </label>
+              <input
+                className="Form-Input"
+                type="text"
+                id="title"
+                value={post.title}
+                disabled
+              />
+              <label className="text-light" for="description">
+                Description
+              </label>
+              <textarea
+                className="Form-Input"
+                type="text"
+                id="description"
+                value={description}
+                onChange={handleDescriptionChange}
+              />
+              {error && <div className="Form-Error">{error}</div>}
+              <button className="btn btn-primary" type="submit">
+                Update Post
+              </button>
+            </form>
+          </div>
         </div>
       )}
     </React.Fragment>

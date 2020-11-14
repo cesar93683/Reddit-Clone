@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
-import "./NewPost.css";
 
 const NewPost = () => {
   const auth = useContext(AuthContext);
@@ -43,7 +42,7 @@ const NewPost = () => {
   }
 
   return (
-    <div className="NewPost Form">
+    <div className="main-content Form">
       <div className="Form-Title">New Post</div>
       <form className="Form-Form" onSubmit={postSubmitHandler}>
         <label className="text-light" for="title">
