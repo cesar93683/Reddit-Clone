@@ -29,7 +29,9 @@ const NavBar = () => {
       </Link>
       {auth.isLoggedIn ? (
         <div>
-          <Link to="/post/new">New Post</Link>
+          <Link className="Blue-Button NavBar__NewPostButton" to="/post/new">
+            New Post
+          </Link>
           <button onClick={auth.logout}>Sign Out</button>
         </div>
       ) : (

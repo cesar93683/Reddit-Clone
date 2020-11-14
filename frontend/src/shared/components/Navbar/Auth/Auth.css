@@ -22,15 +22,6 @@
 }
 .Auth-Submit {
   margin-top: 1rem;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 0.65rem 2rem;
-  border: none;
-  border-radius: 2rem;
-  color: var(--light-white);
-  background: #148cb8;
-  outline: none;
 }
 .Auth-Error {
   color: var(--light-white);

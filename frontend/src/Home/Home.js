@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import Card from "../../shared/components/Card/Card";
+import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
+import Card from "../shared/components/Card/Card";
 import "./Home.css";
 
-import { useHttpClient } from "../../shared/hooks/http-hook";
+import { useHttpClient } from "../shared/hooks/http-hook";
 
 const Home = () => {
   const { isLoading, error, sendRequest } = useHttpClient();

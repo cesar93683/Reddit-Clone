@@ -18,7 +18,7 @@ const Card = (props) => {
   return (
     <div className={"Card" + (linkable ? " Card__Linkable" : "")}>
       <div className="Card-Username">
-        Posted by{" "}
+        {"Posted by "}
         <Link className="Card-Username-Link" to={"/users/" + creator}>
           {creatorUsername}
         </Link>

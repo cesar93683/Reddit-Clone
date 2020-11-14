@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import NavBar from "./shared/components/Navbar/Navbar";
 import Post from "./Posts/pages/Post";
-import Home from "./Home/pages/Home";
+import Home from "./Home/Home";
 import "./App.css";
 import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
