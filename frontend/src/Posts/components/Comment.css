@@ -12,4 +12,5 @@
 }
 .Comment__Comment {
   color: var(--light-white);
+  margin-left: 0.5rem;
 }
