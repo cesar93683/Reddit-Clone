@@ -90,30 +90,44 @@ const Auth = (props) => {
         {props.isLogInMode ? "Log In" : "Sign Up"}
       </div>
       <form className="Auth-Form" onSubmit={authSubmitHandler}>
+        <label className="text-light" for="email">
+          Email address
+        </label>
         <input
           placeholder="Email"
           className="Auth-Input"
           type="email"
+          id="email"
           value={email}
           onChange={handleEmail}
         />
         {!props.isLogInMode && (
-          <input
-            placeholder="Username"
-            className="Auth-Input"
-            type="text"
-            value={username}
-            onChange={handleUsername}
-          />
+          <React.Fragment>
+            <label className="text-light" for="username">
+              Username
+            </label>
+            <input
+              placeholder="Username"
+              className="Auth-Input"
+              id="username"
+              type="text"
+              value={username}
+              onChange={handleUsername}
+            />
+          </React.Fragment>
         )}
+        <label className="text-light" for="password">
+          Password
+        </label>
         <input
           placeholder="Password"
           className="Auth-Input"
+          id="password"
           type="password"
           value={password}
           onChange={handlePasssword}
         />
-        {error && <div className="Auth-Error">{error}</div>}
+        {error && <div className="text-light">{error}</div>}
         <button className="btn btn-white Auth-Submit">
           {props.isLogInMode ? "Log In" : "Sign Up"}
         </button>
