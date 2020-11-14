@@ -128,7 +128,7 @@ const Auth = (props) => {
           onChange={handlePasssword}
         />
         {error && <div className="text-light">{error}</div>}
-        <button className="btn btn-white Auth-Submit">
+        <button className="btn btn-light Auth-Submit">
           {props.isLogInMode ? "Log In" : "Sign Up"}
         </button>
       </form>

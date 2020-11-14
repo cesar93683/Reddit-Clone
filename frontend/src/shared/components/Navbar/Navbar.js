@@ -29,20 +29,23 @@ const NavBar = () => {
       </Link>
       {auth.isLoggedIn ? (
         <div className="NavBar-RightButtons">
-          <Link className="btn btn-blue NavBar__NewPostButton" to="/post/new">
+          <Link
+            className="btn btn-primary NavBar__NewPostButton"
+            to="/post/new"
+          >
             New Post
           </Link>
-          <div className="btn btn-outline-white" onClick={auth.logout}>
+          <div className="btn btn-outline-light" onClick={auth.logout}>
             Sign Out
           </div>
         </div>
       ) : (
         <div className="NavBar-RightButtons">
-          <div className="btn btn-white" onClick={toggleLogInMode}>
+          <div className="btn btn-light" onClick={toggleLogInMode}>
             Log In
           </div>
           <div
-            className="btn btn-outline-white NavBar__SignUpButton"
+            className="btn btn-outline-light NavBar__SignUpButton"
             onClick={toggleSignUpMode}
           >
             Sign Up

@@ -2,9 +2,9 @@
   --dark-gray: rgb(26, 26, 27);
   --gray: rgb(52, 53, 54);
   --light-gray: rgb(129, 131, 132);
-  --light-white: rgb(215, 218, 220);
-  --blue: rgb(0, 103, 215);
-  --red: rgb(220, 53, 69);
+  --light: rgb(215, 218, 220);
+  --primary: rgb(0, 103, 215);
+  --danger: rgb(220, 53, 69);
 }
 body {
   background-color: black;
@@ -30,26 +30,26 @@ body {
   border-radius: 0.25rem;
   text-decoration: none;
 }
-.btn-blue {
-  color: var(--light-white);
+.btn-primary {
+  color: var(--light);
   border: none;
-  background-color: var(--blue);
+  background-color: var(--primary);
 }
-.btn-red {
-  color: var(--light-white);
+.btn-danger {
+  color: var(--light);
   border: none;
-  background-color: var(--red);
+  background-color: var(--danger);
 }
-.btn-white {
+.btn-light {
   color: var(--dark-gray);
   border: none;
-  background-color: var(--light-white);
+  background-color: var(--light);
 }
-.btn-outline-white {
-  color: var(--light-white);
+.btn-outline-light {
+  color: var(--light);
   border: 1px solid;
-  border-color: var(--light-white);
+  border-color: var(--light);
 }
 .text-light {
-  color: var(--light-white);
+  color: var(--light);
 }

@@ -9,7 +9,7 @@ const Comment = (props) => {
       <Link className="Comment__Username" to={"/users/" + creator}>
         {creatorUsername}
       </Link>
-      <div className="Comment__Comment">{comment}</div>
+      <div className="text-light">{comment}</div>
     </div>
   );
 };
