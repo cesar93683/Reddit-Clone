@@ -13,7 +13,7 @@ const Home = () => {
     const fetchPosts = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/posts"
+          `${process.env.REACT_APP_BACKEND_URL}/posts`
         );
 
         setPosts(responseData.posts);

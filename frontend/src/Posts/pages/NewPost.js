@@ -23,7 +23,7 @@ const NewPost = () => {
     event.preventDefault();
     try {
       await sendRequest(
-        "http://localhost:5000/api/posts",
+        `${process.env.REACT_APP_BACKEND_URL}/posts`,
         "POST",
         JSON.stringify({
           title,

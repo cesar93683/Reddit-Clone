@@ -16,7 +16,7 @@ const EditPost = () => {
     const fetchPost = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/posts/" + postId
+          `${process.env.REACT_APP_BACKEND_URL}/posts/${postId}`
         );
         setLoadedPost(responseData.post);
         setDescription(responseData.post.description);
@@ -29,7 +29,7 @@ const EditPost = () => {
     event.preventDefault();
     try {
       await sendRequest(
-        `http://localhost:5000/api/posts/${postId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/posts/${postId}`,
         "PATCH",
         JSON.stringify({
           description: description,

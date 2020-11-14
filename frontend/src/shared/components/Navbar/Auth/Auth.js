@@ -31,7 +31,7 @@ const Auth = (props) => {
     if (props.isLogInMode) {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users/login",
+          `${process.env.REACT_APP_BACKEND_URL}/users/login`,
           "POST",
           JSON.stringify({
             email,
@@ -47,7 +47,7 @@ const Auth = (props) => {
     } else {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/users/signup",
+          `${process.env.REACT_APP_BACKEND_URL}/users/signup`,
           "POST",
           JSON.stringify({
             email,

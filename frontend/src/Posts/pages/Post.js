@@ -21,7 +21,7 @@ const PostItem = () => {
     const fetchPost = async () => {
       try {
         const responseData = await sendRequest(
-          "http://localhost:5000/api/posts/" + postId
+          `${process.env.REACT_APP_BACKEND_URL}/posts/${postId}`
         );
         setLoadedPost(responseData.post);
       } catch (err) {}
@@ -32,7 +32,7 @@ const PostItem = () => {
   const onDelete = async () => {
     try {
       await sendRequest(
-        `http://localhost:5000/api/posts/${postId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/posts/${postId}`,
         "DELETE",
         null,
         {
@@ -46,7 +46,7 @@ const PostItem = () => {
   const onSubmitComment = async (comment) => {
     try {
       await sendRequest(
-        `http://localhost:5000/api/posts/${postId}/newcomment`,
+        `${process.env.REACT_APP_BACKEND_URL}/posts/${postId}/newcomment`,
         "POST",
         JSON.stringify({
           comment,
