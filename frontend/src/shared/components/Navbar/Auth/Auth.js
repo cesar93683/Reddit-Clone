@@ -77,11 +77,26 @@ const Auth = (props) => {
         {props.isLogInMode ? "Log In" : "Sign Up"}
       </div>
       <form className="Auth-Form" onSubmit={authSubmitHandler}>
-        <input type="email" value={email} onChange={handleEmail} />
+        <input
+          className="Auth-Input"
+          type="email"
+          value={email}
+          onChange={handleEmail}
+        />
         {!props.isLogInMode && (
-          <input type="text" value={username} onChange={handleUsername} />
+          <input
+            className="Auth-Input"
+            type="text"
+            value={username}
+            onChange={handleUsername}
+          />
         )}
-        <input type="password" value={password} onChange={handlePasssword} />
+        <input
+          className="Auth-Input"
+          type="password"
+          value={password}
+          onChange={handlePasssword}
+        />
         {error && <div className="Auth-Error">{error}</div>}
         <button className="Auth-Submit">
           {props.isLogInMode ? "Log In" : "Sign Up"}
