@@ -6,7 +6,6 @@ import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import Card from "../../shared/components/Card/Card";
 import Comment from "../components/Comment";
-import "./Post.scss";
 import CommentForm from "../components/CommentForm";
 
 const PostItem = () => {
@@ -87,7 +86,7 @@ const PostItem = () => {
             userId={auth.userId}
             onDelete={onDelete}
           />
-          <div className="Post__CommentSection">
+          <div className="bg-dark-gray p-3">
             {auth.isLoggedIn && <CommentForm onSubmit={onSubmitComment} />}
             {post.comments.map((comment) => (
               <Comment
