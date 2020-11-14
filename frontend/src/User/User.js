@@ -30,7 +30,7 @@ const User = () => {
     return <h2>An error occured.</h2>;
   }
   return (
-    <div className="Home center">
+    <div className="main-content">
       {posts &&
         posts.map((post) => (
           <Card

@@ -1,0 +1,29 @@
+.btn {
+  font-size: 1rem;
+  padding: 0.25rem 1rem;
+  cursor: pointer;
+  outline: none;
+  border-radius: 0.25rem;
+  text-decoration: none;
+}
+.btn-primary {
+  color: var(--light);
+  border: none;
+  background-color: var(--primary);
+}
+.btn-danger {
+  color: var(--light);
+  border: none;
+  background-color: var(--danger);
+}
+.btn-light {
+  color: var(--dark-gray);
+  border: none;
+  background-color: var(--light);
+}
+.btn-outline-light {
+  background-color: var(--dark-gray);
+  color: var(--light);
+  border: 1px solid;
+  border-color: var(--light);
+}

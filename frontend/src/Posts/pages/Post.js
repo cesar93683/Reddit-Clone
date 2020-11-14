@@ -71,7 +71,7 @@ const PostItem = () => {
   const subcontent = <React.Fragment></React.Fragment>;
 
   return (
-    <div className="Post center">
+    <div className="main-content">
       {post && (
         <React.Fragment>
           <Card
