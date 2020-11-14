@@ -7,13 +7,26 @@ import LoadingSpinner from "../../../components/UIElements/LoadingSpinner";
 
 const Auth = (props) => {
   const auth = useContext(AuthContext);
-  const { isLoading, error, sendRequest } = useHttpClient();
+  const { isLoading, error, sendRequest, setError } = useHttpClient();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();
+
+    if (!email) {
+      setError("Please enter your email");
+      return;
+    }
+    if (!props.isLogInMode && !username) {
+      setError("Please enter your username");
+      return;
+    }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
 
     if (props.isLogInMode) {
       try {
@@ -78,6 +91,7 @@ const Auth = (props) => {
       </div>
       <form className="Auth-Form" onSubmit={authSubmitHandler}>
         <input
+          placeholder="Email"
           className="Auth-Input"
           type="email"
           value={email}
@@ -85,6 +99,7 @@ const Auth = (props) => {
         />
         {!props.isLogInMode && (
           <input
+            placeholder="Username"
             className="Auth-Input"
             type="text"
             value={username}
@@ -92,6 +107,7 @@ const Auth = (props) => {
           />
         )}
         <input
+          placeholder="Password"
           className="Auth-Input"
           type="password"
           value={password}

@@ -3,6 +3,7 @@
   padding: 1.5rem 2rem;
   width: 20rem;
   border-radius: 2rem;
+  border: 1px solid var(--gray);
 }
 .Auth-Title {
   color: var(--light-white);
