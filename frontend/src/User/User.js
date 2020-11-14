@@ -26,9 +26,14 @@ const User = () => {
     return <LoadingSpinner />;
   }
 
-  if (!posts && !error) {
-    return <h2>An error occured.</h2>;
+  if (error == "Could not find posts for the provided user id.") {
+    return <h1 className="text-light">User has no posts.</h1>;
   }
+
+  if (error) {
+    return <h1 className="text-light">An error occured.</h1>;
+  }
+
   return (
     <div>
       {posts &&

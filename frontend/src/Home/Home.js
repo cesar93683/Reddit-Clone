@@ -25,12 +25,13 @@ const Home = () => {
     return <LoadingSpinner />;
   }
 
-  if (!posts && !error) {
-    return <h2>An error occured.</h2>;
+  if (!posts && error) {
+    return <h1 className="text-light">An error occured.</h1>;
   }
 
   return (
     <div>
+      {posts && posts.length == 0 && <h1 className="text-light">No Posts</h1>}
       {posts &&
         posts.map((post) => (
           <Card

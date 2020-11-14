@@ -64,8 +64,8 @@ const PostItem = () => {
     return <LoadingSpinner />;
   }
 
-  if (!post && !error) {
-    return <h2>An error occured.</h2>;
+  if (!post && error) {
+    return <h1 className="text-light">An error occured.</h1>;
   }
 
   return (
