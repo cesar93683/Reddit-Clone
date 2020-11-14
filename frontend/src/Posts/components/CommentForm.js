@@ -27,7 +27,7 @@ const CommentForm = (props) => {
         value={comment}
         onChange={handleChange}
       />
-      <div className="CommentForm__Submit">
+      <div className="d-flex justify-content-end">
         <button className="btn btn-primary" type="submit">
           Comment
         </button>

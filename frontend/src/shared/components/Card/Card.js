@@ -35,7 +35,7 @@ const Card = (props) => {
         <div className="Card-Title">{title}</div>
       )}
       <div className="Card-Description">{description}</div>
-      <div className="Card-BottomBar">
+      <div className="d-flex justify-content-between">
         {linkable ? (
           <Link className="Card-NumComments" to={"/posts/" + postId}>
             {numComments} Comment
@@ -49,7 +49,7 @@ const Card = (props) => {
         )}
 
         {onDelete && userId === creator && (
-          <div className="Card-ModifyButtons">
+          <div>
             <Link className="btn btn-primary" to={`/posts/${postId}/edit`}>
               EDIT
             </Link>

@@ -10,10 +10,6 @@
 .Card__Linkable:hover {
   border-color: var(--light-gray);
 }
-.Card__Top {
-  display: flex;
-  justify-content: space-between;
-}
 .Card-Username-Link {
   color: inherit;
   text-decoration: none;
@@ -45,15 +41,8 @@
   color: var(--light-gray);
   text-decoration: none;
 }
-.Card-BottomBar {
-  display: flex;
-  justify-content: space-between;
-}
 .Card__Linkable .Card-NumComments:hover {
   text-decoration: underline;
-}
-.Card-ModifyButtons {
-  display: flex;
 }
 .Card__DeleteButton {
   margin-left: 0.5rem;
