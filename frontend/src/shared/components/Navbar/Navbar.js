@@ -29,10 +29,7 @@ const NavBar = () => {
       </Link>
       {auth.isLoggedIn ? (
         <div className="d-flex">
-          <Link
-            className="btn btn-primary NavBar__NewPostButton"
-            to="/post/new"
-          >
+          <Link className="btn btn-primary mr-3" to="/post/new">
             New Post
           </Link>
           <button className="btn btn-outline-light" onClick={auth.logout}>
@@ -45,7 +42,7 @@ const NavBar = () => {
             Log In
           </button>
           <button
-            className="btn btn-outline-light NavBar__SignUpButton"
+            className="btn btn-outline-light ml-2"
             onClick={toggleSignUpMode}
           >
             Sign Up
