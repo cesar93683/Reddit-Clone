@@ -4,25 +4,31 @@ const timeSince = (currentDate, date) => {
   let interval = seconds / 31536000;
 
   if (interval > 1) {
-    return Math.floor(interval) + " years ago";
+    interval = Math.floor(interval);
+    return interval + " year" + (interval == 1 ? "" : "s") + " ago";
   }
   interval = seconds / 2592000;
   if (interval > 1) {
-    return Math.floor(interval) + " months ago";
+    interval = Math.floor(interval);
+    return interval + " month" + (interval == 1 ? "" : "s") + " ago";
   }
   interval = seconds / 86400;
   if (interval > 1) {
-    return Math.floor(interval) + " days ago";
+    interval = Math.floor(interval);
+    return interval + " day" + (interval == 1 ? "" : "s") + " ago";
   }
   interval = seconds / 3600;
   if (interval > 1) {
-    return Math.floor(interval) + " hours ago";
+    interval = Math.floor(interval);
+    return interval + " hour" + (interval == 1 ? "" : "s") + " ago";
   }
   interval = seconds / 60;
   if (interval > 1) {
-    return Math.floor(interval) + " minutes ago";
+    interval = Math.floor(interval);
+    return interval + " minute" + (interval == 1 ? "" : "s") + " ago";
   }
-  return Math.floor(seconds) + " seconds ago";
+  interval = Math.floor(interval);
+  return interval + " second" + (interval == 1 ? "" : "s") + " ago";
 };
 
 export default timeSince;
