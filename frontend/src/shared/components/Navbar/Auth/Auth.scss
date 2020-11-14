@@ -1,26 +1,3 @@
 .Auth {
-  background-color: var(--dark-gray);
-  padding: 1.5rem 2rem;
   width: 20rem;
-  border-radius: 2rem;
-  border: 1px solid var(--gray);
-}
-.Auth-Title {
-  color: var(--light);
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-.Auth-Form {
-  display: flex;
-  flex-direction: column;
-}
-.Auth-Input {
-  font-size: 1.25rem;
-  margin-bottom: 0.25rem;
-  background-color: var(--light);
-}
-.Auth-Submit {
-  margin-top: 1rem;
-  font-size: 1.25rem;
 }

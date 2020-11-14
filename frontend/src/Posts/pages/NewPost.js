@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
+import "./NewPost.css";
 
 const NewPost = () => {
   const auth = useContext(AuthContext);
@@ -42,12 +43,33 @@ const NewPost = () => {
   }
 
   return (
-    <div>
-      <form className="place-form" onSubmit={placeSubmitHandler}>
-        <input type="text" value={title} onChange={handleTitle} />
-        <input type="text" value={description} onChange={handleDescription} />
-        {error && <div className="Auth-Error">{error}</div>}
-        <button type="submit">New Post</button>
+    <div className="NewPost Form">
+      <div className="Form-Title">New Post</div>
+      <form className="Form-Form" onSubmit={placeSubmitHandler}>
+        <label className="text-light" for="title">
+          Title
+        </label>
+        <input
+          className="Form-Input"
+          type="text"
+          id="title"
+          value={title}
+          onChange={handleTitle}
+        />
+        <label className="text-light" for="description">
+          Description
+        </label>
+        <textarea
+          className="Form-Input"
+          type="text"
+          id="description"
+          value={description}
+          onChange={handleDescription}
+        />
+        {error && <div className="Form-Error">{error}</div>}
+        <button className="btn btn-primary" type="submit">
+          New Post
+        </button>
       </form>
     </div>
   );

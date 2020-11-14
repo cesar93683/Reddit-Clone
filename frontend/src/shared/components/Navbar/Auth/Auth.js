@@ -85,17 +85,17 @@ const Auth = (props) => {
     );
 
   return (
-    <div className={"Auth " + props.className}>
-      <div className="Auth-Title">
+    <div className={"Auth Form " + props.className}>
+      <div className="Form-Title">
         {props.isLogInMode ? "Log In" : "Sign Up"}
       </div>
-      <form className="Auth-Form" onSubmit={authSubmitHandler}>
+      <form className="Form-Form" onSubmit={authSubmitHandler}>
         <label className="text-light" for="email">
           Email address
         </label>
         <input
           placeholder="Email"
-          className="Auth-Input"
+          className="Form-Input"
           type="email"
           id="email"
           value={email}
@@ -108,7 +108,7 @@ const Auth = (props) => {
             </label>
             <input
               placeholder="Username"
-              className="Auth-Input"
+              className="Form-Input"
               id="username"
               type="text"
               value={username}
@@ -121,14 +121,14 @@ const Auth = (props) => {
         </label>
         <input
           placeholder="Password"
-          className="Auth-Input"
+          className="Form-Input"
           id="password"
           type="password"
           value={password}
           onChange={handlePasssword}
         />
         {error && <div className="text-light">{error}</div>}
-        <button className="btn btn-light Auth-Submit">
+        <button className="btn btn-primary">
           {props.isLogInMode ? "Log In" : "Sign Up"}
         </button>
       </form>
