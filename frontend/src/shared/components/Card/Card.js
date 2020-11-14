@@ -49,12 +49,12 @@ const Card = (props) => {
             <Link className="btn btn-primary" to={`/posts/${postId}/edit`}>
               EDIT
             </Link>
-            <div
+            <button
               onClick={onDelete}
               className="btn btn-danger Card__DeleteButton"
             >
               DELETE
-            </div>
+            </button>
           </div>
         )}
       </div>

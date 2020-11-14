@@ -35,21 +35,21 @@ const NavBar = () => {
           >
             New Post
           </Link>
-          <div className="btn btn-outline-light" onClick={auth.logout}>
+          <button className="btn btn-outline-light" onClick={auth.logout}>
             Sign Out
-          </div>
+          </button>
         </div>
       ) : (
         <div className="NavBar-RightButtons">
-          <div className="btn btn-light" onClick={toggleLogInMode}>
+          <button className="btn btn-light" onClick={toggleLogInMode}>
             Log In
-          </div>
-          <div
+          </button>
+          <button
             className="btn btn-outline-light NavBar__SignUpButton"
             onClick={toggleSignUpMode}
           >
             Sign Up
-          </div>
+          </button>
         </div>
       )}
       <Auth

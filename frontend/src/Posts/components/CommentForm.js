@@ -28,9 +28,9 @@ const CommentForm = (props) => {
         onChange={handleChange}
       />
       <div className="CommentForm__Submit">
-        <div className="btn btn-primary" type="submit">
+        <button className="btn btn-primary" type="submit">
           Comment
-        </div>
+        </button>
       </div>
       {error && <div>{error}</div>}
     </form>

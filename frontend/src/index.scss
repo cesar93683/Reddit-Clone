@@ -1,3 +1,5 @@
+@import-normalize;
+
 :root {
   --dark-gray: rgb(26, 26, 27);
   --gray: rgb(52, 53, 54);
@@ -24,6 +26,7 @@ body {
   font-family: "IBM Plex Sans", Arial, sans-serif;
 }
 .btn {
+  font-size: 1rem;
   padding: 0.25rem 1rem;
   cursor: pointer;
   outline: none;
