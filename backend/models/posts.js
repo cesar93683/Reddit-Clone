@@ -13,6 +13,7 @@ const placeSchema = new Schema({
       comment: { type: String, required: true },
       creatorUsername: { type: String, required: true },
       creator: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
+      dateCreated: { type: Number, required: true },
     },
   ],
   dateCreated: { type: Number, required: true },

@@ -242,6 +242,7 @@ const newComment = async (req, res, next) => {
     comment: req.body.comment,
     creator: req.userData.userId,
     creatorUsername: user.username,
+    dateCreated: Date.now(),
   });
   post.numComments = post.numComments + 1;
 

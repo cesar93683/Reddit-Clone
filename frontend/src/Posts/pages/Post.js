@@ -92,6 +92,7 @@ const PostItem = () => {
                 creator={comment.creator}
                 creatorUsername={comment.creatorUsername}
                 comment={comment.comment}
+                dateCreated={comment.dateCreated}
               />
             ))}
           </div>
