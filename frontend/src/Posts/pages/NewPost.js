@@ -13,13 +13,13 @@ const NewPost = () => {
   const [description, setDescription] = useState("");
   const history = useHistory();
 
-  const handleTitle = (event) => {
+  const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
-  const handleDescription = (event) => {
+  const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
   };
-  const placeSubmitHandler = async (event) => {
+  const postSubmitHandler = async (event) => {
     event.preventDefault();
     try {
       await sendRequest(
@@ -45,7 +45,7 @@ const NewPost = () => {
   return (
     <div className="NewPost Form">
       <div className="Form-Title">New Post</div>
-      <form className="Form-Form" onSubmit={placeSubmitHandler}>
+      <form className="Form-Form" onSubmit={postSubmitHandler}>
         <label className="text-light" for="title">
           Title
         </label>
@@ -54,7 +54,7 @@ const NewPost = () => {
           type="text"
           id="title"
           value={title}
-          onChange={handleTitle}
+          onChange={handleTitleChange}
         />
         <label className="text-light" for="description">
           Description
@@ -64,7 +64,7 @@ const NewPost = () => {
           type="text"
           id="description"
           value={description}
-          onChange={handleDescription}
+          onChange={handleDescriptionChange}
         />
         {error && <div className="Form-Error">{error}</div>}
         <button className="btn btn-primary" type="submit">

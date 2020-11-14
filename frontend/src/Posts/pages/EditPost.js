@@ -51,22 +51,38 @@ const EditPost = () => {
     return <LoadingSpinner />;
   }
 
-  if (!post && !error) {
-    return <h2>An error occured.</h2>;
-  }
-
   return (
     <React.Fragment>
       {post && (
-        <form onSubmit={postUpdateSubmitHandler}>
-          <div>{post.title}</div>
-          <input
-            type="text"
-            value={description}
-            onChange={handleDescriptionChange}
-          />
-          <button type="submit">UPDATE POST</button>
-        </form>
+        <div className="NewPost Form">
+          <div className="Form-Title">Edit Post</div>
+          <form className="Form-Form" onSubmit={postUpdateSubmitHandler}>
+            <label className="text-light" for="title">
+              Title
+            </label>
+            <input
+              className="Form-Input"
+              type="text"
+              id="title"
+              value={post.title}
+              disabled
+            />
+            <label className="text-light" for="description">
+              Description
+            </label>
+            <textarea
+              className="Form-Input"
+              type="text"
+              id="description"
+              value={description}
+              onChange={handleDescriptionChange}
+            />
+            {error && <div className="Form-Error">{error}</div>}
+            <button className="btn btn-primary" type="submit">
+              Update Post
+            </button>
+          </form>
+        </div>
       )}
     </React.Fragment>
   );
