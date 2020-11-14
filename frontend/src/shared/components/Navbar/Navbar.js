@@ -28,7 +28,7 @@ const NavBar = () => {
         Home
       </Link>
       {auth.isLoggedIn ? (
-        <div>
+        <div className="NavBar-RightButtons">
           <Link className="btn btn-blue NavBar__NewPostButton" to="/post/new">
             New Post
           </Link>
@@ -37,7 +37,7 @@ const NavBar = () => {
           </div>
         </div>
       ) : (
-        <div className="NavBar-Auth">
+        <div className="NavBar-RightButtons">
           <div className="btn btn-white" onClick={toggleLogInMode}>
             Log In
           </div>
