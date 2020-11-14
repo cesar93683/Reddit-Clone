@@ -10,16 +10,12 @@
 .Card__Linkable:hover {
   border-color: var(--light-gray);
 }
-.Card-Username-Link {
+.Card__Username__Link {
   color: inherit;
   text-decoration: none;
   &:hover {
     text-decoration: underline;
   }
-}
-.Card-Username {
-  color: var(--light-gray);
-  margin-bottom: 0.5rem;
 }
 .Card__Linkable .Card-Title {
   text-decoration: none;
@@ -28,22 +24,15 @@
     text-decoration: underline;
   }
 }
-.Card-Title {
+.Card__Title {
   color: var(--light);
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
 }
-.Card-Description {
-  color: var(--light);
-  margin-bottom: 0.5rem;
-}
-.Card-NumComments {
+.Card__NumComments {
   color: var(--light-gray);
   text-decoration: none;
 }
-.Card__Linkable .Card-NumComments:hover {
+.Card__Linkable .Card__NumComments:hover {
   text-decoration: underline;
-}
-.Card__DeleteButton {
-  margin-left: 0.5rem;
 }

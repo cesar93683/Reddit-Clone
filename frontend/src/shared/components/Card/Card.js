@@ -21,30 +21,30 @@ const Card = (props) => {
   return (
     <div className={"Card" + (linkable ? " Card__Linkable" : "")}>
       <div className="d-flex justify-content-between">
-        <div className="Card-Username">
+        <div className="text-light-gray mb-2">
           {"Posted by "}
-          <Link className="Card-Username-Link" to={"/users/" + creator}>
+          <Link className="Card__Username__Link" to={"/users/" + creator}>
             {creatorUsername}
           </Link>
         </div>
         <div className="text-light">{timeSince(currentDate, dateCreated)}</div>
       </div>
       {linkable ? (
-        <Link className="Card-Title" to={"/posts/" + postId}>
+        <Link className="Card__Title" to={"/posts/" + postId}>
           {title}
         </Link>
       ) : (
-        <div className="Card-Title">{title}</div>
+        <div className="Card__Title">{title}</div>
       )}
-      <div className="Card-Description">{description}</div>
+      <div className="text-light mb-2">{description}</div>
       <div className="d-flex justify-content-between">
         {linkable ? (
-          <Link className="Card-NumComments" to={"/posts/" + postId}>
+          <Link className="Card__NumComments" to={"/posts/" + postId}>
             {numComments} Comment
             {parseInt(numComments) === 1 ? "" : "s"}
           </Link>
         ) : (
-          <div className="Card-NumComments">
+          <div className="Card__NumComments">
             {numComments} Comment
             {parseInt(numComments) === 1 ? "" : "s"}
           </div>
@@ -55,10 +55,7 @@ const Card = (props) => {
             <Link className="btn btn-primary" to={`/posts/${postId}/edit`}>
               EDIT
             </Link>
-            <button
-              onClick={onDelete}
-              className="btn btn-danger Card__DeleteButton"
-            >
+            <button onClick={onDelete} className="btn btn-danger ml-2">
               DELETE
             </button>
           </div>
