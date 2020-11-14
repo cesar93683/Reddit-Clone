@@ -1,6 +1,7 @@
 import React from "react";
 import "./Card.scss";
 import { Link } from "react-router-dom";
+import timeSince from "../../../utils/timeSince";
 
 const Card = (props) => {
   const {
@@ -11,6 +12,7 @@ const Card = (props) => {
     creator,
     userId,
     description,
+    currentDate,
     dateCreated,
     linkable,
     onDelete,
@@ -25,7 +27,7 @@ const Card = (props) => {
             {creatorUsername}
           </Link>
         </div>
-        <div className="text-light">{dateCreated}</div>
+        <div className="text-light">{timeSince(currentDate, dateCreated)}</div>
       </div>
       {linkable ? (
         <Link className="Card-Title" to={"/posts/" + postId}>

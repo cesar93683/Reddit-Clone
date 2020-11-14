@@ -7,6 +7,7 @@ import { useHttpClient } from "../shared/hooks/http-hook";
 const Home = () => {
   const { isLoading, error, sendRequest } = useHttpClient();
   const [posts, setPosts] = useState();
+  const currentDate = Date.now();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -42,6 +43,7 @@ const Home = () => {
             numComments={post.numComments}
             creator={post.creator}
             dateCreated={post.dateCreated}
+            currentDate={currentDate}
             linkable
           />
         ))}

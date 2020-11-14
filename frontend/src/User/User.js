@@ -8,6 +8,7 @@ const User = () => {
   const { isLoading, error, sendRequest } = useHttpClient();
   const [posts, setPosts] = useState();
   const userId = useParams().userId;
+  const currentDate = Date.now();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -45,6 +46,7 @@ const User = () => {
             creatorUsername={post.creatorUsername}
             numComments={post.numComments}
             creator={post.creator}
+            currentDate={currentDate}
             dateCreated={post.dateCreated}
             linkable
           />

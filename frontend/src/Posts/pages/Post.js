@@ -15,6 +15,8 @@ const PostItem = () => {
   const [post, setLoadedPost] = useState();
   const postId = useParams().postId;
   const history = useHistory();
+  const currentDate = Date.now();
+  console.log(currentDate);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -81,6 +83,7 @@ const PostItem = () => {
             description={post.description}
             creator={post.creator}
             dateCreated={post.dateCreated}
+            currentDate={currentDate}
             userId={auth.userId}
             onDelete={onDelete}
           />
@@ -93,6 +96,7 @@ const PostItem = () => {
                 creatorUsername={comment.creatorUsername}
                 comment={comment.comment}
                 dateCreated={comment.dateCreated}
+                currentDate={currentDate}
               />
             ))}
           </div>
