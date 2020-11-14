@@ -80,6 +80,7 @@ const PostItem = () => {
             numComments={post.numComments}
             description={post.description}
             creator={post.creator}
+            dateCreated={post.dateCreated}
             userId={auth.userId}
             onDelete={onDelete}
           />

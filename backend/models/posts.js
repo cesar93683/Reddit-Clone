@@ -15,6 +15,7 @@ const placeSchema = new Schema({
       creator: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
     },
   ],
+  dateCreated: { type: Number, required: true },
 });
 
 module.exports = mongoose.model("Post", placeSchema);

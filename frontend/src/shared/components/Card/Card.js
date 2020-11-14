@@ -11,17 +11,21 @@ const Card = (props) => {
     creator,
     userId,
     description,
+    dateCreated,
     linkable,
     onDelete,
   } = props;
 
   return (
     <div className={"Card" + (linkable ? " Card__Linkable" : "")}>
-      <div className="Card-Username">
-        {"Posted by "}
-        <Link className="Card-Username-Link" to={"/users/" + creator}>
-          {creatorUsername}
-        </Link>
+      <div className="d-flex justify-content-between">
+        <div className="Card-Username">
+          {"Posted by "}
+          <Link className="Card-Username-Link" to={"/users/" + creator}>
+            {creatorUsername}
+          </Link>
+        </div>
+        <div className="text-light">{dateCreated}</div>
       </div>
       {linkable ? (
         <Link className="Card-Title" to={"/posts/" + postId}>

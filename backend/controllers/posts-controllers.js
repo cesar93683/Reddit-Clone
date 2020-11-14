@@ -98,6 +98,7 @@ const createPost = async (req, res, next) => {
     numComments: 0,
     creator: req.userData.userId,
     creatorUsername: user.username,
+    dateCreated: Date.now(),
   });
 
   try {

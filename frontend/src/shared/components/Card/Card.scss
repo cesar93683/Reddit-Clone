@@ -10,6 +10,10 @@
 .Card__Linkable:hover {
   border-color: var(--light-gray);
 }
+.Card__Top {
+  display: flex;
+  justify-content: space-between;
+}
 .Card-Username-Link {
   color: inherit;
   text-decoration: none;
