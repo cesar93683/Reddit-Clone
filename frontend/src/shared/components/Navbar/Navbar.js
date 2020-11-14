@@ -32,14 +32,19 @@ const NavBar = () => {
           <Link className="Blue-Button NavBar__NewPostButton" to="/post/new">
             New Post
           </Link>
-          <button onClick={auth.logout}>Sign Out</button>
+          <button className="SecondaryButton" onClick={auth.logout}>
+            Sign Out
+          </button>
         </div>
       ) : (
         <div className="NavBar-Auth">
-          <div className="NavBar-LogInButton" onClick={toggleLogInMode}>
+          <div className="PrimaryButton" onClick={toggleLogInMode}>
             Log In
           </div>
-          <div className="NavBar-SignUpButton" onClick={toggleSignUpMode}>
+          <div
+            className="SecondaryButton NavBar__SignUpButton"
+            onClick={toggleSignUpMode}
+          >
             Sign Up
           </div>
         </div>

@@ -21,15 +21,33 @@ body {
 * {
   font-family: "IBM Plex Sans", Arial, sans-serif;
 }
-.Blue-Button {
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  border: none;
+.PrimaryButton-Blue {
   color: var(--light-white);
-  background: #148cb8;
+  padding: 0.25rem 1rem;
+  cursor: pointer;
   outline: none;
+  border: none;
+  border-radius: 0.25rem;
+  background-color: #148cb8;
+  text-decoration: none;
+}
+.PrimaryButton {
+  color: var(--dark-gray);
+  padding: 0.25rem 1rem;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  border-radius: 0.25rem;
+  background-color: var(--light-white);
+  text-decoration: none;
+}
+.SecondaryButton {
+  color: var(--light-white);
+  padding: 0.25rem 1rem;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid;
+  border-radius: 0.25rem;
+  border-color: var(--light-white);
+  text-decoration: none;
 }

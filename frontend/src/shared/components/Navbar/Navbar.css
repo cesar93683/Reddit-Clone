@@ -22,22 +22,9 @@
   display: flex;
   flex-direction: row;
 }
-.NavBar-LogInButton {
-  color: var(--light-white);
-  border-color: var(--light-white);
-  border-radius: 0.25rem;
-  border: 1px solid;
-  padding: 0.25rem 1rem;
-  cursor: pointer;
-}
-.NavBar-SignUpButton {
-  margin-left: 0.5rem;
-  color: var(--dark-gray);
-  background-color: var(--light-white);
-  border-radius: 0.25rem;
-  padding: 0.25rem 1rem;
-  cursor: pointer;
-}
 .NavBar__NewPostButton {
   margin-right: 1rem;
+}
+.NavBar__SignUpButton {
+  margin-left: 0.5rem;
 }
