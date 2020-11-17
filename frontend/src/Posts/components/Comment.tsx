@@ -3,7 +3,15 @@ import "./Comment.scss";
 import { Link } from "react-router-dom";
 import timeSince from "../../utils/timeSince";
 
-const Comment = (props) => {
+interface CommentProps {
+  creatorUsername: string,
+  creator: string,
+  comment: string,
+  dateCreated: number,
+  currentDate: number
+}
+
+const Comment = (props: CommentProps) => {
   const { creatorUsername, creator, comment, dateCreated, currentDate } = props;
 
   return (

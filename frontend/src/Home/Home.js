@@ -32,7 +32,7 @@ const Home = () => {
 
   return (
     <div>
-      {posts && posts.length == 0 && <h1 className="text-light">No Posts</h1>}
+      {posts && posts.length === 0 && <h1 className="text-light">No Posts</h1>}
       {posts &&
         posts.map((post) => (
           <Card

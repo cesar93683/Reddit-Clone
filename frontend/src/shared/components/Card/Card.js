@@ -41,12 +41,12 @@ const Card = (props) => {
         {linkable ? (
           <Link className="Card__NumComments" to={"/posts/" + postId}>
             {numComments} Comment
-            {parseInt(numComments) === 1 ? "" : "s"}
+            {numComments === 1 ? "" : "s"}
           </Link>
         ) : (
           <div className="Card__NumComments">
             {numComments} Comment
-            {parseInt(numComments) === 1 ? "" : "s"}
+            {numComments === 1 ? "" : "s"}
           </div>
         )}
 

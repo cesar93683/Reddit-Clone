@@ -7,15 +7,19 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import Card from "../../shared/components/Card/Card";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
+import { PostInterface } from '../../shared/interfaces/interfaces'
+
+interface PostParams {
+  postId: string
+}
 
 const PostItem = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest } = useHttpClient();
-  const [post, setLoadedPost] = useState();
-  const postId = useParams().postId;
+  const [post, setLoadedPost] = useState<PostInterface>();
+  const postId = useParams<PostParams>().postId;
   const history = useHistory();
   const currentDate = Date.now();
-  console.log(currentDate);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -23,6 +27,7 @@ const PostItem = () => {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/posts/${postId}`
         );
+        console.log(responseData)
         setLoadedPost(responseData.post);
       } catch (err) {}
     };
@@ -43,7 +48,7 @@ const PostItem = () => {
     } catch (err) {}
   };
 
-  const onSubmitComment = async (comment) => {
+  const onSubmitComment = async (comment: string) => {
     try {
       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/posts/${postId}/newcomment`,

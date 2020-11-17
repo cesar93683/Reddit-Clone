@@ -61,7 +61,6 @@ const NewPost = () => {
         </label>
         <textarea
           className="Form__TextArea"
-          type="text"
           id="description"
           value={description}
           onChange={handleDescriptionChange}

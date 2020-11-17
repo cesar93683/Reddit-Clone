@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import "./CommentForm.scss";
 
-const CommentForm = (props) => {
+interface CommentFormProps {
+  onSubmit: ((comment: string) => void)
+}
+
+const CommentForm = (props: CommentFormProps) => {
   const [comment, setComment] = useState("");
   const [error, setError] = useState("");
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!comment) {
       setError("Please Enter A Comment.");
@@ -23,7 +27,6 @@ const CommentForm = (props) => {
     <form onSubmit={handleSubmit}>
       <textarea
         className="CommentForm__TextArea"
-        type="text"
         value={comment}
         onChange={handleChange}
       />
