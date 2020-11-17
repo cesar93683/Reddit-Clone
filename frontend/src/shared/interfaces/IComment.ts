@@ -1,4 +1,4 @@
-export default interface CommentInterface {
+export default interface IComment {
   id: string;
   creator: string;
   creatorUsername: string;

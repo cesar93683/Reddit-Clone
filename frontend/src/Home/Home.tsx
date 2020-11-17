@@ -3,11 +3,11 @@ import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 import Card from "../shared/components/Card/Card";
 
 import { useHttpClient } from "../shared/hooks/http-hook";
-import PostInterface from "../shared/interfaces/PostInterface";
+import IPost from "../shared/interfaces/IPost";
 
 const Home = () => {
   const { isLoading, error, sendRequest } = useHttpClient();
-  const [posts, setPosts] = useState<PostInterface[]>();
+  const [posts, setPosts] = useState<IPost[]>();
   const currentDate = Date.now();
 
   useEffect(() => {

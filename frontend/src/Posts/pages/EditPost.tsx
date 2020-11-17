@@ -3,7 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
-import PostInterface from "../../shared/interfaces/PostInterface";
+import IPost from "../../shared/interfaces/IPost";
 
 interface PostParams {
   postId: string;
@@ -12,7 +12,7 @@ interface PostParams {
 const EditPost = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest } = useHttpClient();
-  const [post, setLoadedPost] = useState<PostInterface>();
+  const [post, setLoadedPost] = useState<IPost>();
   const postId = useParams<PostParams>().postId;
   const history = useHistory();
   const [description, setDescription] = useState("");

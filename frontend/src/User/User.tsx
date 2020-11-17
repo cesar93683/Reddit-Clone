@@ -3,15 +3,15 @@ import { useParams } from "react-router-dom";
 import Card from "../shared/components/Card/Card";
 import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 import { useHttpClient } from "../shared/hooks/http-hook";
-import PostInterface from "../shared/interfaces/PostInterface";
+import IPost from "../shared/interfaces/IPost";
 
 interface UserParams {
-  userId: string
+  userId: string;
 }
 
 const User = () => {
   const { isLoading, error, sendRequest } = useHttpClient();
-  const [posts, setPosts] = useState<PostInterface[]>();
+  const [posts, setPosts] = useState<IPost[]>();
   const userId = useParams<UserParams>().userId;
   const currentDate = Date.now();
 
@@ -44,7 +44,14 @@ const User = () => {
     <div>
       {posts &&
         posts.map((post) => (
-          <Card key={post.id} post={post} currentDate={currentDate} linkable onDelete={null} userId={null} />
+          <Card
+            key={post.id}
+            post={post}
+            currentDate={currentDate}
+            linkable
+            onDelete={null}
+            userId={null}
+          />
         ))}
     </div>
   );

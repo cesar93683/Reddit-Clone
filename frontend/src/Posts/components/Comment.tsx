@@ -2,11 +2,11 @@ import React from "react";
 import "./Comment.scss";
 import { Link } from "react-router-dom";
 import timeSince from "../../utils/timeSince";
-import CommentInterface from "../../shared/interfaces/CommentInterface";
+import IComment from "../../shared/interfaces/IComment";
 
 interface CommentProps {
   currentDate: number;
-  comment: CommentInterface;
+  comment: IComment;
 }
 
 const Comment = (props: CommentProps) => {

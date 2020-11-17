@@ -1,6 +1,6 @@
-import CommentInterface from "./CommentInterface";
+import IComment from "./IComment";
 
-export default interface PostInterface {
+export default interface IPost {
   id: string;
   title: string;
   creatorUsername: string;
@@ -8,5 +8,5 @@ export default interface PostInterface {
   description: string;
   numComments: number;
   dateCreated: number;
-  comments: CommentInterface[];
+  comments: IComment[];
 }

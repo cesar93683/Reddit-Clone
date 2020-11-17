@@ -7,7 +7,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import Card from "../../shared/components/Card/Card";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
-import PostInterface from "../../shared/interfaces/PostInterface";
+import IPost from "../../shared/interfaces/IPost";
 
 interface PostParams {
   postId: string;
@@ -16,7 +16,7 @@ interface PostParams {
 const PostItem = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest } = useHttpClient();
-  const [post, setLoadedPost] = useState<PostInterface>();
+  const [post, setLoadedPost] = useState<IPost>();
   const postId = useParams<PostParams>().postId;
   const history = useHistory();
   const currentDate = Date.now();

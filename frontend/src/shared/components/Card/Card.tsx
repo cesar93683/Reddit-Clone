@@ -2,10 +2,10 @@ import React from "react";
 import "./Card.scss";
 import { Link } from "react-router-dom";
 import timeSince from "../../../utils/timeSince";
-import PostInterface from "../../interfaces/PostInterface";
+import IPost from "../../interfaces/IPost";
 
 interface CardInterface {
-  post: PostInterface;
+  post: IPost;
   currentDate: number;
   linkable: boolean;
   userId: string | null;
