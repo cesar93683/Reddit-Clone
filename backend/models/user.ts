@@ -1,5 +1,13 @@
-const mongoose = require("mongoose");
-const uniqueValidator = require("mongoose-unique-validator");
+import mongoose from "mongoose";
+import uniqueValidator from "mongoose-unique-validator";
+import { IPost } from "./posts";
+
+export interface IUser extends mongoose.Document {
+  username: string;
+  email: string;
+  password: string;
+  posts: [IPost["_id"]];
+}
 
 const Schema = mongoose.Schema;
 
@@ -12,4 +20,4 @@ const userSchema = new Schema({
 
 userSchema.plugin(uniqueValidator);
 
-module.exports = mongoose.model("User", userSchema);
+export default mongoose.model<IUser>("User", userSchema);

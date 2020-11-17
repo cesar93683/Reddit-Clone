@@ -1,11 +1,16 @@
-const { validationResult } = require("express-validator");
-const mongoose = require("mongoose");
+import { validationResult } from "express-validator";
+import mongoose from "mongoose";
 
-const HttpError = require("../models/http-error");
-const Post = require("../models/posts");
-const User = require("../models/user");
+import HttpError from "../models/http-error";
+import Post, { IPost } from "../models/posts";
+import User from "../models/user";
+import express from "express";
 
-const getPosts = async (req, res, next) => {
+const getPosts = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
   let posts;
   try {
     posts = await Post.find({}, "-comments -description");
@@ -19,7 +24,11 @@ const getPosts = async (req, res, next) => {
   res.json({ posts: posts.map((post) => post.toObject({ getters: true })) });
 };
 
-const getPostById = async (req, res, next) => {
+const getPostById = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
   const postId = req.params.pid;
 
   let post;
@@ -44,12 +53,16 @@ const getPostById = async (req, res, next) => {
   res.json({ post: post.toObject({ getters: true }) });
 };
 
-const getPostsByUserId = async (req, res, next) => {
+const getPostsByUserId = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
   const userId = req.params.uid;
 
-  let userWithPosts;
+  let user;
   try {
-    userWithPosts = await User.findById(userId).populate("posts");
+    user = await User.findById(userId).populate("posts");
   } catch (err) {
     const error = new HttpError(
       "Fetching posts failed, please try again later.",
@@ -58,18 +71,22 @@ const getPostsByUserId = async (req, res, next) => {
     return next(error);
   }
 
-  if (!userWithPosts || userWithPosts.posts.length === 0) {
+  if (!user || <number>user.posts.length === 0) {
     return next(
       new HttpError("Could not find posts for the provided user id.", 404)
     );
   }
 
   res.json({
-    posts: userWithPosts.posts.map((post) => post.toObject({ getters: true })),
+    posts: user.posts.map((post) => post.toObject({ getters: true })),
   });
 };
 
-const createPost = async (req, res, next) => {
+const createPost = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(
@@ -116,7 +133,11 @@ const createPost = async (req, res, next) => {
   res.status(201).json({ post: createdPost });
 };
 
-const updatePost = async (req, res, next) => {
+const updatePost = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(
@@ -158,7 +179,11 @@ const updatePost = async (req, res, next) => {
   res.status(200).json({ post: post.toObject({ getters: true }) });
 };
 
-const deletePost = async (req, res, next) => {
+const deletePost = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
   const postId = req.params.pid;
 
   let post;
@@ -186,12 +211,13 @@ const deletePost = async (req, res, next) => {
   }
 
   try {
-    const sess = await mongoose.startSession();
-    sess.startTransaction();
-    await post.remove({ session: sess });
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    Post.deleteOne;
+    await Post.findByIdAndRemove(postId, { session: session });
     post.creator.posts.pull(post);
-    await post.creator.save({ session: sess });
-    await sess.commitTransaction();
+    await post.creator.save({ session });
+    await session.commitTransaction();
   } catch (err) {
     const error = new HttpError(
       "Something went wrong, could not delete post.",
@@ -203,7 +229,11 @@ const deletePost = async (req, res, next) => {
   res.status(200).json({ message: "Deleted post." });
 };
 
-const newComment = async (req, res, next) => {
+const newComment = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
   const postId = req.params.pid;
 
   let post;
@@ -259,10 +289,12 @@ const newComment = async (req, res, next) => {
   res.status(200).json({ message: "Comment added." });
 };
 
-exports.getPostById = getPostById;
-exports.getPostsByUserId = getPostsByUserId;
-exports.createPost = createPost;
-exports.updatePost = updatePost;
-exports.deletePost = deletePost;
-exports.getPosts = getPosts;
-exports.newComment = newComment;
+export default {
+  getPostById,
+  getPostsByUserId,
+  createPost,
+  updatePost,
+  deletePost,
+  getPosts,
+  newComment,
+};

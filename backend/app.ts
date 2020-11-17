@@ -1,10 +1,10 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
+import express from "express";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
 
-const usersRoutes = require("./routes/users-routes");
-const postsRoutes = require("./routes/posts-routes");
-const HttpError = require("./models/http-error");
+import usersRoutes from "./routes/users-routes";
+import postsRoutes from "./routes/posts-routes";
+import HttpError from "./models/http-error";
 
 const app = express();
 
@@ -29,13 +29,20 @@ app.use((req, res, next) => {
   throw error;
 });
 
-app.use((error, req, res, next) => {
-  if (res.headerSent) {
-    return next(error);
+app.use(
+  (
+    error: any,
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
+    if (res.headersSent) {
+      return next(error);
+    }
+    res.status(error.code || 500);
+    res.json({ message: error.message || "An unknown error occurred!" });
   }
-  res.status(error.code || 500);
-  res.json({ message: error.message || "An unknown error occurred!" });
-});
+);
 
 mongoose
   .connect(

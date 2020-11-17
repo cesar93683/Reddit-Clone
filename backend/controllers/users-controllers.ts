@@ -1,11 +1,16 @@
-const { validationResult } = require("express-validator");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+import { validationResult } from "express-validator";
+import express from "express";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
-const HttpError = require("../models/http-error");
-const User = require("../models/user");
+import HttpError from "../models/http-error";
+import User from "../models/user";
 
-const signup = async (req, res, next) => {
+const signup = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return next(
@@ -81,7 +86,11 @@ const signup = async (req, res, next) => {
     .json({ userId: createdUser.id, email: createdUser.email, token: token });
 };
 
-const login = async (req, res, next) => {
+const login = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
   const { email, password } = req.body;
 
   let existingUser;
@@ -145,5 +154,7 @@ const login = async (req, res, next) => {
   });
 };
 
-exports.signup = signup;
-exports.login = login;
+export default {
+  signup,
+  login,
+};

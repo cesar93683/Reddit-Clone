@@ -1,8 +1,8 @@
-const express = require("express");
-const { check } = require("express-validator");
+import express from "express";
+import { check } from "express-validator";
 
-const postsControllers = require("../controllers/posts-controllers");
-const checkAuth = require("../middleware/check-auth");
+import postsControllers from "../controllers/posts-controllers";
+import checkAuth from "../middleware/check-auth";
 
 const router = express.Router();
 
@@ -26,4 +26,4 @@ router.post(
 
 router.delete("/:pid", postsControllers.deletePost);
 
-module.exports = router;
+export default router;
