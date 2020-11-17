@@ -13,13 +13,15 @@ const NewPost = () => {
   const [description, setDescription] = useState("");
   const history = useHistory();
 
-  const handleTitleChange = (event) => {
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
-  const handleDescriptionChange = (event) => {
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setDescription(event.target.value);
   };
-  const postSubmitHandler = async (event) => {
+  const postSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       await sendRequest(
@@ -46,7 +48,7 @@ const NewPost = () => {
     <div className="Form">
       <div className="Form__Title">New Post</div>
       <form className="Form__Form" onSubmit={postSubmitHandler}>
-        <label className="text-light" for="title">
+        <label className="text-light" htmlFor="title">
           Title
         </label>
         <input
@@ -56,7 +58,7 @@ const NewPost = () => {
           value={title}
           onChange={handleTitleChange}
         />
-        <label className="text-light" for="description">
+        <label className="text-light" htmlFor="description">
           Description
         </label>
         <textarea

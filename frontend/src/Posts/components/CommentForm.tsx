@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./CommentForm.scss";
 
 interface CommentFormProps {
-  onSubmit: ((comment: string) => void)
+  onSubmit: (comment: string) => void;
 }
 
 const CommentForm = (props: CommentFormProps) => {

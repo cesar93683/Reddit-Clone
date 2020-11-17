@@ -2,17 +2,18 @@ import React from "react";
 import "./Comment.scss";
 import { Link } from "react-router-dom";
 import timeSince from "../../utils/timeSince";
+import CommentInterface from "../../shared/interfaces/CommentInterface";
 
 interface CommentProps {
-  creatorUsername: string,
-  creator: string,
-  comment: string,
-  dateCreated: number,
-  currentDate: number
+  currentDate: number;
+  comment: CommentInterface;
 }
 
 const Comment = (props: CommentProps) => {
-  const { creatorUsername, creator, comment, dateCreated, currentDate } = props;
+  const {
+    comment: { creatorUsername, creator, dateCreated, comment },
+    currentDate,
+  } = props;
 
   return (
     <div className="mb-3">

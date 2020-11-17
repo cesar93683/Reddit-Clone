@@ -3,10 +3,11 @@ import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 import Card from "../shared/components/Card/Card";
 
 import { useHttpClient } from "../shared/hooks/http-hook";
+import PostInterface from "../shared/interfaces/PostInterface";
 
 const Home = () => {
   const { isLoading, error, sendRequest } = useHttpClient();
-  const [posts, setPosts] = useState();
+  const [posts, setPosts] = useState<PostInterface[]>();
   const currentDate = Date.now();
 
   useEffect(() => {
@@ -37,14 +38,11 @@ const Home = () => {
         posts.map((post) => (
           <Card
             key={post.id}
-            postId={post.id}
-            title={post.title}
-            creatorUsername={post.creatorUsername}
-            numComments={post.numComments}
-            creator={post.creator}
-            dateCreated={post.dateCreated}
+            post={post}
             currentDate={currentDate}
             linkable
+            onDelete={null}
+            userId={null}
           />
         ))}
     </div>

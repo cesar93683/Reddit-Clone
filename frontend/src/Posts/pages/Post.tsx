@@ -7,10 +7,10 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import Card from "../../shared/components/Card/Card";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
-import { PostInterface } from '../../shared/interfaces/interfaces'
+import PostInterface from "../../shared/interfaces/PostInterface";
 
 interface PostParams {
-  postId: string
+  postId: string;
 }
 
 const PostItem = () => {
@@ -27,7 +27,6 @@ const PostItem = () => {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/posts/${postId}`
         );
-        console.log(responseData)
         setLoadedPost(responseData.post);
       } catch (err) {}
     };
@@ -80,26 +79,18 @@ const PostItem = () => {
         <React.Fragment>
           <Card
             key={post.id}
-            postId={post.id}
-            title={post.title}
-            creatorUsername={post.creatorUsername}
-            numComments={post.numComments}
-            description={post.description}
-            creator={post.creator}
-            dateCreated={post.dateCreated}
+            post={post}
             currentDate={currentDate}
             userId={auth.userId}
             onDelete={onDelete}
+            linkable={false}
           />
           <div className="bg-dark-gray p-3">
             {auth.isLoggedIn && <CommentForm onSubmit={onSubmitComment} />}
             {post.comments.map((comment) => (
               <Comment
                 key={comment.id}
-                creator={comment.creator}
-                creatorUsername={comment.creatorUsername}
-                comment={comment.comment}
-                dateCreated={comment.dateCreated}
+                comment={comment}
                 currentDate={currentDate}
               />
             ))}

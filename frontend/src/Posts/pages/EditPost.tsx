@@ -3,14 +3,19 @@ import { useHistory, useParams } from "react-router-dom";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
+import PostInterface from "../../shared/interfaces/PostInterface";
+
+interface PostParams {
+  postId: string;
+}
 
 const EditPost = () => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest } = useHttpClient();
-  const [post, setLoadedPost] = useState();
-  const postId = useParams().postId;
+  const [post, setLoadedPost] = useState<PostInterface>();
+  const postId = useParams<PostParams>().postId;
   const history = useHistory();
-  const [description, setDescription] = useState();
+  const [description, setDescription] = useState("");
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -25,7 +30,9 @@ const EditPost = () => {
     fetchPost();
   }, [sendRequest, postId]);
 
-  const postUpdateSubmitHandler = async (event) => {
+  const postUpdateSubmitHandler = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
     try {
       await sendRequest(
@@ -43,7 +50,9 @@ const EditPost = () => {
     } catch (err) {}
   };
 
-  const handleDescriptionChange = (event) => {
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setDescription(event.target.value);
   };
 
@@ -57,7 +66,7 @@ const EditPost = () => {
         <div className="Form">
           <div className="Form__Title">Edit Post</div>
           <form className="Form__Form" onSubmit={postUpdateSubmitHandler}>
-            <label className="text-light" for="title">
+            <label className="text-light" htmlFor="title">
               Title
             </label>
             <input
@@ -67,7 +76,7 @@ const EditPost = () => {
               value={post.title}
               disabled
             />
-            <label className="text-light" for="description">
+            <label className="text-light" htmlFor="description">
               Description
             </label>
             <textarea

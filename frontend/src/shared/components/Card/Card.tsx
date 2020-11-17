@@ -2,18 +2,29 @@ import React from "react";
 import "./Card.scss";
 import { Link } from "react-router-dom";
 import timeSince from "../../../utils/timeSince";
+import PostInterface from "../../interfaces/PostInterface";
 
-const Card = (props) => {
+interface CardInterface {
+  post: PostInterface;
+  currentDate: number;
+  linkable: boolean;
+  userId: string | null;
+  onDelete: (() => void) | null;
+}
+
+const Card = (props: CardInterface) => {
   const {
-    postId,
-    numComments,
-    creatorUsername,
-    title,
-    creator,
+    post: {
+      creator,
+      creatorUsername,
+      title,
+      dateCreated,
+      id: postId,
+      description,
+      numComments,
+    },
     userId,
-    description,
     currentDate,
-    dateCreated,
     linkable,
     onDelete,
   } = props;

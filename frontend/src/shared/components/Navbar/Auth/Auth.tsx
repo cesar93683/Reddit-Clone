@@ -3,16 +3,22 @@ import "./Auth.scss";
 
 import { useHttpClient } from "../../../hooks/http-hook";
 import { AuthContext } from "../../../context/auth-context";
-import LoadingSpinner from "../../../components/UIElements/LoadingSpinner";
+import LoadingSpinner from "../../UIElements/LoadingSpinner";
 
-const Auth = (props) => {
+interface AuthProps {
+  isLogInMode: boolean;
+  closeDropDown: () => void;
+  className: string;
+}
+
+const Auth = (props: AuthProps) => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, setError } = useHttpClient();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const authSubmitHandler = async (event) => {
+  const authSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!email) {
@@ -41,7 +47,7 @@ const Auth = (props) => {
             "Content-Type": "application/json",
           }
         );
-        auth.login(responseData.userId, responseData.token);
+        auth.login(responseData.userId, responseData.token, null);
         props.closeDropDown();
       } catch (err) {}
     } else {
@@ -59,21 +65,21 @@ const Auth = (props) => {
           }
         );
 
-        auth.login(responseData.userId, responseData.token);
+        auth.login(responseData.userId, responseData.token, null);
         props.closeDropDown();
       } catch (err) {}
     }
   };
 
-  const handleEmail = (event) => {
+  const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
 
-  const handleUsername = (event) => {
+  const handleUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
   };
 
-  const handlePasssword = (event) => {
+  const handlePasssword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
@@ -90,7 +96,7 @@ const Auth = (props) => {
         {props.isLogInMode ? "Log In" : "Sign Up"}
       </div>
       <form className="Form__Form" onSubmit={authSubmitHandler}>
-        <label className="text-light" for="email">
+        <label className="text-light" htmlFor="email">
           Email address
         </label>
         <input
@@ -103,7 +109,7 @@ const Auth = (props) => {
         />
         {!props.isLogInMode && (
           <React.Fragment>
-            <label className="text-light" for="username">
+            <label className="text-light" htmlFor="username">
               Username
             </label>
             <input
@@ -116,7 +122,7 @@ const Auth = (props) => {
             />
           </React.Fragment>
         )}
-        <label className="text-light" for="password">
+        <label className="text-light" htmlFor="password">
           Password
         </label>
         <input
