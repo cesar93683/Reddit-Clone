@@ -5,7 +5,7 @@ export const User = objectType({
   definition(t) {
     t.model.id()
     t.model.username()
-    t.model.posts({ pagination: false })
-    t.model.comments({ pagination: false })
+    t.model.posts()
+    t.model.comments()
   },
 })

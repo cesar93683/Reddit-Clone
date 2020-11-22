@@ -13,6 +13,7 @@ model Post {
   content   String
   author    User    @relation(fields: [authorId], references: [id])
   authorId  Int
+  comments Comment[]
 }
 
 model Comment {

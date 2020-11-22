@@ -14,6 +14,10 @@ type Comment {
   post: Post!
 }
 
+input CommentWhereUniqueInput {
+  id: Int
+}
+
 type Message {
   message: String
 }
@@ -28,20 +32,26 @@ type Mutation {
 
 type Post {
   author: User!
+  comments(after: CommentWhereUniqueInput, before: CommentWhereUniqueInput, first: Int, last: Int): [Comment!]!
   content: String!
   id: Int!
   title: String!
 }
 
+input PostWhereUniqueInput {
+  id: Int
+}
+
 type Query {
+  getAllPosts: [Post]
   getPostById(id: Int): Post
-  getPosts: [Post]
   getPostsByUserId(userId: Int): [Post]
+  getUser(userId: Int): User
 }
 
 type User {
-  comments: [Comment!]!
+  comments(after: CommentWhereUniqueInput, before: CommentWhereUniqueInput, first: Int, last: Int): [Comment!]!
   id: Int!
-  posts: [Post!]!
+  posts(after: PostWhereUniqueInput, before: PostWhereUniqueInput, first: Int, last: Int): [Post!]!
   username: String!
 }
