@@ -153,17 +153,52 @@ export const Mutation = mutationType({
         content: stringArg({ nullable: false }),
         id: intArg({ nullable: false }),
       },
-      resolve: (parent, { content, id }, ctx) => {
-        const userId = getUserId(ctx)
-        if (!userId) throw new Error('Could not authenticate user.')
-        return ctx.prisma.post.update({
-          data: {
-            content,
-          },
-          where: {
-            id,
-          },
-        })
+      resolve: async (parent, { content, id }, ctx) => {
+        let userId: number
+        let user
+        try {
+          userId = Number(getUserId(ctx))
+          user = await ctx.prisma.user.findOne({
+            where: { id: userId },
+          })
+        } catch (err) {
+          throw new Error('Editing post failed, please try again.')
+        }
+
+        if (!user) {
+          throw new Error('Could not find user for provided id.')
+        }
+
+        let post
+
+        try {
+          post = await ctx.prisma.post.findOne({ where: { id } })
+        } catch (err) {
+          throw new Error('Something went wrong, could not update post.')
+        }
+
+        if (!post) {
+          throw Error('Post not found.')
+        }
+
+        if (post.authorId !== userId) {
+          throw Error('You are not allowed to edit this post.')
+        }
+
+        try {
+          post = ctx.prisma.post.update({
+            data: {
+              content,
+            },
+            where: {
+              id,
+            },
+          })
+        } catch (err) {
+          throw new Error('Editing post failed, please try again.')
+        }
+
+        return post
       },
     })
 
