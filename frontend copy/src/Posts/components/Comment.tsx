@@ -14,7 +14,7 @@ const Comment = (props: CommentProps) => {
     comment: {
       author: { id: userId, username },
       dateCreated,
-      comment,
+      content,
     },
     currentDate,
   } = props;
@@ -29,7 +29,7 @@ const Comment = (props: CommentProps) => {
           {timeSince(currentDate, dateCreated)}
         </div>
       </div>
-      <div className="text-light">{comment}</div>
+      <div className="text-light">{content}</div>
     </div>
   );
 };

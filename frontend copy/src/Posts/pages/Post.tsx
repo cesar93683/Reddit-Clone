@@ -5,7 +5,7 @@ import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import Card from "../../shared/components/Card/Card";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import IComment from "../../shared/interfaces/IComment";
 
 interface PostParams {
@@ -34,10 +34,20 @@ const GET_POST_BY_ID = gql`
   }
 `;
 
+const CREATE_COMMENT = gql`
+  mutation($postId: Int!, $content: String!) {
+    createComment(postId: $postId, content: $content) {
+      id
+      content
+    }
+  }
+`;
+
 const PostItem = () => {
   const token = localStorage.getItem("token");
 
   const postId = Number(useParams<PostParams>().postId);
+  const [createComment] = useMutation(CREATE_COMMENT);
   const { loading, data, error } = useQuery(GET_POST_BY_ID, {
     variables: { id: postId },
   });
@@ -48,7 +58,13 @@ const PostItem = () => {
     history.push("/");
   };
 
-  const onSubmitComment = async (comment: string) => {};
+  const onSubmitComment = async (content: string) => {
+    await createComment({ variables: { postId, content } })
+      .then(({ data }) => {})
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   if (loading) {
     return <LoadingSpinner />;

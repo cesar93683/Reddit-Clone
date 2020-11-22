@@ -32,14 +32,10 @@ const NewPost = () => {
   };
   const postSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try {
-      await newPost({ variables: { title, content } })
-        .then(({ data }) => {})
-        .catch((e) => {});
-      history.push("/");
-    } catch (err) {
-      setError(err);
-    }
+    await newPost({ variables: { title, content } })
+      .then(({ data }) => {})
+      .catch((err) => {});
+    history.push("/");
   };
 
   if (loading) {

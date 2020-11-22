@@ -184,7 +184,7 @@ export const Mutation = mutationType({
         }
         let post
         try {
-          await ctx.prisma.post.findOne({ where: { id: postId } })
+          post = await ctx.prisma.post.findOne({ where: { id: postId } })
         } catch (err) {
           throw new Error('Creating comment failed, please try again.')
         }
