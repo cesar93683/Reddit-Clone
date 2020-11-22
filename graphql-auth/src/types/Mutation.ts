@@ -28,7 +28,7 @@ export const Mutation = mutationType({
         try {
           hashedPassword = await hash(password, 12)
         } catch (err) {
-          throw new Error('Could not create user, please try again.')
+          throw new Error('Signing up failed, please try again later.')
         }
 
         let user
@@ -42,14 +42,14 @@ export const Mutation = mutationType({
             },
           })
         } catch (err) {
-          throw new Error('Could not create user, please try again.')
+          throw new Error('Signing up failed, please try again later.')
         }
 
         let token
         try {
           token = sign({ userId: user.id }, APP_SECRET)
         } catch (err) {
-          throw new Error('Could not create user, please try again.')
+          throw new Error('Signing up failed, please try again later.')
         }
 
         return {
@@ -66,20 +66,42 @@ export const Mutation = mutationType({
         password: stringArg({ nullable: false }),
       },
       resolve: async (_parent, { email, password }, ctx) => {
-        const user = await ctx.prisma.user.findOne({
-          where: {
-            email,
-          },
-        })
+        let user
+
+        try {
+          user = await ctx.prisma.user.findOne({
+            where: {
+              email,
+            },
+          })
+        } catch (err) {
+          throw new Error('Logging in failed, please try again later.')
+        }
+
         if (!user) {
           throw new Error(`No user found for email: ${email}`)
         }
-        const passwordValid = await compare(password, user.password)
-        if (!passwordValid) {
+
+        let isValidPassword = false
+        try {
+          isValidPassword = await compare(password, user.password)
+        } catch (err) {
+          throw new Error('Logging in failed, please try again later.')
+        }
+
+        if (!isValidPassword) {
           throw new Error('Invalid password')
         }
+
+        let token
+        try {
+          token = sign({ userId: user.id }, APP_SECRET)
+        } catch (err) {
+          throw new Error('Logging in failed, please try again later.')
+        }
+
         return {
-          token: sign({ userId: user.id }, APP_SECRET),
+          token,
           user,
         }
       },
