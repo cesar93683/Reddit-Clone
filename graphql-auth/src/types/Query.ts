@@ -17,7 +17,18 @@ export const Query = queryType({
       resolve: (parent, { id }, ctx) => {
         return ctx.prisma.post.findOne({
           where: {
-            id: Number(id),
+            id,
+          },
+        })
+      },
+    })
+    t.list.field('getPostsByUserId', {
+      type: 'Post',
+      args: { userId: intArg() },
+      resolve: (parent, { userId }, ctx) => {
+        return ctx.prisma.post.findMany({
+          where: {
+            authorId: userId,
           },
         })
       },
