@@ -3,23 +3,14 @@ import { getUserId } from '../utils'
 
 export const Query = queryType({
   definition(t) {
-    t.field('me', {
-      type: 'User',
-      nullable: true,
-      resolve: (parent, args, ctx) => {
-        const userId = getUserId(ctx)
-        return ctx.prisma.user.findOne({
-          where: {
-            id: Number(userId),
-          },
-        })
-      },
-    })
-
-    t.list.field('feed', {
+    t.list.field('getPosts', {
       type: 'Post',
       resolve: (parent, args, ctx) => {
-        return ctx.prisma.post.findMany()
+        try {
+          return ctx.prisma.post.findMany()
+        } catch (err) {
+          throw new Error('Could not get posts')
+        }
       },
     })
 

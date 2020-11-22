@@ -34,8 +34,7 @@ type Post {
 }
 
 type Query {
-  feed: [Post]
-  me: User
+  getPosts: [Post]
   post(id: Int): Post
 }
 

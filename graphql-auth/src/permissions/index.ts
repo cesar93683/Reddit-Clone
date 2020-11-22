@@ -21,10 +21,6 @@ const rules = {
 
 export const permissions = shield(
   {
-    Query: {
-      me: rules.isAuthenticatedUser,
-      post: rules.isAuthenticatedUser,
-    },
     Mutation: {
       createPost: rules.isAuthenticatedUser,
       editPost: rules.isPostOwner,
