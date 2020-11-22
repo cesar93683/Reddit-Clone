@@ -1,13 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./Navbar.scss";
 import Auth from "./Auth/Auth";
-import { AuthContext } from "../../context/auth-context";
 
 const NavBar = () => {
-  const token = localStorage.getItem("token");
-  const auth = useContext(AuthContext);
+  const [token, setToken] = useState(localStorage.getItem("token"));
+
+  const logOut = () => {
+    localStorage.removeItem("token");
+    setToken("");
+  };
 
   const [logInMode, setLogInMode] = useState(false);
   const [signUpMode, setSignUpMode] = useState(false);
@@ -33,7 +36,7 @@ const NavBar = () => {
           <Link className="btn btn-primary mr-3" to="/post/new">
             New Post
           </Link>
-          <button className="btn btn-outline-light" onClick={auth.logout}>
+          <button className="btn btn-outline-light" onClick={logOut}>
             Sign Out
           </button>
         </div>
