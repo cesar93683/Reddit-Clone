@@ -156,14 +156,13 @@ export const Mutation = mutationType({
       type: 'Message',
       nullable: true,
       args: { id: intArg({ nullable: false }) },
-      resolve: (parent, { id }, ctx) => {
+      resolve: async (parent, { id }, ctx) => {
         try {
-          ctx.prisma.post.delete({ where: { id } })
+          await ctx.prisma.post.delete({ where: { id } })
           return {
             message: 'Success',
           }
         } catch (err) {
-          console.log('error ' + err)
           throw new Error('Deleting post failed, please try again.')
         }
       },
@@ -185,7 +184,7 @@ export const Mutation = mutationType({
         }
         let post
         try {
-          ctx.prisma.post.findOne({ where: { id: postId } })
+          await ctx.prisma.post.findOne({ where: { id: postId } })
         } catch (err) {
           throw new Error('Creating comment failed, please try again.')
         }
@@ -201,8 +200,23 @@ export const Mutation = mutationType({
             },
           })
         } catch (err) {
-          console.log('error ' + err)
           throw new Error('Creating comment failed, please try again.')
+        }
+      },
+    })
+
+    t.field('deleteComment', {
+      type: 'Message',
+      nullable: true,
+      args: { id: intArg({ nullable: false }) },
+      resolve: async (parent, { id }, ctx) => {
+        try {
+          await ctx.prisma.comment.delete({ where: { id } })
+          return {
+            message: 'Success',
+          }
+        } catch (err) {
+          throw new Error('Deleting comment failed, please try again.')
         }
       },
     })

@@ -13,6 +13,13 @@ const rules = {
       .author()
     return userId === author.id
   }),
+  isCommentOwner: rule()(async (parent, { id: commentId }, context) => {
+    const userId = getUserId(context)
+    const author = await context.prisma.comment
+      .findOne({ where: { id: Number(commentId) } })
+      .author()
+    return userId === author.id
+  }),
 }
 
 export const permissions = shield(
@@ -22,6 +29,7 @@ export const permissions = shield(
       editPost: rules.isPostOwner,
       deletePost: rules.isPostOwner,
       createComment: rules.isAuthenticatedUser,
+      deleteComment: rules.isCommentOwner,
     },
   },
   { allowExternalErrors: true },
