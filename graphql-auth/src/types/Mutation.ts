@@ -183,6 +183,15 @@ export const Mutation = mutationType({
         } catch (err) {
           throw new Error('Creating comment failed, please try again.')
         }
+        let post
+        try {
+          ctx.prisma.post.findOne({ where: { id: postId } })
+        } catch (err) {
+          throw new Error('Creating comment failed, please try again.')
+        }
+        if (!post) {
+          throw new Error('Creating comment failed, please try again.')
+        }
         try {
           return ctx.prisma.comment.create({
             data: {
