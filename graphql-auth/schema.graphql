@@ -14,9 +14,13 @@ type Comment {
   post: Post!
 }
 
+type Message {
+  message: String
+}
+
 type Mutation {
   createPost(content: String!, title: String!): Post
-  deletePost(id: Int!): Post
+  deletePost(id: Int!): Message
   editPost(content: String!, id: Int!): Post
   login(email: String!, password: String!): AuthPayload
   signup(email: String!, password: String!, username: String!): AuthPayload

@@ -115,35 +115,22 @@ export const Mutation = mutationType({
       },
       resolve: async (parent, { title, content }, ctx) => {
         let userId
-        let user
         try {
-          userId = getUserId(ctx)
-          user = await ctx.prisma.user.findOne({
-            where: { id: Number(userId) },
-          })
+          userId = Number(getUserId(ctx))
         } catch (err) {
           throw new Error('Creating post failed, please try again.')
         }
-
-        if (!user) {
-          throw new Error('Could not find user for provided id.')
-        }
-
-        let post
-
         try {
-          post = ctx.prisma.post.create({
+          return ctx.prisma.post.create({
             data: {
               title,
               content,
-              author: { connect: { id: Number(userId) } },
+              author: { connect: { id: userId } },
             },
           })
         } catch (err) {
           throw new Error('Creating post failed, please try again.')
         }
-
-        return post
       },
     })
 
@@ -153,65 +140,40 @@ export const Mutation = mutationType({
         content: stringArg({ nullable: false }),
         id: intArg({ nullable: false }),
       },
-      resolve: async (parent, { content, id }, ctx) => {
-        let userId: number
-        let user
+      resolve: async (parent, { content, id: postId }, ctx) => {
         try {
-          userId = Number(getUserId(ctx))
-          user = await ctx.prisma.user.findOne({
-            where: { id: userId },
-          })
-        } catch (err) {
-          throw new Error('Editing post failed, please try again.')
-        }
-
-        if (!user) {
-          throw new Error('Could not find user for provided id.')
-        }
-
-        let post
-
-        try {
-          post = await ctx.prisma.post.findOne({ where: { id } })
-        } catch (err) {
-          throw new Error('Something went wrong, could not update post.')
-        }
-
-        if (!post) {
-          throw Error('Post not found.')
-        }
-
-        if (post.authorId !== userId) {
-          throw Error('You are not allowed to edit this post.')
-        }
-
-        try {
-          post = ctx.prisma.post.update({
+          return ctx.prisma.post.update({
             data: {
               content,
             },
             where: {
-              id,
+              id: postId,
             },
           })
         } catch (err) {
           throw new Error('Editing post failed, please try again.')
         }
-
-        return post
       },
     })
 
     t.field('deletePost', {
-      type: 'Post',
+      type: 'Message',
       nullable: true,
       args: { id: intArg({ nullable: false }) },
-      resolve: (parent, { id }, ctx) => {
-        return ctx.prisma.post.delete({
-          where: {
-            id,
-          },
-        })
+      resolve: async (parent, { id: postId }, ctx) => {
+        try {
+          await ctx.prisma.post.delete({
+            where: {
+              id: postId,
+            },
+          })
+          return {
+            message: 'Success',
+          }
+        } catch (err) {
+          console.log('error ' + err)
+          throw new Error('Deleting post failed, please try again.')
+        }
       },
     })
   },

@@ -6,12 +6,12 @@ const rules = {
     const userId = getUserId(context)
     return Boolean(userId)
   }),
-  isPostOwner: rule()(async (parent, { id }, context) => {
+  isPostOwner: rule()(async (parent, { id: postId }, context) => {
     const userId = getUserId(context)
     const author = await context.prisma.post
       .findOne({
         where: {
-          id: Number(id),
+          id: Number(postId),
         },
       })
       .author()
@@ -27,6 +27,7 @@ export const permissions = shield(
     },
     Mutation: {
       createPost: rules.isAuthenticatedUser,
+      editPost: rules.isPostOwner,
       deletePost: rules.isPostOwner,
     },
   },
