@@ -23,6 +23,7 @@ type Message {
 }
 
 type Mutation {
+  createComment(content: String!, postId: Int!): Comment
   createPost(content: String!, title: String!): Post
   deletePost(id: Int!): Message
   editPost(content: String!, id: Int!): Post
