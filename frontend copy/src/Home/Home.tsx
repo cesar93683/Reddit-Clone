@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 import Card from "../shared/components/Card/Card";
 
@@ -45,6 +45,7 @@ const Home = () => {
             post={post}
             currentDate={currentDate}
             linkable
+            userId={null}
             onDelete={null}
           />
         ))}

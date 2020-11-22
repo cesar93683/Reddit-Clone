@@ -56,6 +56,7 @@ const User = () => {
             currentDate={currentDate}
             linkable
             onDelete={null}
+            userId={null}
           />
         ))}
     </div>

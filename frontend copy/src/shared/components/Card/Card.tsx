@@ -8,19 +8,21 @@ interface CardInterface {
   post: IPost;
   currentDate: number;
   linkable: boolean;
+  userId: string | null;
   onDelete: (() => void) | null;
 }
 
 const Card = (props: CardInterface) => {
   const {
     post: {
-      author: { id: userId, username },
+      author: { id: authorId, username },
       title,
       dateCreated,
       id: postId,
       content,
       numComments,
     },
+    userId,
     currentDate,
     linkable,
     onDelete,
@@ -31,7 +33,7 @@ const Card = (props: CardInterface) => {
       <div className="d-flex justify-content-between">
         <div className="text-light-gray mb-2">
           {"Posted by "}
-          <Link className="Card__Username__Link" to={"/users/" + userId}>
+          <Link className="Card__Username__Link" to={"/users/" + authorId}>
             {username}
           </Link>
         </div>
@@ -58,7 +60,7 @@ const Card = (props: CardInterface) => {
           </div>
         )}
 
-        {onDelete && userId === userId && (
+        {onDelete && authorId === Number(userId) && (
           <div>
             <Link className="btn btn-primary" to={`/posts/${postId}/edit`}>
               EDIT

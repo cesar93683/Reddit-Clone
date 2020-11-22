@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
@@ -7,6 +7,7 @@ import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import IComment from "../../shared/interfaces/IComment";
+import { AuthContext } from "../../shared/context/auth-context";
 
 interface PostParams {
   postId: string;
@@ -52,7 +53,7 @@ const DELETE_POST = gql`
 `;
 
 const PostItem = () => {
-  const token = localStorage.getItem("token");
+  const auth = useContext(AuthContext);
 
   const postId = Number(useParams<PostParams>().postId);
   const [createComment] = useMutation(CREATE_COMMENT);
@@ -94,9 +95,10 @@ const PostItem = () => {
             currentDate={currentDate}
             onDelete={onDelete}
             linkable={false}
+            userId={auth.userId}
           />
           <div className="bg-dark-gray p-3">
-            {token && <CommentForm onSubmit={onSubmitComment} />}
+            {auth.isLoggedIn && <CommentForm onSubmit={onSubmitComment} />}
             {data.getPostById.comments.map((comment: IComment) => (
               <Comment
                 key={comment.id}

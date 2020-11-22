@@ -9,6 +9,8 @@ import NavBar from "./shared/components/Navbar/Navbar";
 import Post from "./Posts/pages/Post";
 import Home from "./Home/Home";
 import NewPost from "./Posts/pages/NewPost";
+import { AuthContext } from "./shared/context/auth-context";
+import { useAuth } from "./shared/hooks/auth-hook";
 import EditPost from "./Posts/pages/EditPost";
 import User from "./User/User";
 import "./App.scss";
@@ -39,7 +41,8 @@ const client = new ApolloClient({
 });
 
 const App = () => {
-  const token = localStorage.getItem("token");
+  const { token, login, logout, userId } = useAuth();
+
   let routes;
   if (token) {
     routes = (
@@ -81,10 +84,20 @@ const App = () => {
 
   return (
     <ApolloProvider client={client}>
-      <Router>
-        <NavBar />
-        <main className="App">{routes}</main>
-      </Router>
+      <AuthContext.Provider
+        value={{
+          isLoggedIn: !!token,
+          token: token,
+          userId: userId,
+          login: login,
+          logout: logout,
+        }}
+      >
+        <Router>
+          <NavBar />
+          <main className="App">{routes}</main>
+        </Router>
+      </AuthContext.Provider>
     </ApolloProvider>
   );
 };

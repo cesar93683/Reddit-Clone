@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Auth.scss";
 import { gql, useMutation } from "@apollo/client";
+import { AuthContext } from "../../../context/auth-context";
 
 const LOGIN_MUTATION = gql`
   mutation logIn($email: String!, $password: String!) {
     logIn(email: $email, password: $password) {
       token
+      user {
+        id
+      }
     }
   }
 `;
@@ -14,6 +18,9 @@ const SIGNUP_MUTATION = gql`
   mutation signUp($username: String!, $email: String!, $password: String!) {
     signUp(username: $username, email: $email, password: $password) {
       token
+      user {
+        id
+      }
     }
   }
 `;
@@ -25,6 +32,7 @@ interface AuthProps {
 }
 
 const Auth = (props: AuthProps) => {
+  const auth = useContext(AuthContext);
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -43,26 +51,24 @@ const Auth = (props: AuthProps) => {
       setError("Please enter your username");
       return;
     }
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return;
-    }
 
     if (props.isLogInMode) {
       try {
         await logIn({ variables: { email, password } })
           .then(({ data }) => {
-            localStorage.setItem("token", data.logIn.token);
+            auth.login(data.logIn.token, data.logIn.user.id, null);
             props.closeDropDown();
           })
-          .catch((e) => {});
+          .catch((err) => {
+            console.log(err);
+          });
       } catch (err) {
         setError(err);
       }
     } else {
       await signUp({ variables: { email, username, password } })
         .then(({ data }) => {
-          localStorage.setItem("token", data.signUp.token);
+          auth.login(data.signUp.token, data.signUp.user.id, null);
           props.closeDropDown();
         })
         .catch((err) => {

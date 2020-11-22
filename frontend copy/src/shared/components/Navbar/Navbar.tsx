@@ -1,16 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./Navbar.scss";
 import Auth from "./Auth/Auth";
+import { AuthContext } from "../../context/auth-context";
 
 const NavBar = () => {
-  const [token, setToken] = useState(localStorage.getItem("token"));
-
-  const logOut = () => {
-    localStorage.removeItem("token");
-    setToken("");
-  };
+  const auth = useContext(AuthContext);
 
   const [logInMode, setLogInMode] = useState(false);
   const [signUpMode, setSignUpMode] = useState(false);
@@ -31,12 +27,12 @@ const NavBar = () => {
       <Link className="NavBar-Home" to="/">
         Home
       </Link>
-      {token ? (
+      {auth.isLoggedIn ? (
         <div className="d-flex">
           <Link className="btn btn-primary mr-3" to="/post/new">
             New Post
           </Link>
-          <button className="btn btn-outline-light" onClick={logOut}>
+          <button className="btn btn-outline-light" onClick={auth.logout}>
             Log Out
           </button>
         </div>
