@@ -28,8 +28,8 @@ type Mutation {
   deleteComment(id: Int!): Message
   deletePost(id: Int!): Message
   editPost(content: String!, id: Int!): Post
-  login(email: String!, password: String!): AuthPayload
-  signup(email: String!, password: String!, username: String!): AuthPayload
+  logIn(email: String!, password: String!): AuthPayload
+  signUp(email: String!, password: String!, username: String!): AuthPayload
 }
 
 type Post {

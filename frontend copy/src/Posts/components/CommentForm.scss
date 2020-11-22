@@ -1,0 +1,10 @@
+.CommentForm__TextArea {
+  width: 100%;
+  resize: vertical;
+  background-color: var(--dark-gray);
+  border: 1px solid var(--gray);
+  color: var(--light);
+  min-height: 5rem;
+  height: auto;
+  margin-bottom: 0.25rem;
+}

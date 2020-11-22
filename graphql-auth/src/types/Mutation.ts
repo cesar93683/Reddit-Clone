@@ -5,7 +5,7 @@ import { APP_SECRET, getUserId } from '../utils'
 
 export const Mutation = mutationType({
   definition(t) {
-    t.field('signup', {
+    t.field('signUp', {
       type: 'AuthPayload',
       args: {
         username: stringArg({ nullable: false }),
@@ -59,7 +59,7 @@ export const Mutation = mutationType({
       },
     })
 
-    t.field('login', {
+    t.field('logIn', {
       type: 'AuthPayload',
       args: {
         email: stringArg({ nullable: false }),
