@@ -6,15 +6,11 @@ export const Query = queryType({
     t.list.field('getPosts', {
       type: 'Post',
       resolve: (parent, args, ctx) => {
-        try {
-          return ctx.prisma.post.findMany()
-        } catch (err) {
-          throw new Error('Could not get posts')
-        }
+        return ctx.prisma.post.findMany()
       },
     })
 
-    t.field('post', {
+    t.field('getPostById', {
       type: 'Post',
       nullable: true,
       args: { id: intArg() },
