@@ -113,16 +113,37 @@ export const Mutation = mutationType({
         title: stringArg({ nullable: false }),
         content: stringArg({ nullable: false }),
       },
-      resolve: (parent, { title, content }, ctx) => {
-        const userId = getUserId(ctx)
-        if (!userId) throw new Error('Could not authenticate user.')
-        return ctx.prisma.post.create({
-          data: {
-            title,
-            content,
-            author: { connect: { id: Number(userId) } },
-          },
-        })
+      resolve: async (parent, { title, content }, ctx) => {
+        let userId
+        let user
+        try {
+          userId = getUserId(ctx)
+          user = await ctx.prisma.user.findOne({
+            where: { id: Number(userId) },
+          })
+        } catch (err) {
+          throw new Error('Creating post failed, please try again.')
+        }
+
+        if (!user) {
+          throw new Error('Could not find user for provided id.')
+        }
+
+        let post
+
+        try {
+          post = ctx.prisma.post.create({
+            data: {
+              title,
+              content,
+              author: { connect: { id: Number(userId) } },
+            },
+          })
+        } catch (err) {
+          throw new Error('Creating post failed, please try again.')
+        }
+
+        return post
       },
     })
 
