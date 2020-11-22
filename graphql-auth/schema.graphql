@@ -47,7 +47,6 @@ input PostWhereUniqueInput {
 type Query {
   getAllPosts: [Post]
   getPostById(id: Int): Post
-  getPostsByUserId(userId: Int): [Post]
   getUser(userId: Int): User
 }
 

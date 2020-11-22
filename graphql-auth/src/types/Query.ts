@@ -19,15 +19,6 @@ export const Query = queryType({
         })
       },
     })
-    t.list.field('getPostsByUserId', {
-      type: 'Post',
-      args: { userId: intArg() },
-      resolve: (parent, { userId }, ctx) => {
-        return ctx.prisma.post.findMany({
-          where: { authorId: userId },
-        })
-      },
-    })
     t.field('getUser', {
       type: 'User',
       args: { userId: intArg() },

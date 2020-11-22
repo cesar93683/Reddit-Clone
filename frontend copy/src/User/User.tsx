@@ -1,61 +1,70 @@
-import React, { useEffect, useState } from "react";
+import { gql, useQuery } from "@apollo/client";
+import React from "react";
 import { useParams } from "react-router-dom";
 import Card from "../shared/components/Card/Card";
 import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
-import { useHttpClient } from "../shared/hooks/http-hook";
 import IPost from "../shared/interfaces/IPost";
 
 interface UserParams {
   userId: string;
 }
 
+const GET_USER_MUTATION = gql`
+  query($userId: Int!) {
+    getUser(userId: $userId) {
+      id
+      username
+      posts {
+        id
+        title
+        author {
+          id
+          username
+        }
+      }
+    }
+  }
+`;
+
 const User = () => {
-  return <div></div>;
-  // const { isLoading, error, sendRequest } = useHttpClient();
-  // const [posts, setPosts] = useState<IPost[]>();
-  // const userId = useParams<UserParams>().userId;
-  // const currentDate = Date.now();
+  const param = useParams<UserParams>().userId;
+  let userId = Number(param);
+  const currentDate = Date.now();
+  const { loading, data, error } = useQuery(GET_USER_MUTATION, {
+    variables: { userId },
+  });
+  console.log(data);
 
-  // useEffect(() => {
-  //   const fetchPosts = async () => {
-  //     try {
-  //       const responseData = await sendRequest(
-  //         `${process.env.REACT_APP_BACKEND_URL}/posts/user/${userId}`
-  //       );
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
-  //       setPosts(responseData.posts);
-  //     } catch (err) {}
-  //   };
-  //   fetchPosts();
-  // }, [sendRequest, userId]);
+  if (error) {
+    return <h1 className="text-light">An error occured.</h1>;
+  }
 
-  // if (isLoading) {
-  //   return <LoadingSpinner />;
-  // }
-
-  // if (error === "Could not find posts for the provided user id.") {
-  //   return <h1 className="text-light">User has no posts.</h1>;
-  // }
-
-  // if (error) {
-  //   return <h1 className="text-light">An error occured.</h1>;
-  // }
-
-  // return (
-  //   <div>
-  //     {posts &&
-  //       posts.map((post) => (
-  //         <Card
-  //           key={post.id}
-  //           post={post}
-  //           currentDate={currentDate}
-  //           linkable
-  //           onDelete={null}
-  //           userId={null}
-  //         />
-  //       ))}
-  //   </div>
-  // );
+  return (
+    <div>
+      {data &&
+        data.getUser &&
+        data.getUser.posts &&
+        data.getUser.posts.length === 0 && (
+          <h1 className="text-light">No Posts</h1>
+        )}
+      {data &&
+        data.getUser &&
+        data.getUser.posts &&
+        data.getUser.posts.map((post: IPost) => (
+          <Card
+            key={post.id}
+            post={post}
+            currentDate={currentDate}
+            linkable
+            onDelete={null}
+          />
+        ))}
+    </div>
+  );
 };
 
 export default User;
