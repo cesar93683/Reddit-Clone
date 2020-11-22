@@ -12,7 +12,6 @@ interface AuthProps {
 }
 
 const Auth = (props: AuthProps) => {
-  const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, setError } = useHttpClient();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");

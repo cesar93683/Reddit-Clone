@@ -35,10 +35,10 @@ const Home = () => {
 
   return (
     <div>
-      {data && data.getAllPosts && data.getAllPosts.length === 0 && (
+      {data && data.getAllPosts.length === 0 && (
         <h1 className="text-light">No Posts</h1>
       )}
-      {data.getAllPosts &&
+      {data &&
         data.getAllPosts.map((post: IPost) => (
           <Card
             key={post.id}

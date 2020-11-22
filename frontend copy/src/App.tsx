@@ -8,8 +8,6 @@ import {
 import NavBar from "./shared/components/Navbar/Navbar";
 import Post from "./Posts/pages/Post";
 import Home from "./Home/Home";
-import { AuthContext } from "./shared/context/auth-context";
-import { useAuth } from "./shared/hooks/auth-hook";
 import NewPost from "./Posts/pages/NewPost";
 import EditPost from "./Posts/pages/EditPost";
 import User from "./User/User";
@@ -41,7 +39,7 @@ const client = new ApolloClient({
 });
 
 const App = () => {
-  const { token, login, logout, userId } = useAuth();
+  const token = localStorage.getItem("token");
   let routes;
   if (token) {
     routes = (

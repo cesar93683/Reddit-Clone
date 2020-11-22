@@ -56,14 +56,18 @@ const Auth = (props: AuthProps) => {
             props.closeDropDown();
           })
           .catch((e) => {});
-      } catch (err) {}
+      } catch (err) {
+        setError(err);
+      }
     } else {
       await signUp({ variables: { email, username, password } })
         .then(({ data }) => {
           localStorage.setItem("token", data.signUp.token);
           props.closeDropDown();
         })
-        .catch((e) => {});
+        .catch((err) => {
+          setError(err);
+        });
     }
   };
 

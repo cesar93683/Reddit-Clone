@@ -6,6 +6,7 @@ import Auth from "./Auth/Auth";
 import { AuthContext } from "../../context/auth-context";
 
 const NavBar = () => {
+  const token = localStorage.getItem("token");
   const auth = useContext(AuthContext);
 
   const [logInMode, setLogInMode] = useState(false);
@@ -27,7 +28,7 @@ const NavBar = () => {
       <Link className="NavBar-Home" to="/">
         Home
       </Link>
-      {auth.isLoggedIn ? (
+      {token ? (
         <div className="d-flex">
           <Link className="btn btn-primary mr-3" to="/post/new">
             New Post

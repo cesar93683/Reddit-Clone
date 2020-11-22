@@ -45,15 +45,10 @@ const User = () => {
 
   return (
     <div>
+      {data && data.getUser.posts.length === 0 && (
+        <h1 className="text-light">No Posts</h1>
+      )}
       {data &&
-        data.getUser &&
-        data.getUser.posts &&
-        data.getUser.posts.length === 0 && (
-          <h1 className="text-light">No Posts</h1>
-        )}
-      {data &&
-        data.getUser &&
-        data.getUser.posts &&
         data.getUser.posts.map((post: IPost) => (
           <Card
             key={post.id}
