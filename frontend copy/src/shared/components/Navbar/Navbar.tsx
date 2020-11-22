@@ -37,7 +37,7 @@ const NavBar = () => {
             New Post
           </Link>
           <button className="btn btn-outline-light" onClick={logOut}>
-            Sign Out
+            Log Out
           </button>
         </div>
       ) : (

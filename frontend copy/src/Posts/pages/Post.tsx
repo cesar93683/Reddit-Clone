@@ -1,105 +1,88 @@
-import React, { useEffect, useState, useContext } from "react";
+import React from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import { AuthContext } from "../../shared/context/auth-context";
-import { useHttpClient } from "../../shared/hooks/http-hook";
 import Card from "../../shared/components/Card/Card";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
-import IPost from "../../shared/interfaces/IPost";
+import { gql, useQuery } from "@apollo/client";
+import IComment from "../../shared/interfaces/IComment";
 
 interface PostParams {
   postId: string;
 }
 
+const GET_POST_BY_ID = gql`
+  query($id: Int!) {
+    getPostById(id: $id) {
+      id
+      title
+      content
+      author {
+        id
+        username
+      }
+      comments {
+        id
+        content
+        author {
+          id
+          username
+        }
+      }
+    }
+  }
+`;
+
 const PostItem = () => {
-  return <div></div>;
-  // const auth = useContext(AuthContext);
-  // const { isLoading, error, sendRequest } = useHttpClient();
-  // const [post, setLoadedPost] = useState<IPost>();
-  // const postId = useParams<PostParams>().postId;
-  // const history = useHistory();
-  // const currentDate = Date.now();
+  const token = localStorage.getItem("token");
 
-  // useEffect(() => {
-  //   const fetchPost = async () => {
-  //     try {
-  //       const responseData = await sendRequest(
-  //         `${process.env.REACT_APP_BACKEND_URL}/posts/${postId}`
-  //       );
-  //       setLoadedPost(responseData.post);
-  //     } catch (err) {}
-  //   };
-  //   fetchPost();
-  // }, [sendRequest, postId]);
+  const postId = Number(useParams<PostParams>().postId);
+  const { loading, data, error } = useQuery(GET_POST_BY_ID, {
+    variables: { id: postId },
+  });
+  const history = useHistory();
+  const currentDate = Date.now();
 
-  // const onDelete = async () => {
-  //   try {
-  //     await sendRequest(
-  //       `${process.env.REACT_APP_BACKEND_URL}/posts/${postId}`,
-  //       "DELETE",
-  //       null,
-  //       {
-  //         Authorization: "Bearer " + auth.token,
-  //       }
-  //     );
-  //     history.push("/");
-  //   } catch (err) {}
-  // };
+  const onDelete = async () => {
+    history.push("/");
+  };
 
-  // const onSubmitComment = async (comment: string) => {
-  //   try {
-  //     await sendRequest(
-  //       `${process.env.REACT_APP_BACKEND_URL}/posts/${postId}/newcomment`,
-  //       "POST",
-  //       JSON.stringify({
-  //         comment,
-  //       }),
-  //       {
-  //         "Content-Type": "application/json",
-  //         Authorization: "Bearer " + auth.token,
-  //       }
-  //     );
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const onSubmitComment = async (comment: string) => {};
 
-  // if (isLoading) {
-  //   return <LoadingSpinner />;
-  // }
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
-  // if (!post && error) {
-  //   return <h1 className="text-light">An error occured.</h1>;
-  // }
+  if (error) {
+    return <h1 className="text-light">An error occured.</h1>;
+  }
 
-  // return (
-  //   <div>
-  //     {post && (
-  //       <React.Fragment>
-  //         <Card
-  //           key={post.id}
-  //           post={post}
-  //           currentDate={currentDate}
-  //           userId={auth.userId}
-  //           onDelete={onDelete}
-  //           linkable={false}
-  //         />
-  //         <div className="bg-dark-gray p-3">
-  //           {auth.isLoggedIn && <CommentForm onSubmit={onSubmitComment} />}
-  //           {post.comments.map((comment) => (
-  //             <Comment
-  //               key={comment.id}
-  //               comment={comment}
-  //               currentDate={currentDate}
-  //             />
-  //           ))}
-  //         </div>
-  //       </React.Fragment>
-  //     )}
-  //   </div>
-  // );
+  return (
+    <div>
+      {data && (
+        <React.Fragment>
+          <Card
+            key={data.getPostById.id}
+            post={data.getPostById}
+            currentDate={currentDate}
+            onDelete={onDelete}
+            linkable={false}
+          />
+          <div className="bg-dark-gray p-3">
+            {token && <CommentForm onSubmit={onSubmitComment} />}
+            {data.getPostById.comments.map((comment: IComment) => (
+              <Comment
+                key={comment.id}
+                comment={comment}
+                currentDate={currentDate}
+              />
+            ))}
+          </div>
+        </React.Fragment>
+      )}
+    </div>
+  );
 };
 
 export default PostItem;

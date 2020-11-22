@@ -11,15 +11,19 @@ interface CommentProps {
 
 const Comment = (props: CommentProps) => {
   const {
-    comment: { creatorUsername, creator, dateCreated, comment },
+    comment: {
+      author: { id: userId, username },
+      dateCreated,
+      comment,
+    },
     currentDate,
   } = props;
 
   return (
     <div className="mb-3">
       <div className="d-flex">
-        <Link className="Comment__Username" to={"/users/" + creator}>
-          {creatorUsername}
+        <Link className="Comment__Username" to={"/users/" + userId}>
+          {username}
         </Link>
         <div className="text-light ml-1">
           {timeSince(currentDate, dateCreated)}
