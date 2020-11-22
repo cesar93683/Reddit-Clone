@@ -17,6 +17,7 @@ type Comment {
 type Mutation {
   createPost(content: String!, title: String!): Post
   deletePost(id: Int!): Post
+  editPost(content: String!, id: Int!): Post
   login(email: String!, password: String!): AuthPayload
   signup(email: String!, password: String!, username: String!): AuthPayload
 }
