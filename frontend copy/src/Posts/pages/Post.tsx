@@ -43,11 +43,20 @@ const CREATE_COMMENT = gql`
   }
 `;
 
+const DELETE_POST = gql`
+  mutation($id: Int!) {
+    deletePost(id: $id) {
+      message
+    }
+  }
+`;
+
 const PostItem = () => {
   const token = localStorage.getItem("token");
 
   const postId = Number(useParams<PostParams>().postId);
   const [createComment] = useMutation(CREATE_COMMENT);
+  const [deletePost] = useMutation(DELETE_POST);
   const { loading, data, error } = useQuery(GET_POST_BY_ID, {
     variables: { id: postId },
   });
@@ -55,15 +64,16 @@ const PostItem = () => {
   const currentDate = Date.now();
 
   const onDelete = async () => {
+    await deletePost({ variables: { id: postId } })
+      .then(({ data }) => {})
+      .catch((err) => {});
     history.push("/");
   };
 
   const onSubmitComment = async (content: string) => {
     await createComment({ variables: { postId, content } })
       .then(({ data }) => {})
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   if (loading) {
