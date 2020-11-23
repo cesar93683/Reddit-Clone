@@ -56,7 +56,7 @@ const Auth = (props: AuthProps) => {
       try {
         await logIn({ variables: { email, password } })
           .then(({ data }) => {
-            auth.login(data.logIn.token, data.logIn.user.id, null);
+            auth.login(data.logIn.user.id, data.logIn.token, null);
             props.closeDropDown();
           })
           .catch((err) => {
@@ -68,7 +68,7 @@ const Auth = (props: AuthProps) => {
     } else {
       await signUp({ variables: { email, username, password } })
         .then(({ data }) => {
-          auth.login(data.signUp.token, data.signUp.user.id, null);
+          auth.login(data.signUp.user.id, data.signUp.token, null);
           props.closeDropDown();
         })
         .catch((err) => {

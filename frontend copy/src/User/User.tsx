@@ -33,7 +33,6 @@ const User = () => {
   const { loading, data, error } = useQuery(GET_USER_MUTATION, {
     variables: { userId },
   });
-  console.log(data);
 
   if (loading) {
     return <LoadingSpinner />;
