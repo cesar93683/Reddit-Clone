@@ -158,6 +158,7 @@ export const Mutation = mutationType({
       args: { id: intArg({ nullable: false }) },
       resolve: async (parent, { id }, ctx) => {
         try {
+          await ctx.prisma.comment.deleteMany({ where: { post: { id } } })
           await ctx.prisma.post.delete({ where: { id } })
           return {
             message: 'Success',
