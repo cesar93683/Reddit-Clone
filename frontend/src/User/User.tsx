@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useQuery } from "@apollo/client";
+import React from "react";
 import { useParams } from "react-router-dom";
+import { GET_USER_QUERY } from "../GraphQL/Query";
 import Card from "../shared/components/Card/Card";
 import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
-import { useHttpClient } from "../shared/hooks/http-hook";
 import IPost from "../shared/interfaces/IPost";
 
 interface UserParams {
@@ -10,30 +11,15 @@ interface UserParams {
 }
 
 const User = () => {
-  const { isLoading, error, sendRequest } = useHttpClient();
-  const [posts, setPosts] = useState<IPost[]>();
-  const userId = useParams<UserParams>().userId;
+  const param = useParams<UserParams>().userId;
+  let userId = Number(param);
   const currentDate = Date.now();
+  const { loading, data, error } = useQuery(GET_USER_QUERY, {
+    variables: { userId },
+  });
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/posts/user/${userId}`
-        );
-
-        setPosts(responseData.posts);
-      } catch (err) {}
-    };
-    fetchPosts();
-  }, [sendRequest, userId]);
-
-  if (isLoading) {
+  if (loading) {
     return <LoadingSpinner />;
-  }
-
-  if (error === "Could not find posts for the provided user id.") {
-    return <h1 className="text-light">User has no posts.</h1>;
   }
 
   if (error) {
@@ -42,8 +28,11 @@ const User = () => {
 
   return (
     <div>
-      {posts &&
-        posts.map((post) => (
+      {data && data.getUser.posts.length === 0 && (
+        <h1 className="text-light">No Posts</h1>
+      )}
+      {data &&
+        data.getUser.posts.map((post: IPost) => (
           <Card
             key={post.id}
             post={post}

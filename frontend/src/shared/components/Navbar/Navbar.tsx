@@ -33,7 +33,7 @@ const NavBar = () => {
             New Post
           </Link>
           <button className="btn btn-outline-light" onClick={auth.logout}>
-            Sign Out
+            Log Out
           </button>
         </div>
       ) : (

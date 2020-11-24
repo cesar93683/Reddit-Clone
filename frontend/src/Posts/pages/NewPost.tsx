@@ -1,46 +1,35 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import { useHttpClient } from "../../shared/hooks/http-hook";
-import { AuthContext } from "../../shared/context/auth-context";
 import "./EditPost";
+import { useMutation } from "@apollo/client";
+import { NEW_POST_MUTATION } from "../../GraphQL/Mutation";
 
 const NewPost = () => {
-  const auth = useContext(AuthContext);
-  const { isLoading, error, sendRequest } = useHttpClient();
+  const [newPost, { loading }] = useMutation(NEW_POST_MUTATION);
+  const [error, setError] = useState("");
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [content, setContent] = useState("");
   const history = useHistory();
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
-  const handleDescriptionChange = (
+  const handleContentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setDescription(event.target.value);
+    setContent(event.target.value);
   };
   const postSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try {
-      await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/posts`,
-        "POST",
-        JSON.stringify({
-          title,
-          description,
-        }),
-        {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.token,
-        }
-      );
-      history.push("/");
-    } catch (err) {}
+    await newPost({ variables: { title, content } })
+      .then(({ data }) => {})
+      .catch((err) => {});
+    history.push("/");
   };
 
-  if (isLoading) {
+  if (loading) {
     return <LoadingSpinner />;
   }
 
@@ -58,14 +47,14 @@ const NewPost = () => {
           value={title}
           onChange={handleTitleChange}
         />
-        <label className="text-light" htmlFor="description">
-          Description
+        <label className="text-light" htmlFor="content">
+          Content
         </label>
         <textarea
           className="Form__TextArea"
-          id="description"
-          value={description}
-          onChange={handleDescriptionChange}
+          id="content"
+          value={content}
+          onChange={handleContentChange}
         />
         {error && <div className="Form-Error">{error}</div>}
         <button className="btn btn-primary" type="submit">

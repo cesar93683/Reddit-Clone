@@ -1,13 +1,18 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import { AuthContext } from "../../shared/context/auth-context";
-import { useHttpClient } from "../../shared/hooks/http-hook";
 import Card from "../../shared/components/Card/Card";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
-import IPost from "../../shared/interfaces/IPost";
+import { useMutation, useQuery } from "@apollo/client";
+import IComment from "../../shared/interfaces/IComment";
+import { AuthContext } from "../../shared/context/auth-context";
+import { GET_POST_BY_ID_QUERY } from "../../GraphQL/Query";
+import {
+  CREATE_COMMENT_MUTATION,
+  DELETE_POST_MUTATION,
+} from "../../GraphQL/Mutation";
 
 interface PostParams {
   postId: string;
@@ -15,79 +20,52 @@ interface PostParams {
 
 const PostItem = () => {
   const auth = useContext(AuthContext);
-  const { isLoading, error, sendRequest } = useHttpClient();
-  const [post, setLoadedPost] = useState<IPost>();
-  const postId = useParams<PostParams>().postId;
+
+  const postId = Number(useParams<PostParams>().postId);
+  const [createComment] = useMutation(CREATE_COMMENT_MUTATION);
+  const [deletePost] = useMutation(DELETE_POST_MUTATION);
+  const { loading, data, error } = useQuery(GET_POST_BY_ID_QUERY, {
+    variables: { id: postId },
+  });
   const history = useHistory();
   const currentDate = Date.now();
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/posts/${postId}`
-        );
-        setLoadedPost(responseData.post);
-      } catch (err) {}
-    };
-    fetchPost();
-  }, [sendRequest, postId]);
-
   const onDelete = async () => {
-    try {
-      await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/posts/${postId}`,
-        "DELETE",
-        null,
-        {
-          Authorization: "Bearer " + auth.token,
-        }
-      );
-      history.push("/");
-    } catch (err) {}
+    await deletePost({ variables: { id: postId } })
+      .then(({ data }) => {})
+      .catch((err) => {});
+    history.push("/");
   };
 
-  const onSubmitComment = async (comment: string) => {
-    try {
-      await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/posts/${postId}/newcomment`,
-        "POST",
-        JSON.stringify({
-          comment,
-        }),
-        {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.token,
-        }
-      );
-    } catch (err) {
-      console.log(err);
-    }
+  const onSubmitComment = async (content: string) => {
+    await createComment({ variables: { postId, content } })
+      .then(({ data }) => {})
+      .catch((err) => {});
   };
 
-  if (isLoading) {
+  if (loading) {
     return <LoadingSpinner />;
   }
 
-  if (!post && error) {
+  if (error) {
     return <h1 className="text-light">An error occured.</h1>;
   }
 
   return (
     <div>
-      {post && (
+      {data && (
         <React.Fragment>
           <Card
-            key={post.id}
-            post={post}
+            key={data.getPostById.id}
+            post={data.getPostById}
             currentDate={currentDate}
-            userId={auth.userId}
             onDelete={onDelete}
             linkable={false}
+            userId={auth.userId}
           />
           <div className="bg-dark-gray p-3">
             {auth.isLoggedIn && <CommentForm onSubmit={onSubmitComment} />}
-            {post.comments.map((comment) => (
+            {data.getPostById.comments.map((comment: IComment) => (
               <Comment
                 key={comment.id}
                 comment={comment}

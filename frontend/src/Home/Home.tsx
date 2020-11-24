@@ -1,48 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 import Card from "../shared/components/Card/Card";
 
-import { useHttpClient } from "../shared/hooks/http-hook";
 import IPost from "../shared/interfaces/IPost";
+import { useQuery } from "@apollo/client";
+import { GET_ALL_POSTS_QUERY } from "../GraphQL/Query";
 
 const Home = () => {
-  const { isLoading, error, sendRequest } = useHttpClient();
-  const [posts, setPosts] = useState<IPost[]>();
   const currentDate = Date.now();
+  const { loading, data, error } = useQuery(GET_ALL_POSTS_QUERY);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/posts`
-        );
-
-        setPosts(responseData.posts);
-      } catch (err) {}
-    };
-    fetchPosts();
-  }, [sendRequest]);
-
-  if (isLoading) {
+  if (loading) {
     return <LoadingSpinner />;
   }
 
-  if (!posts && error) {
+  if (error) {
     return <h1 className="text-light">An error occured.</h1>;
   }
 
   return (
     <div>
-      {posts && posts.length === 0 && <h1 className="text-light">No Posts</h1>}
-      {posts &&
-        posts.map((post) => (
+      {data && data.getAllPosts.length === 0 && (
+        <h1 className="text-light">No Posts</h1>
+      )}
+      {data &&
+        data.getAllPosts.map((post: IPost) => (
           <Card
             key={post.id}
             post={post}
             currentDate={currentDate}
             linkable
-            onDelete={null}
             userId={null}
+            onDelete={null}
           />
         ))}
     </div>

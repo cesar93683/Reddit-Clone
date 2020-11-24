@@ -1,7 +1,9 @@
 export default interface IComment {
   id: string;
-  creator: string;
-  creatorUsername: string;
-  comment: string;
+  author: {
+    id: number;
+    username: string;
+  };
+  content: string;
   dateCreated: number;
 }

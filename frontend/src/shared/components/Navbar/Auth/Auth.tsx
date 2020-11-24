@@ -1,9 +1,8 @@
 import React, { useContext, useState } from "react";
 import "./Auth.scss";
-
-import { useHttpClient } from "../../../hooks/http-hook";
+import { useMutation } from "@apollo/client";
 import { AuthContext } from "../../../context/auth-context";
-import LoadingSpinner from "../../UIElements/LoadingSpinner";
+import { LOGIN_MUTATION, SIGNUP_MUTATION } from "../../../../GraphQL/Mutation";
 
 interface AuthProps {
   isLogInMode: boolean;
@@ -13,10 +12,12 @@ interface AuthProps {
 
 const Auth = (props: AuthProps) => {
   const auth = useContext(AuthContext);
-  const { isLoading, error, sendRequest, setError } = useHttpClient();
+  const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [signUp] = useMutation(SIGNUP_MUTATION);
+  const [logIn] = useMutation(LOGIN_MUTATION);
 
   const authSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -29,45 +30,29 @@ const Auth = (props: AuthProps) => {
       setError("Please enter your username");
       return;
     }
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return;
-    }
 
     if (props.isLogInMode) {
       try {
-        const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/users/login`,
-          "POST",
-          JSON.stringify({
-            email,
-            password,
-          }),
-          {
-            "Content-Type": "application/json",
-          }
-        );
-        auth.login(responseData.userId, responseData.token, null);
-        props.closeDropDown();
-      } catch (err) {}
+        await logIn({ variables: { email, password } })
+          .then(({ data }) => {
+            auth.login(data.logIn.user.id, data.logIn.token, null);
+            props.closeDropDown();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (err) {
+        setError(err);
+      }
     } else {
-      try {
-        const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/users/signup`,
-          "POST",
-          JSON.stringify({
-            email,
-            username,
-            password,
-          }),
-          {
-            "Content-Type": "application/json",
-          }
-        );
-
-        auth.login(responseData.userId, responseData.token, null);
-        props.closeDropDown();
-      } catch (err) {}
+      await signUp({ variables: { email, username, password } })
+        .then(({ data }) => {
+          auth.login(data.signUp.user.id, data.signUp.token, null);
+          props.closeDropDown();
+        })
+        .catch((err) => {
+          setError(err);
+        });
     }
   };
 
@@ -82,13 +67,6 @@ const Auth = (props: AuthProps) => {
   const handlePasssword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
-
-  if (isLoading)
-    return (
-      <div className={"Auth " + props.className}>
-        <LoadingSpinner />
-      </div>
-    );
 
   return (
     <div className={"Auth Form " + props.className}>

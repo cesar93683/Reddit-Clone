@@ -1,68 +1,57 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { EDIT_POST_MUTATION } from "../../GraphQL/Mutation";
+import { GET_POST_BY_ID_QUERY } from "../../GraphQL/Query";
+
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import { AuthContext } from "../../shared/context/auth-context";
-import { useHttpClient } from "../../shared/hooks/http-hook";
-import IPost from "../../shared/interfaces/IPost";
 
 interface PostParams {
   postId: string;
 }
 
 const EditPost = () => {
-  const auth = useContext(AuthContext);
-  const { isLoading, error, sendRequest } = useHttpClient();
-  const [post, setLoadedPost] = useState<IPost>();
   const postId = useParams<PostParams>().postId;
   const history = useHistory();
-  const [description, setDescription] = useState("");
+  const [content, setContent] = useState("");
+  const [editPost] = useMutation(EDIT_POST_MUTATION);
+
+  const { loading, data, error } = useQuery(GET_POST_BY_ID_QUERY, {
+    variables: { id: Number(postId) },
+  });
 
   useEffect(() => {
-    const fetchPost = async () => {
-      try {
-        const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/posts/${postId}`
-        );
-        setLoadedPost(responseData.post);
-        setDescription(responseData.post.description);
-      } catch (err) {}
-    };
-    fetchPost();
-  }, [sendRequest, postId]);
+    if (!loading && data) {
+      setContent(data.getPostById.content);
+    }
+  }, [loading, data]);
 
   const postUpdateSubmitHandler = async (
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
-    try {
-      await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/posts/${postId}`,
-        "PATCH",
-        JSON.stringify({
-          description: description,
-        }),
-        {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + auth.token,
-        }
-      );
-      history.push("/posts/" + postId);
-    } catch (err) {}
+    await editPost({ variables: { id: Number(postId), content } })
+      .then(({ data }) => {
+        history.push("/posts/" + postId);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  const handleDescriptionChange = (
+  const handleContentChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setDescription(event.target.value);
+    setContent(event.target.value);
   };
 
-  if (isLoading) {
+  if (loading) {
     return <LoadingSpinner />;
   }
 
   return (
     <React.Fragment>
-      {post && (
+      {data && (
         <div className="Form">
           <div className="Form__Title">Edit Post</div>
           <form className="Form__Form" onSubmit={postUpdateSubmitHandler}>
@@ -73,17 +62,17 @@ const EditPost = () => {
               className="Form__Input"
               type="text"
               id="title"
-              value={post.title}
+              value={data.getPostById.title}
               disabled
             />
-            <label className="text-light" htmlFor="description">
-              Description
+            <label className="text-light" htmlFor="content">
+              Content
             </label>
             <textarea
               className="Form__TextArea"
-              id="description"
-              value={description}
-              onChange={handleDescriptionChange}
+              id="content"
+              value={content}
+              onChange={handleContentChange}
             />
             {error && <div className="Form-Error">{error}</div>}
             <button className="btn btn-primary" type="submit">
