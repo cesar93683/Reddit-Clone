@@ -1,41 +1,14 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+import { EDIT_POST_MUTATION } from "../../GraphQL/Mutation";
+import { GET_POST_BY_ID_QUERY } from "../../GraphQL/Query";
+
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 interface PostParams {
   postId: string;
 }
-
-const EDIT_POST_MUTATION = gql`
-  mutation($id: Int!, $content: String!) {
-    editPost(id: $id, content: $content) {
-      id
-    }
-  }
-`;
-
-const GET_POST_BY_ID = gql`
-  query($id: Int!) {
-    getPostById(id: $id) {
-      id
-      title
-      content
-      author {
-        id
-        username
-      }
-      comments {
-        id
-        content
-        author {
-          id
-          username
-        }
-      }
-    }
-  }
-`;
 
 const EditPost = () => {
   const postId = useParams<PostParams>().postId;
@@ -43,7 +16,7 @@ const EditPost = () => {
   const [content, setContent] = useState("");
   const [editPost] = useMutation(EDIT_POST_MUTATION);
 
-  const { loading, data, error } = useQuery(GET_POST_BY_ID, {
+  const { loading, data, error } = useQuery(GET_POST_BY_ID_QUERY, {
     variables: { id: Number(postId) },
   });
 

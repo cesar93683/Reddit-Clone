@@ -87,6 +87,20 @@
     {
       "tag": "CreateField",
       "model": "Post",
+      "field": "numComments",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Post",
+      "field": "dateCreated",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Post",
       "field": "author",
       "type": "User",
       "arity": "Required"
@@ -136,6 +150,13 @@
       "field": "authorId",
       "type": "Int",
       "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Post",
+      "field": "comments",
+      "type": "Comment",
+      "arity": "List"
     },
     {
       "tag": "CreateModel",
@@ -188,6 +209,13 @@
       "tag": "CreateField",
       "model": "Comment",
       "field": "content",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Comment",
+      "field": "dateCreated",
       "type": "String",
       "arity": "Required"
     },

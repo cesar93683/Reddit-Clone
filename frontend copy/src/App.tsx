@@ -24,7 +24,7 @@ import { setContext } from "apollo-link-context";
 
 const httpLink = new HttpLink({ uri: "http://localhost:4000" });
 const authLink = setContext(async (req, { headers }) => {
-  const token = localStorage.getItem("token");
+  const token = JSON.parse(localStorage.getItem("userData") || "{}").token;
 
   return {
     ...headers,

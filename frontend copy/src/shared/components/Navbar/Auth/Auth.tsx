@@ -1,29 +1,8 @@
 import React, { useContext, useState } from "react";
 import "./Auth.scss";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { AuthContext } from "../../../context/auth-context";
-
-const LOGIN_MUTATION = gql`
-  mutation logIn($email: String!, $password: String!) {
-    logIn(email: $email, password: $password) {
-      token
-      user {
-        id
-      }
-    }
-  }
-`;
-
-const SIGNUP_MUTATION = gql`
-  mutation signUp($username: String!, $email: String!, $password: String!) {
-    signUp(username: $username, email: $email, password: $password) {
-      token
-      user {
-        id
-      }
-    }
-  }
-`;
+import { LOGIN_MUTATION, SIGNUP_MUTATION } from "../../../../GraphQL/Mutation";
 
 interface AuthProps {
   isLogInMode: boolean;

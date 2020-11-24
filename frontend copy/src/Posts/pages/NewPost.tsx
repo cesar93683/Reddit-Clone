@@ -3,15 +3,8 @@ import { useHistory } from "react-router-dom";
 
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import "./EditPost";
-import { gql, useMutation } from "@apollo/client";
-
-const NEW_POST_MUTATION = gql`
-  mutation($title: String!, $content: String!) {
-    createPost(title: $title, content: $content) {
-      id
-    }
-  }
-`;
+import { useMutation } from "@apollo/client";
+import { NEW_POST_MUTATION } from "../../GraphQL/Mutation";
 
 const NewPost = () => {
   const [newPost, { loading }] = useMutation(NEW_POST_MUTATION);

@@ -5,60 +5,26 @@ import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import Card from "../../shared/components/Card/Card";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import IComment from "../../shared/interfaces/IComment";
 import { AuthContext } from "../../shared/context/auth-context";
+import { GET_POST_BY_ID_QUERY } from "../../GraphQL/Query";
+import {
+  CREATE_COMMENT_MUTATION,
+  DELETE_POST_MUTATION,
+} from "../../GraphQL/Mutation";
 
 interface PostParams {
   postId: string;
 }
 
-const GET_POST_BY_ID = gql`
-  query($id: Int!) {
-    getPostById(id: $id) {
-      id
-      title
-      content
-      author {
-        id
-        username
-      }
-      comments {
-        id
-        content
-        author {
-          id
-          username
-        }
-      }
-    }
-  }
-`;
-
-const CREATE_COMMENT = gql`
-  mutation($postId: Int!, $content: String!) {
-    createComment(postId: $postId, content: $content) {
-      id
-      content
-    }
-  }
-`;
-
-const DELETE_POST = gql`
-  mutation($id: Int!) {
-    deletePost(id: $id) {
-      message
-    }
-  }
-`;
-
 const PostItem = () => {
   const auth = useContext(AuthContext);
 
   const postId = Number(useParams<PostParams>().postId);
-  const [createComment] = useMutation(CREATE_COMMENT);
-  const [deletePost] = useMutation(DELETE_POST);
-  const { loading, data, error } = useQuery(GET_POST_BY_ID, {
+  const [createComment] = useMutation(CREATE_COMMENT_MUTATION);
+  const [deletePost] = useMutation(DELETE_POST_MUTATION);
+  const { loading, data, error } = useQuery(GET_POST_BY_ID_QUERY, {
     variables: { id: postId },
   });
   const history = useHistory();

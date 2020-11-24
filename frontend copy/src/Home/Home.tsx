@@ -3,27 +3,12 @@ import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 import Card from "../shared/components/Card/Card";
 
 import IPost from "../shared/interfaces/IPost";
-import { gql, useQuery } from "@apollo/client";
-
-const GET_ALL_POSTS_MUTATION = gql`
-  query {
-    getAllPosts {
-      id
-      title
-      author {
-        id
-        username
-      }
-      comments {
-        content
-      }
-    }
-  }
-`;
+import { useQuery } from "@apollo/client";
+import { GET_ALL_POSTS_QUERY } from "../GraphQL/Query";
 
 const Home = () => {
   const currentDate = Date.now();
-  const { loading, data, error } = useQuery(GET_ALL_POSTS_MUTATION);
+  const { loading, data, error } = useQuery(GET_ALL_POSTS_QUERY);
 
   if (loading) {
     return <LoadingSpinner />;

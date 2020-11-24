@@ -1,6 +1,7 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import React from "react";
 import { useParams } from "react-router-dom";
+import { GET_USER_QUERY } from "../GraphQL/Query";
 import Card from "../shared/components/Card/Card";
 import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 import IPost from "../shared/interfaces/IPost";
@@ -9,28 +10,11 @@ interface UserParams {
   userId: string;
 }
 
-const GET_USER_MUTATION = gql`
-  query($userId: Int!) {
-    getUser(userId: $userId) {
-      id
-      username
-      posts {
-        id
-        title
-        author {
-          id
-          username
-        }
-      }
-    }
-  }
-`;
-
 const User = () => {
   const param = useParams<UserParams>().userId;
   let userId = Number(param);
   const currentDate = Date.now();
-  const { loading, data, error } = useQuery(GET_USER_MUTATION, {
+  const { loading, data, error } = useQuery(GET_USER_QUERY, {
     variables: { userId },
   });
 

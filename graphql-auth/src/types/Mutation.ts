@@ -124,6 +124,8 @@ export const Mutation = mutationType({
           return ctx.prisma.post.create({
             data: {
               title,
+              numComments: 0,
+              dateCreated: String(Date.now()),
               content,
               author: { connect: { id: userId } },
             },
@@ -192,10 +194,12 @@ export const Mutation = mutationType({
         if (!post) {
           throw new Error('Creating comment failed, please try again.')
         }
+        console.log(`postId:${postId} userId:${userId}`)
         try {
           return ctx.prisma.comment.create({
             data: {
               content,
+              dateCreated: String(Date.now()),
               author: { connect: { id: userId } },
               post: { connect: { id: postId } },
             },
