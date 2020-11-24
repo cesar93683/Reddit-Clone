@@ -1,7 +1,7 @@
-import { intArg, mutationType, stringArg } from '@nexus/schema'
-import { compare, hash } from 'bcryptjs'
-import { sign } from 'jsonwebtoken'
-import { APP_SECRET, getUserId } from '../utils'
+import { intArg, mutationType, stringArg } from '@nexus/schema';
+import { compare, hash } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
+import { APP_SECRET, getUserId } from '../utils';
 
 export const Mutation = mutationType({
   definition(t) {
@@ -13,25 +13,25 @@ export const Mutation = mutationType({
         password: stringArg({ nullable: false }),
       },
       resolve: async (_parent, { username, email, password }, ctx) => {
-        let existingUser
+        let existingUser;
         try {
-          existingUser = await ctx.prisma.user.findOne({ where: { email } })
+          existingUser = await ctx.prisma.user.findOne({ where: { email } });
         } catch (err) {
-          throw new Error('Signing up failed, please try again later.')
+          throw new Error('Signing up failed, please try again later.');
         }
 
         if (existingUser) {
-          throw new Error('User exists already, please login instead.')
+          throw new Error('User exists already, please login instead.');
         }
 
-        let hashedPassword
+        let hashedPassword;
         try {
-          hashedPassword = await hash(password, 12)
+          hashedPassword = await hash(password, 12);
         } catch (err) {
-          throw new Error('Signing up failed, please try again later.')
+          throw new Error('Signing up failed, please try again later.');
         }
 
-        let user
+        let user;
 
         try {
           user = await ctx.prisma.user.create({
@@ -40,24 +40,24 @@ export const Mutation = mutationType({
               email,
               password: hashedPassword,
             },
-          })
+          });
         } catch (err) {
-          throw new Error('Signing up failed, please try again later.')
+          throw new Error('Signing up failed, please try again later.');
         }
 
-        let token
+        let token;
         try {
-          token = sign({ userId: user.id }, APP_SECRET)
+          token = sign({ userId: user.id }, APP_SECRET);
         } catch (err) {
-          throw new Error('Signing up failed, please try again later.')
+          throw new Error('Signing up failed, please try again later.');
         }
 
         return {
           token,
           user,
-        }
+        };
       },
-    })
+    });
 
     t.field('logIn', {
       type: 'AuthPayload',
@@ -66,46 +66,46 @@ export const Mutation = mutationType({
         password: stringArg({ nullable: false }),
       },
       resolve: async (_parent, { email, password }, ctx) => {
-        let user
+        let user;
 
         try {
           user = await ctx.prisma.user.findOne({
             where: {
               email,
             },
-          })
+          });
         } catch (err) {
-          throw new Error('Logging in failed, please try again later.')
+          throw new Error('Logging in failed, please try again later.');
         }
 
         if (!user) {
-          throw new Error(`No user found for email: ${email}`)
+          throw new Error(`No user found for email: ${email}`);
         }
 
-        let isValidPassword = false
+        let isValidPassword = false;
         try {
-          isValidPassword = await compare(password, user.password)
+          isValidPassword = await compare(password, user.password);
         } catch (err) {
-          throw new Error('Logging in failed, please try again later.')
+          throw new Error('Logging in failed, please try again later.');
         }
 
         if (!isValidPassword) {
-          throw new Error('Invalid password')
+          throw new Error('Invalid password');
         }
 
-        let token
+        let token;
         try {
-          token = sign({ userId: user.id }, APP_SECRET)
+          token = sign({ userId: user.id }, APP_SECRET);
         } catch (err) {
-          throw new Error('Logging in failed, please try again later.')
+          throw new Error('Logging in failed, please try again later.');
         }
 
         return {
           token,
           user,
-        }
+        };
       },
-    })
+    });
 
     t.field('createPost', {
       type: 'Post',
@@ -114,11 +114,11 @@ export const Mutation = mutationType({
         content: stringArg({ nullable: false }),
       },
       resolve: async (parent, { title, content }, ctx) => {
-        let userId
+        let userId;
         try {
-          userId = Number(getUserId(ctx))
+          userId = Number(getUserId(ctx));
         } catch (err) {
-          throw new Error('Creating post failed, please try again.')
+          throw new Error('Creating post failed, please try again.');
         }
         try {
           return ctx.prisma.post.create({
@@ -129,12 +129,12 @@ export const Mutation = mutationType({
               content,
               author: { connect: { id: userId } },
             },
-          })
+          });
         } catch (err) {
-          throw new Error('Creating post failed, please try again.')
+          throw new Error('Creating post failed, please try again.');
         }
       },
-    })
+    });
 
     t.field('editPost', {
       type: 'Post',
@@ -147,12 +147,12 @@ export const Mutation = mutationType({
           return ctx.prisma.post.update({
             data: { content },
             where: { id: postId },
-          })
+          });
         } catch (err) {
-          throw new Error('Editing post failed, please try again.')
+          throw new Error('Editing post failed, please try again.');
         }
       },
-    })
+    });
 
     t.field('deletePost', {
       type: 'Message',
@@ -160,16 +160,16 @@ export const Mutation = mutationType({
       args: { id: intArg({ nullable: false }) },
       resolve: async (parent, { id }, ctx) => {
         try {
-          await ctx.prisma.comment.deleteMany({ where: { post: { id } } })
-          await ctx.prisma.post.delete({ where: { id } })
+          await ctx.prisma.comment.deleteMany({ where: { post: { id } } });
+          await ctx.prisma.post.delete({ where: { id } });
           return {
             message: 'Success',
-          }
+          };
         } catch (err) {
-          throw new Error('Deleting post failed, please try again.')
+          throw new Error('Deleting post failed, please try again.');
         }
       },
-    })
+    });
 
     t.field('createComment', {
       type: 'Comment',
@@ -179,22 +179,22 @@ export const Mutation = mutationType({
         content: stringArg({ nullable: false }),
       },
       resolve: async (parent, { postId, content }, ctx) => {
-        let userId
+        let userId;
         try {
-          userId = Number(getUserId(ctx))
+          userId = Number(getUserId(ctx));
         } catch (err) {
-          throw new Error('Creating comment failed, please try again.')
+          throw new Error('Creating comment failed, please try again.');
         }
-        let post
+        let post;
         try {
-          post = await ctx.prisma.post.findOne({ where: { id: postId } })
+          post = await ctx.prisma.post.findOne({ where: { id: postId } });
         } catch (err) {
-          throw new Error('Creating comment failed, please try again.')
+          throw new Error('Creating comment failed, please try again.');
         }
         if (!post) {
-          throw new Error('Creating comment failed, please try again.')
+          throw new Error('Creating comment failed, please try again.');
         }
-        console.log(`postId:${postId} userId:${userId}`)
+        console.log(`postId:${postId} userId:${userId}`);
         try {
           return ctx.prisma.comment.create({
             data: {
@@ -203,12 +203,12 @@ export const Mutation = mutationType({
               author: { connect: { id: userId } },
               post: { connect: { id: postId } },
             },
-          })
+          });
         } catch (err) {
-          throw new Error('Creating comment failed, please try again.')
+          throw new Error('Creating comment failed, please try again.');
         }
       },
-    })
+    });
 
     t.field('deleteComment', {
       type: 'Message',
@@ -216,14 +216,14 @@ export const Mutation = mutationType({
       args: { id: intArg({ nullable: false }) },
       resolve: async (parent, { id }, ctx) => {
         try {
-          await ctx.prisma.comment.delete({ where: { id } })
+          await ctx.prisma.comment.delete({ where: { id } });
           return {
             message: 'Success',
-          }
+          };
         } catch (err) {
-          throw new Error('Deleting comment failed, please try again.')
+          throw new Error('Deleting comment failed, please try again.');
         }
       },
-    })
+    });
   },
-})
+});

@@ -32,7 +32,6 @@
   },
   "prettier": {
     "singleQuote": true,
-    "semi": false,
     "trailingComma": "all"
   },
   "engines": {

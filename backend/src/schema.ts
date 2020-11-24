@@ -1,6 +1,6 @@
-import { makeSchema } from '@nexus/schema'
-import { nexusPrisma } from 'nexus-plugin-prisma'
-import * as types from './types'
+import { makeSchema } from '@nexus/schema';
+import { nexusPrisma } from 'nexus-plugin-prisma';
+import * as types from './types';
 
 export const schema = makeSchema({
   types,
@@ -22,4 +22,4 @@ export const schema = makeSchema({
     ],
     contextType: 'Context.Context',
   },
-})
+});
