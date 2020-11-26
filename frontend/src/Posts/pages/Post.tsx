@@ -54,8 +54,6 @@ const PostItem = () => {
     return <h1 className="text-light">An error occured.</h1>;
   }
 
-  console.log(data.getPostById.comments.reverse);
-
   return (
     <div>
       <React.Fragment>
@@ -79,13 +77,16 @@ const PostItem = () => {
               currentDate={currentDate}
             />
           ))}
-          {data.getPostById.comments.map((comment: IComment) => (
-            <Comment
-              key={comment.id}
-              comment={comment}
-              currentDate={currentDate}
-            />
-          ))}
+          {data.getPostById.comments
+            .slice(0)
+            .reverse()
+            .map((comment: IComment) => (
+              <Comment
+                key={comment.id}
+                comment={comment}
+                currentDate={currentDate}
+              />
+            ))}
         </div>
       </React.Fragment>
     </div>
