@@ -67,9 +67,10 @@ const PostItem = () => {
         />
         <div className="bg-dark-gray p-3">
           {auth.isLoggedIn && <CommentForm onSubmit={onSubmitComment} />}
-          {data.getPostById.comments.length === 0 && (
-            <h2 className="text-light">No Comments</h2>
-          )}
+          {data.getPostById.comments.length === 0 &&
+            newComments.length == 0 && (
+              <h2 className="text-light">No Comments</h2>
+            )}
           {newComments.map((comment: IComment) => (
             <Comment
               key={comment.id}
