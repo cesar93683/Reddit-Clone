@@ -1,10 +1,11 @@
 import React from "react";
-import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
-import Card from "../shared/components/Card/Card";
 
-import IPost from "../shared/interfaces/IPost";
+import IPost from "../utils/interfaces/IPost";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_POSTS_QUERY } from "../GraphQL/Query";
+
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import Card from "../components/Card/Card";
 
 const Home = () => {
   const currentDate = Date.now();

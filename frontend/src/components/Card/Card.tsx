@@ -1,8 +1,8 @@
 import React from "react";
 import "./Card.scss";
 import { Link } from "react-router-dom";
-import timeSince from "../../../utils/timeSince";
-import IPost from "../../interfaces/IPost";
+import IPost from "../../utils/interfaces/IPost";
+import timeSince from "../../utils/timeSince";
 
 interface CardInterface {
   post: IPost;
@@ -46,7 +46,7 @@ const Card = (props: CardInterface) => {
       ) : (
         <div className="Card__Title">{title}</div>
       )}
-      <div className="text-light mb-2">{content}</div>
+      {content && <div className="text-light mb-2">{content}</div>}
       <div className="d-flex justify-content-between">
         {linkable ? (
           <Link className="Card__NumComments" to={"/posts/" + postId}>

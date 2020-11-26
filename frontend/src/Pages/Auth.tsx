@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useMutation } from "@apollo/client";
-import { AuthContext } from "../shared/context/auth-context";
+import { AuthContext } from "../utils/auth-context";
 import { LOGIN_MUTATION, SIGNUP_MUTATION } from "../GraphQL/Mutation";
 import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";

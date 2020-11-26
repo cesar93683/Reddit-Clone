@@ -5,14 +5,13 @@ import {
   Redirect,
   Switch,
 } from "react-router-dom";
-import NavBar from "./shared/components/Navbar/Navbar";
-import Post from "./Posts/pages/Post";
-import Home from "./Home/Home";
-import NewPost from "./Posts/pages/NewPost";
-import { AuthContext } from "./shared/context/auth-context";
-import { useAuth } from "./shared/hooks/auth-hook";
-import EditPost from "./Posts/pages/EditPost";
-import User from "./User/User";
+import Post from "./Pages/Post";
+import Home from "./Pages/Home";
+import NewPost from "./Pages/NewPost";
+import { AuthContext } from "./utils/auth-context";
+import { useAuth } from "./utils/auth-hook";
+import EditPost from "./Pages/EditPost";
+import User from "./Pages/User";
 import {
   ApolloClient,
   ApolloProvider,
@@ -20,8 +19,9 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import { setContext } from "apollo-link-context";
-import Auth from "./Auth/Auth";
+import Auth from "./Pages/Auth";
 import { Container } from "react-bootstrap";
+import NavBar from "./components/Navbar";
 
 const httpLink = new HttpLink({ uri: "http://localhost:4000" });
 const authLink = setContext(async (req, { headers }) => {

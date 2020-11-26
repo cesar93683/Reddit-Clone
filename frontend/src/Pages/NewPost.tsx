@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import "./EditPost";
 import { useMutation } from "@apollo/client";
-import { NEW_POST_MUTATION } from "../../GraphQL/Mutation";
+import { NEW_POST_MUTATION } from "../GraphQL/Mutation";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 const NewPost = () => {
   const [newPost, { loading }] = useMutation(NEW_POST_MUTATION);

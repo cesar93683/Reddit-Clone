@@ -1,10 +1,10 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
 import { useParams } from "react-router-dom";
+import Card from "../components/Card/Card";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import { GET_USER_QUERY } from "../GraphQL/Query";
-import Card from "../shared/components/Card/Card";
-import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
-import IPost from "../shared/interfaces/IPost";
+import IPost from "../utils/interfaces/IPost";
 
 interface UserParams {
   userId: string;

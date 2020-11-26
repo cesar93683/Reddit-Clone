@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./Comment.scss";
 import { Link } from "react-router-dom";
-import timeSince from "../../utils/timeSince";
-import IComment from "../../shared/interfaces/IComment";
-import { DELETE_COMMENT_MUTATION } from "../../GraphQL/Mutation";
+import timeSince from "../../../utils/timeSince";
+import IComment from "../../../utils/interfaces/IComment";
+import { DELETE_COMMENT_MUTATION } from "../../../GraphQL/Mutation";
 import { useMutation } from "@apollo/client";
 
 interface CommentProps {

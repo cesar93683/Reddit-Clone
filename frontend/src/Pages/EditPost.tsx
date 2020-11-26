@@ -1,10 +1,9 @@
 import { useMutation, useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { EDIT_POST_MUTATION } from "../../GraphQL/Mutation";
-import { GET_POST_BY_ID_QUERY } from "../../GraphQL/Query";
-
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import { EDIT_POST_MUTATION } from "../GraphQL/Mutation";
+import { GET_POST_BY_ID_QUERY } from "../GraphQL/Query";
 
 interface PostParams {
   postId: string;

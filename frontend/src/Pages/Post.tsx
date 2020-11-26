@@ -1,18 +1,18 @@
 import React, { useContext, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
-import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import Card from "../../shared/components/Card/Card";
-import Comment from "../components/Comment";
-import CommentForm from "../components/CommentForm";
+import Comment from "./Post/components/Comment";
+import CommentForm from "./Post/components/CommentForm";
 import { useMutation, useQuery } from "@apollo/client";
-import IComment from "../../shared/interfaces/IComment";
-import { AuthContext } from "../../shared/context/auth-context";
-import { GET_POST_BY_ID_QUERY } from "../../GraphQL/Query";
+import IComment from "../utils/interfaces/IComment";
+import { AuthContext } from "../utils/auth-context";
+import { GET_POST_BY_ID_QUERY } from "../GraphQL/Query";
 import {
   CREATE_COMMENT_MUTATION,
   DELETE_POST_MUTATION,
-} from "../../GraphQL/Mutation";
+} from "../GraphQL/Mutation";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import Card from "../components/Card/Card";
 
 interface PostParams {
   postId: string;
