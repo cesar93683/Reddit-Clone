@@ -27,3 +27,7 @@
   border: 1px solid;
   border-color: var(--light);
 }
+.btn-disbaled {
+  opacity: 65%;
+  pointer-events: none;
+}

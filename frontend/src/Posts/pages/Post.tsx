@@ -24,7 +24,7 @@ const PostItem = () => {
   const postId = Number(useParams<PostParams>().postId);
   const [createComment] = useMutation(CREATE_COMMENT_MUTATION);
   const [deletePost] = useMutation(DELETE_POST_MUTATION);
-  const [newComments, setNewComments] = useState<IComment[]>([]);
+  const [newComment, setNewComment] = useState<IComment | null>(null);
   const { loading, data, error } = useQuery(GET_POST_BY_ID_QUERY, {
     variables: { id: postId },
   });
@@ -40,8 +40,8 @@ const PostItem = () => {
 
   const onSubmitComment = async (content: string) => {
     await createComment({ variables: { postId, content } })
-      .then(({ data: { createComment: newComment } }) => {
-        setNewComments([newComment, ...newComments]);
+      .then(({ data: { createComment } }) => {
+        setNewComment(createComment);
       })
       .catch((err) => {});
   };
@@ -66,20 +66,24 @@ const PostItem = () => {
           userId={auth.userId}
         />
         <div className="bg-dark-gray p-3">
-          {auth.isLoggedIn && <CommentForm onSubmit={onSubmitComment} />}
-          {data.getPostById.comments.length === 0 &&
-            newComments.length == 0 && (
-              <h2 className="text-light">No Comments</h2>
-            )}
-          {newComments.map((comment: IComment) => (
+          {auth.isLoggedIn && (
+            <CommentForm
+              onSubmit={onSubmitComment}
+              enableSubmit={!!newComment}
+            />
+          )}
+          {data.getPostById.comments.length === 0 && !newComment && (
+            <h2 className="text-light">No Comments</h2>
+          )}
+          {newComment && (
             <Comment
-              key={comment.id}
-              comment={comment}
+              key={newComment.id}
+              comment={newComment}
               currentDate={currentDate}
               postId={postId}
               userId={auth.userId}
             />
-          ))}
+          )}
           {data.getPostById.comments
             .slice(0)
             .reverse()

@@ -3,6 +3,7 @@ import "./CommentForm.scss";
 
 interface CommentFormProps {
   onSubmit: (comment: string) => void;
+  enableSubmit: boolean;
 }
 
 const CommentForm = (props: CommentFormProps) => {
@@ -31,7 +32,13 @@ const CommentForm = (props: CommentFormProps) => {
         onChange={handleChange}
       />
       <div className="d-flex justify-content-end">
-        <button className="btn btn-primary" type="submit">
+        <button
+          className={
+            "btn btn-primary" + (props.enableSubmit ? "" : " btn-disabled")
+          }
+          type="submit"
+          disabled={props.enableSubmit}
+        >
           Comment
         </button>
       </div>
