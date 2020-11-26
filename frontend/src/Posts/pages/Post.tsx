@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
@@ -24,6 +24,7 @@ const PostItem = () => {
   const postId = Number(useParams<PostParams>().postId);
   const [createComment] = useMutation(CREATE_COMMENT_MUTATION);
   const [deletePost] = useMutation(DELETE_POST_MUTATION);
+  const [newComments, setNewComments] = useState<IComment[]>([]);
   const { loading, data, error } = useQuery(GET_POST_BY_ID_QUERY, {
     variables: { id: postId },
   });
@@ -39,7 +40,9 @@ const PostItem = () => {
 
   const onSubmitComment = async (content: string) => {
     await createComment({ variables: { postId, content } })
-      .then(({ data }) => {})
+      .then(({ data: { createComment: newComment } }) => {
+        setNewComments([newComment, ...newComments]);
+      })
       .catch((err) => {});
   };
 
@@ -51,33 +54,40 @@ const PostItem = () => {
     return <h1 className="text-light">An error occured.</h1>;
   }
 
+  console.log(data.getPostById.comments.reverse);
+
   return (
     <div>
-      {data && data.getPostById && (
-        <React.Fragment>
-          <Card
-            key={data.getPostById.id}
-            post={data.getPostById}
-            currentDate={currentDate}
-            onDelete={onDelete}
-            linkable={false}
-            userId={auth.userId}
-          />
-          <div className="bg-dark-gray p-3">
-            {auth.isLoggedIn && <CommentForm onSubmit={onSubmitComment} />}
-            {data.getPostById.comments.length === 0 && (
-              <h2 className="text-light">No Comments</h2>
-            )}
-            {data.getPostById.comments.map((comment: IComment) => (
-              <Comment
-                key={comment.id}
-                comment={comment}
-                currentDate={currentDate}
-              />
-            ))}
-          </div>
-        </React.Fragment>
-      )}
+      <React.Fragment>
+        <Card
+          key={data.getPostById.id}
+          post={data.getPostById}
+          currentDate={currentDate}
+          onDelete={onDelete}
+          linkable={false}
+          userId={auth.userId}
+        />
+        <div className="bg-dark-gray p-3">
+          {auth.isLoggedIn && <CommentForm onSubmit={onSubmitComment} />}
+          {data.getPostById.comments.length === 0 && (
+            <h2 className="text-light">No Comments</h2>
+          )}
+          {newComments.map((comment: IComment) => (
+            <Comment
+              key={comment.id}
+              comment={comment}
+              currentDate={currentDate}
+            />
+          ))}
+          {data.getPostById.comments.map((comment: IComment) => (
+            <Comment
+              key={comment.id}
+              comment={comment}
+              currentDate={currentDate}
+            />
+          ))}
+        </div>
+      </React.Fragment>
     </div>
   );
 };
