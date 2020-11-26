@@ -5,7 +5,7 @@ import { useQuery } from "@apollo/client";
 import { GET_ALL_POSTS_QUERY } from "../GraphQL/Query";
 
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
-import Card from "../components/Card/Card";
+import CustomCard from "../components/CustomCard";
 
 const Home = () => {
   const currentDate = Date.now();
@@ -29,7 +29,7 @@ const Home = () => {
           .slice(0)
           .reverse()
           .map((post: IPost) => (
-            <Card
+            <CustomCard
               key={post.id}
               post={post}
               currentDate={currentDate}

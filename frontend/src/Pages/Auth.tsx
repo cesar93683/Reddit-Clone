@@ -101,12 +101,6 @@ const Auth = ({ isLogInMode }: AuthProps) => {
           <Button className="mt-1" variant="primary" type="submit">
             {isLogInMode ? "Log In" : "Sign Up"}
           </Button>
-          <Link
-            className="d-block mt-1"
-            to={isLogInMode ? "/signup" : "/login"}
-          >
-            {isLogInMode ? "Sign Up Instead" : "Log In Instead"}
-          </Link>
         </Form>
       </Col>
     </Row>

@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
 import { useParams } from "react-router-dom";
-import Card from "../components/Card/Card";
+import CustomCard from "../components/CustomCard";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import { GET_USER_QUERY } from "../GraphQL/Query";
 import IPost from "../utils/interfaces/IPost";
@@ -36,7 +36,7 @@ const User = () => {
           .slice(0)
           .reverse()
           .map((post: IPost) => (
-            <Card
+            <CustomCard
               key={post.id}
               post={post}
               currentDate={currentDate}

@@ -12,7 +12,7 @@ import {
   DELETE_POST_MUTATION,
 } from "../GraphQL/Mutation";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
-import Card from "../components/Card/Card";
+import CustomCard from "../components/CustomCard";
 
 interface PostParams {
   postId: string;
@@ -57,7 +57,7 @@ const PostItem = () => {
   return (
     <div>
       <React.Fragment>
-        <Card
+        <CustomCard
           key={data.getPostById.id}
           post={data.getPostById}
           currentDate={currentDate}
