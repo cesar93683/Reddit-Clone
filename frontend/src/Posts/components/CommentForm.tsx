@@ -35,7 +35,9 @@ const CommentForm = (props: CommentFormProps) => {
           Comment
         </button>
       </div>
-      {error && <div>{error}</div>}
+      {error && (
+        <div className="d-flex justify-content-end text-danger">{error}</div>
+      )}
     </form>
   );
 };

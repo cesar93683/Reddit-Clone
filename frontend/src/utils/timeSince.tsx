@@ -27,8 +27,7 @@ const timeSince = (currentDate: number, date: number) => {
     interval = Math.floor(interval);
     return interval + " minute" + (interval === 1 ? "" : "s") + " ago";
   }
-  interval = Math.floor(interval);
-  return interval + " second" + (interval === 1 ? "" : "s") + " ago";
+  return seconds + " second" + (seconds === 1 ? "" : "s") + " ago";
 };
 
 export default timeSince;
