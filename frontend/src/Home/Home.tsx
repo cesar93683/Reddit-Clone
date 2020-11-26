@@ -24,16 +24,19 @@ const Home = () => {
         <h1 className="text-light">No Posts</h1>
       )}
       {data &&
-        data.getAllPosts.map((post: IPost) => (
-          <Card
-            key={post.id}
-            post={post}
-            currentDate={currentDate}
-            linkable
-            userId={null}
-            onDelete={null}
-          />
-        ))}
+        data.getAllPosts
+          .slice(0)
+          .reverse()
+          .map((post: IPost) => (
+            <Card
+              key={post.id}
+              post={post}
+              currentDate={currentDate}
+              linkable
+              userId={null}
+              onDelete={null}
+            />
+          ))}
     </div>
   );
 };
