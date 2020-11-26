@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import "./Navbar.scss";
 import Auth from "./Auth/Auth";
 import { AuthContext } from "../../context/auth-context";
+import { Button, Navbar } from "react-bootstrap";
 
 const NavBar = () => {
   const auth = useContext(AuthContext);
@@ -23,38 +23,37 @@ const NavBar = () => {
     setLogInMode(false);
   };
   return (
-    <div className="NavBar">
-      <Link className="NavBar-Home" to="/">
-        Home
+    <Navbar bg="light" variant="light">
+      <Link to="/" className="mr-auto">
+        <Navbar.Brand>Home</Navbar.Brand>
       </Link>
       {auth.isLoggedIn ? (
-        <div className="d-flex">
-          <Link className="btn btn-primary mr-3" to="/post/new">
-            New Post
+        <>
+          <Link to="/post/new">
+            <Button variant="primary" className="mr-1">
+              New Post
+            </Button>
           </Link>
-          <button className="btn btn-outline-light" onClick={auth.logout}>
+          <Button variant="secondary" onClick={auth.logout}>
             Log Out
-          </button>
-        </div>
+          </Button>
+        </>
       ) : (
-        <div className="d-flex">
-          <button className="btn btn-light" onClick={toggleLogInMode}>
+        <>
+          <Button variant="outline-primary" onClick={toggleLogInMode}>
             Log In
-          </button>
-          <button
-            className="btn btn-outline-light ml-2"
-            onClick={toggleSignUpMode}
-          >
+          </Button>
+          <Button variant="primary" className="ml-2" onClick={toggleSignUpMode}>
             Sign Up
-          </button>
-        </div>
+          </Button>
+        </>
       )}
       <Auth
         isLogInMode={logInMode}
         closeDropDown={closeDropDown}
         className={logInMode || signUpMode ? "NavBar-DropDown" : "d-none"}
       />
-    </div>
+    </Navbar>
   );
 };
 
