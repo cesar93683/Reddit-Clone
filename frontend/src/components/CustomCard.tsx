@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import IPost from "../utils/interfaces/IPost";
 import timeSince from "../utils/timeSince";
 import { Button, Card } from "react-bootstrap";
+import CustomCardSubtitle from "./CustomCardSubtitle";
 
 interface CustomCardInterface {
   post: IPost;
@@ -31,15 +32,11 @@ const CustomCard = (props: CustomCardInterface) => {
   return (
     <Card className="my-2">
       <Card.Body>
-        <Card.Subtitle className="d-flex justify-content-between">
-          <div>
-            {"Posted by "}
-            <Link className="text-body" to={"/users/" + authorId}>
-              {username}
-            </Link>
-          </div>
-          <div>{timeSince(currentDate, dateCreated)}</div>
-        </Card.Subtitle>
+        <CustomCardSubtitle
+          authorId={authorId}
+          timeSince={timeSince(currentDate, dateCreated)}
+          username={username}
+        />
         <Card.Title>
           {linkable ? (
             <Link className="text-body" to={"/posts/" + postId}>
@@ -65,9 +62,9 @@ const CustomCard = (props: CustomCardInterface) => {
 
           {onDelete && authorId === Number(userId) && (
             <div>
-              <Button variant="outline-primary">
-                <Link to={`/posts/${postId}/edit`}>EDIT</Link>
-              </Button>
+              <Link to={`/posts/${postId}/edit`}>
+                <Button variant="outline-primary">EDIT</Button>
+              </Link>
               <Button variant="danger" className="ml-1" onClick={onDelete}>
                 DELETE
               </Button>

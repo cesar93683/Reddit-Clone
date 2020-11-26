@@ -5,7 +5,7 @@ import {
   Redirect,
   Switch,
 } from "react-router-dom";
-import Post from "./Pages/Post";
+import Post from "./Pages/Post/Post";
 import Home from "./Pages/Home";
 import NewPost from "./Pages/NewPost";
 import { AuthContext } from "./utils/auth-context";

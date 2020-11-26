@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import "./Comment.scss";
-import { Link } from "react-router-dom";
 import timeSince from "../../../utils/timeSince";
 import IComment from "../../../utils/interfaces/IComment";
 import { DELETE_COMMENT_MUTATION } from "../../../GraphQL/Mutation";
 import { useMutation } from "@apollo/client";
+import { Button, Card } from "react-bootstrap";
+import CustomCardSubtitle from "../../../components/CustomCardSubtitle";
 
 interface CommentProps {
   currentDate: number;
@@ -41,26 +41,27 @@ const Comment = (props: CommentProps) => {
   };
 
   if (isCommentDeleted) {
-    return <div className="mb-3 text-light">Comment deleted</div>;
+    return <div className="mb-3">Comment deleted</div>;
   }
 
   return (
-    <div className="mb-3">
-      <div className="d-flex">
-        <Link className="Comment__Username" to={"/users/" + authorId}>
-          {username}
-        </Link>
-        <div className="text-light ml-1">
-          {timeSince(currentDate, dateCreated)}
+    <Card className="my-2">
+      <Card.Body>
+        <CustomCardSubtitle
+          authorId={authorId}
+          timeSince={timeSince(currentDate, dateCreated)}
+          username={username}
+        />
+        <Card.Text>{content}</Card.Text>
+        <div className="d-flex justify-content-end">
+          {Number(userId) === authorId && (
+            <Button variant="danger" onClick={onDelete}>
+              Delete
+            </Button>
+          )}
         </div>
-        {Number(userId) === authorId && (
-          <button onClick={onDelete} className="btn btn-danger">
-            Delete
-          </button>
-        )}
-      </div>
-      <div className="text-light">{content}</div>
-    </div>
+      </Card.Body>
+    </Card>
   );
 };
 export default Comment;

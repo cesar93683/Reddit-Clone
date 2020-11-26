@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./CommentForm.scss";
+import { Alert, Button, Form } from "react-bootstrap";
 
 interface CommentFormProps {
   onSubmit: (comment: string) => void;
@@ -25,27 +25,20 @@ const CommentForm = (props: CommentFormProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <textarea
-        className="CommentForm__TextArea"
+    <Form onSubmit={handleSubmit}>
+      <Form.Control
+        as="textarea"
+        rows={3}
         value={comment}
         onChange={handleChange}
       />
-      <div className="d-flex justify-content-end">
-        <button
-          className={
-            "btn btn-primary" + (props.enableSubmit ? "" : " btn-disabled")
-          }
-          type="submit"
-          disabled={props.enableSubmit}
-        >
+      <div className="d-flex justify-content-end mt-1">
+        <Button type="submit" disabled={props.enableSubmit}>
           Comment
-        </button>
+        </Button>
       </div>
-      {error && (
-        <div className="d-flex justify-content-end text-danger">{error}</div>
-      )}
-    </form>
+      {error && <Alert variant="danger">{error}</Alert>}
+    </Form>
   );
 };
 export default CommentForm;
