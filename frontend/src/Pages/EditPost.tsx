@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
+import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import { EDIT_POST_MUTATION } from "../GraphQL/Mutation";
@@ -49,38 +50,33 @@ const EditPost = () => {
   }
 
   return (
-    <React.Fragment>
-      {data && (
-        <div className="Form">
-          <div className="Form__Title">Edit Post</div>
-          <form className="Form__Form" onSubmit={postUpdateSubmitHandler}>
-            <label className="text-light" htmlFor="title">
-              Title
-            </label>
-            <input
-              className="Form__Input"
-              type="text"
-              id="title"
-              value={data.getPostById.title}
-              disabled
-            />
-            <label className="text-light" htmlFor="content">
-              Content
-            </label>
-            <textarea
-              className="Form__TextArea"
-              id="content"
-              value={content}
-              onChange={handleContentChange}
-            />
-            {error && <div className="Form-Error">{error}</div>}
-            <button className="btn btn-primary" type="submit">
-              Update Post
-            </button>
-          </form>
-        </div>
-      )}
-    </React.Fragment>
+    <Row className="justify-content-md-center">
+      <Col xl={6} lg={8}>
+        {data && (
+          <Form onSubmit={postUpdateSubmitHandler}>
+            <Form.Group>
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter title"
+                value={data.getPostById.title}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Content</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter content"
+                value={content}
+                onChange={handleContentChange}
+              />
+            </Form.Group>
+            {error && <Alert variant="danger">{error}</Alert>}
+            <Button type="submit">Update Post</Button>
+          </Form>
+        )}
+      </Col>
+    </Row>
   );
 };
 export default EditPost;

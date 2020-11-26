@@ -79,18 +79,15 @@ const PostItem = () => {
           userId={auth.userId}
         />
       )}
-      {data.getPostById.comments
-        .slice(0)
-        .reverse()
-        .map((comment: IComment) => (
-          <Comment
-            key={comment.id}
-            comment={comment}
-            currentDate={currentDate}
-            postId={postId}
-            userId={auth.userId}
-          />
-        ))}
+      {data.getPostById.comments.map((comment: IComment) => (
+        <Comment
+          key={comment.id}
+          comment={comment}
+          currentDate={currentDate}
+          postId={postId}
+          userId={auth.userId}
+        />
+      ))}
     </>
   );
 };

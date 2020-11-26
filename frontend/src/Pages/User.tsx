@@ -22,29 +22,23 @@ const User = () => {
     return <LoadingSpinner />;
   }
 
-  if (error) {
+  if (error || !data) {
     return <h1 className="text-light">An error occured.</h1>;
   }
 
   return (
     <div>
-      {data && data.getUser.posts.length === 0 && (
-        <h1 className="text-light">No Posts</h1>
-      )}
-      {data &&
-        data.getUser.posts
-          .slice(0)
-          .reverse()
-          .map((post: IPost) => (
-            <CustomCard
-              key={post.id}
-              post={post}
-              currentDate={currentDate}
-              linkable
-              onDelete={null}
-              userId={null}
-            />
-          ))}
+      {data.getUser.posts.length === 0 && <h1>No Posts</h1>}
+      {data.getUser.posts.map((post: IPost) => (
+        <CustomCard
+          key={post.id}
+          post={post}
+          currentDate={currentDate}
+          linkable
+          onDelete={null}
+          userId={null}
+        />
+      ))}
     </div>
   );
 };

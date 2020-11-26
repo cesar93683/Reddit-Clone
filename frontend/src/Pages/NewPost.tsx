@@ -5,6 +5,7 @@ import "./EditPost";
 import { useMutation } from "@apollo/client";
 import { NEW_POST_MUTATION } from "../GraphQL/Mutation";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 
 const NewPost = () => {
   const [newPost, { loading }] = useMutation(NEW_POST_MUTATION);
@@ -23,9 +24,14 @@ const NewPost = () => {
   };
   const postSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!title) {
+      setError("Please enter a title");
+      return;
+    }
+
     await newPost({ variables: { title, content } })
       .then(({ data }) => {
-        console.log(data);
         history.push(`/posts/${data.createPost.id}`);
       })
       .catch((err) => {});
@@ -36,34 +42,32 @@ const NewPost = () => {
   }
 
   return (
-    <div className="Form">
-      <div className="Form__Title">New Post</div>
-      <form className="Form__Form" onSubmit={postSubmitHandler}>
-        <label className="text-light" htmlFor="title">
-          Title
-        </label>
-        <input
-          className="Form__Input"
-          type="text"
-          id="title"
-          value={title}
-          onChange={handleTitleChange}
-        />
-        <label className="text-light" htmlFor="content">
-          Content
-        </label>
-        <textarea
-          className="Form__TextArea"
-          id="content"
-          value={content}
-          onChange={handleContentChange}
-        />
-        {error && <div className="Form-Error">{error}</div>}
-        <button className="btn btn-primary" type="submit">
-          New Post
-        </button>
-      </form>
-    </div>
+    <Row className="justify-content-md-center">
+      <Col xl={6} lg={8}>
+        <Form onSubmit={postSubmitHandler}>
+          <Form.Group>
+            <Form.Label>Title</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter title"
+              value={title}
+              onChange={handleTitleChange}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Content</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter content"
+              value={content}
+              onChange={handleContentChange}
+            />
+          </Form.Group>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <Button type="submit">New Post</Button>
+        </Form>
+      </Col>
+    </Row>
   );
 };
 
