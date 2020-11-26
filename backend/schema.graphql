@@ -26,7 +26,7 @@ type Message {
 type Mutation {
   createComment(content: String!, postId: Int!): Comment
   createPost(content: String!, title: String!): Post
-  deleteComment(id: Int!): Message
+  deleteComment(id: Int!, postId: Int!): Message
   deletePost(id: Int!): Message
   editPost(content: String!, id: Int!): Post
   logIn(email: String!, password: String!): AuthPayload

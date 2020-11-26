@@ -32,16 +32,19 @@ const User = () => {
         <h1 className="text-light">No Posts</h1>
       )}
       {data &&
-        data.getUser.posts.map((post: IPost) => (
-          <Card
-            key={post.id}
-            post={post}
-            currentDate={currentDate}
-            linkable
-            onDelete={null}
-            userId={null}
-          />
-        ))}
+        data.getUser.posts
+          .slice(0)
+          .reverse()
+          .map((post: IPost) => (
+            <Card
+              key={post.id}
+              post={post}
+              currentDate={currentDate}
+              linkable
+              onDelete={null}
+              userId={null}
+            />
+          ))}
     </div>
   );
 };

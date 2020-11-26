@@ -194,9 +194,8 @@ export const Mutation = mutationType({
         if (!post) {
           throw new Error('Creating comment failed, please try again.');
         }
-        console.log(`postId:${postId} userId:${userId}`);
         try {
-          return ctx.prisma.comment.create({
+          const result = await ctx.prisma.comment.create({
             data: {
               content,
               dateCreated: String(Date.now()),
@@ -204,6 +203,11 @@ export const Mutation = mutationType({
               post: { connect: { id: postId } },
             },
           });
+          await ctx.prisma.post.update({
+            where: { id: postId },
+            data: { numComments: post.numComments + 1 },
+          });
+          return result;
         } catch (err) {
           throw new Error('Creating comment failed, please try again.');
         }
@@ -213,16 +217,27 @@ export const Mutation = mutationType({
     t.field('deleteComment', {
       type: 'Message',
       nullable: true,
-      args: { id: intArg({ nullable: false }) },
-      resolve: async (parent, { id }, ctx) => {
+      args: {
+        id: intArg({ nullable: false }),
+        postId: intArg({ nullable: false }),
+      },
+      resolve: async (parent, { id, postId }, ctx) => {
+        let post = await ctx.prisma.post.findOne({ where: { id: postId } });
+        if (!post) {
+          throw new Error('Deleting comment failed, please try again.');
+        }
         try {
           await ctx.prisma.comment.delete({ where: { id } });
-          return {
-            message: 'Success',
-          };
+          await ctx.prisma.post.update({
+            where: { id: postId },
+            data: { numComments: post.numComments - 1 },
+          });
         } catch (err) {
           throw new Error('Deleting comment failed, please try again.');
         }
+        return {
+          message: 'Success',
+        };
       },
     });
   },
