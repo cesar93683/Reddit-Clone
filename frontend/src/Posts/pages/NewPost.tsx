@@ -24,9 +24,11 @@ const NewPost = () => {
   const postSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await newPost({ variables: { title, content } })
-      .then(({ data }) => {})
+      .then(({ data }) => {
+        console.log(data);
+        history.push(`/posts/${data.createPost.id}`);
+      })
       .catch((err) => {});
-    history.push("/");
   };
 
   if (loading) {
