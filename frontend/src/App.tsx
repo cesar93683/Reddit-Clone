@@ -21,6 +21,7 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import { setContext } from "apollo-link-context";
+import Auth from "./Pages/Auth";
 
 const httpLink = new HttpLink({ uri: "http://localhost:4000" });
 const authLink = setContext(async (req, { headers }) => {
@@ -76,6 +77,12 @@ const App = () => {
         </Route>
         <Route path="/users/:userId" exact>
           <User />
+        </Route>
+        <Route path="/login" exact>
+          <Auth isLogInMode />
+        </Route>
+        <Route path="/signup" exact>
+          <Auth isLogInMode={false} />
         </Route>
         <Redirect to="/" />
       </Switch>
