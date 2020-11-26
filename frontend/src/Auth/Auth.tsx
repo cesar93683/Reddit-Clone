@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { AuthContext } from "../shared/context/auth-context";
 import { LOGIN_MUTATION, SIGNUP_MUTATION } from "../GraphQL/Mutation";
-import { Alert, Button, Form } from "react-bootstrap";
+import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 
 interface AuthProps {
@@ -65,44 +65,51 @@ const Auth = ({ isLogInMode }: AuthProps) => {
   };
 
   return (
-    <Form onSubmit={authSubmitHandler}>
-      <Form.Label>Email address</Form.Label>
-      <Form.Control
-        type="email"
-        placeholder="Enter email"
-        value={email}
-        onChange={handleEmail}
-      />
-      {!isLogInMode && (
-        <>
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter username"
-            value={username}
-            onChange={handleUsername}
-          />
-        </>
-      )}
-      <Form.Label>Password</Form.Label>
-      <Form.Control
-        type="password"
-        placeholder="Enter password"
-        value={password}
-        onChange={handlePasssword}
-      />
-      {error && (
-        <Alert className="mt-1 mb-0" variant="danger">
-          {error}
-        </Alert>
-      )}
-      <Button className="mt-1" variant="primary" type="submit">
-        {isLogInMode ? "Log In" : "Sign Up"}
-      </Button>
-      <Link className="d-block" to={isLogInMode ? "/signup" : "/login"}>
-        {isLogInMode ? "Sign Up Instead" : "Log In Instead"}
-      </Link>
-    </Form>
+    <Row className="justify-content-md-center">
+      <Col xl={6} lg={8}>
+        <Form onSubmit={authSubmitHandler}>
+          <Form.Group>
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={email}
+              onChange={handleEmail}
+            />
+          </Form.Group>
+          {!isLogInMode && (
+            <Form.Group>
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter username"
+                value={username}
+                onChange={handleUsername}
+              />
+            </Form.Group>
+          )}
+          <Form.Group>
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Enter password"
+              value={password}
+              onChange={handlePasssword}
+            />
+          </Form.Group>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <Button className="mt-1" variant="primary" type="submit">
+            {isLogInMode ? "Log In" : "Sign Up"}
+          </Button>
+          <Link
+            className="d-block mt-1"
+            to={isLogInMode ? "/signup" : "/login"}
+          >
+            {isLogInMode ? "Sign Up Instead" : "Log In Instead"}
+          </Link>
+        </Form>
+      </Col>
+    </Row>
   );
 };
 

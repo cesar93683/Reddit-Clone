@@ -13,7 +13,6 @@ import { AuthContext } from "./shared/context/auth-context";
 import { useAuth } from "./shared/hooks/auth-hook";
 import EditPost from "./Posts/pages/EditPost";
 import User from "./User/User";
-import "./App.scss";
 import {
   ApolloClient,
   ApolloProvider,
@@ -22,6 +21,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "apollo-link-context";
 import Auth from "./Auth/Auth";
+import { Container } from "react-bootstrap";
 
 const httpLink = new HttpLink({ uri: "http://localhost:4000" });
 const authLink = setContext(async (req, { headers }) => {
@@ -102,7 +102,7 @@ const App = () => {
       >
         <Router>
           <NavBar />
-          <main className="App">{routes}</main>
+          <Container>{routes}</Container>
         </Router>
       </AuthContext.Provider>
     </ApolloProvider>
