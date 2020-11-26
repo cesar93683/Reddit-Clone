@@ -70,24 +70,26 @@ const PostItem = () => {
       {data.getPostById.comments.length === 0 && !newComment && (
         <h2>No Comments</h2>
       )}
-      {newComment && (
-        <Comment
-          key={newComment.id}
-          comment={newComment}
-          currentDate={currentDate}
-          postId={postId}
-          userId={auth.userId}
-        />
-      )}
-      {data.getPostById.comments.map((comment: IComment) => (
-        <Comment
-          key={comment.id}
-          comment={comment}
-          currentDate={currentDate}
-          postId={postId}
-          userId={auth.userId}
-        />
-      ))}
+      <div className="px-3">
+        {newComment && (
+          <Comment
+            key={newComment.id}
+            comment={newComment}
+            currentDate={currentDate}
+            postId={postId}
+            userId={auth.userId}
+          />
+        )}
+        {data.getPostById.comments.map((comment: IComment) => (
+          <Comment
+            key={comment.id}
+            comment={comment}
+            currentDate={currentDate}
+            postId={postId}
+            userId={auth.userId}
+          />
+        ))}
+      </div>
     </>
   );
 };

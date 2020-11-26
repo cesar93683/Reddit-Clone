@@ -57,15 +57,16 @@ const EditPost = () => {
             <Form.Group>
               <Form.Label>Title</Form.Label>
               <Form.Control
+                disabled
                 type="text"
-                placeholder="Enter title"
                 value={data.getPostById.title}
               />
             </Form.Group>
             <Form.Group>
               <Form.Label>Content</Form.Label>
               <Form.Control
-                type="text"
+                as="textarea"
+                rows={3}
                 placeholder="Enter content"
                 value={content}
                 onChange={handleContentChange}
