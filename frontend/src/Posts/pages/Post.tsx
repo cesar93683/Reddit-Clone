@@ -47,13 +47,13 @@ const PostItem = () => {
     return <LoadingSpinner />;
   }
 
-  if (error) {
+  if (error || !data || !data.getPostById) {
     return <h1 className="text-light">An error occured.</h1>;
   }
 
   return (
     <div>
-      {data && (
+      {data && data.getPostById && (
         <React.Fragment>
           <Card
             key={data.getPostById.id}
