@@ -47,11 +47,11 @@ const GET_USER_QUERY = gql`
       posts {
         id
         title
+        dateCreated
+        numComments
         author {
           id
           username
-          dateCreated
-          numComments
         }
       }
     }
