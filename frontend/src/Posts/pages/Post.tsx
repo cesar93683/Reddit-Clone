@@ -76,6 +76,8 @@ const PostItem = () => {
               key={comment.id}
               comment={comment}
               currentDate={currentDate}
+              postId={postId}
+              userId={auth.userId}
             />
           ))}
           {data.getPostById.comments
@@ -86,6 +88,8 @@ const PostItem = () => {
                 key={comment.id}
                 comment={comment}
                 currentDate={currentDate}
+                postId={postId}
+                userId={auth.userId}
               />
             ))}
         </div>

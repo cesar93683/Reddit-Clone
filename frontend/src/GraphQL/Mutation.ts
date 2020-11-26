@@ -59,6 +59,14 @@ const DELETE_POST_MUTATION = gql`
     }
   }
 `;
+
+const DELETE_COMMENT_MUTATION = gql`
+  mutation($id: Int!, $postId: Int!) {
+    deleteComment(id: $id, postId: $postId) {
+      message
+    }
+  }
+`;
 export {
   LOGIN_MUTATION,
   SIGNUP_MUTATION,
@@ -66,4 +74,5 @@ export {
   NEW_POST_MUTATION,
   CREATE_COMMENT_MUTATION,
   DELETE_POST_MUTATION,
+  DELETE_COMMENT_MUTATION,
 };
