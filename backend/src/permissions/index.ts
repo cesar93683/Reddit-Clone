@@ -32,6 +32,9 @@ export const permissions = shield(
       deleteComment: rules.isCommentOwner,
       votePost: rules.isAuthenticatedUser,
     },
+    Query: {
+      getVote: rules.isAuthenticatedUser,
+    },
   },
   { allowExternalErrors: true },
 );

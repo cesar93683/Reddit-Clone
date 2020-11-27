@@ -57,6 +57,7 @@ type Query {
   getAllPosts: [Post]
   getPostById(id: Int): Post
   getUser(userId: Int): User
+  getVote(postId: Int): Vote
 }
 
 type User {

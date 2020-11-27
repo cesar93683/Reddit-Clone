@@ -285,18 +285,18 @@ export const Mutation = mutationType({
         if (!post) {
           throw new Error('Post does not exist');
         }
-        let oldVoteArr;
+        let oldVote;
 
         try {
-          oldVoteArr = await ctx.prisma.vote.findMany({
+          oldVote = await ctx.prisma.vote.findFirst({
             where: { post: { id: postId }, author: { id: userId } },
           });
         } catch (err) {
           throw new Error('Voting failed, please try again.');
         }
 
-        if (oldVoteArr.length) {
-          const voteDiff = value - oldVoteArr[0].value;
+        if (oldVote) {
+          const voteDiff = value - oldVote.value;
           if (voteDiff !== 0) {
             try {
               await ctx.prisma.vote.updateMany({
