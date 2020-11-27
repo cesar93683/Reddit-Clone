@@ -364,6 +364,7 @@ export const Mutation = mutationType({
         try {
           userId = Number(getUserId(ctx));
         } catch (err) {
+          console.log(err);
           throw new Error('Voting failed, please try again.');
         }
         let comment;
@@ -372,6 +373,7 @@ export const Mutation = mutationType({
             where: { id: commentId },
           });
         } catch (err) {
+          console.log(err);
           throw new Error('Voting failed, please try again.');
         }
         if (!comment) {
@@ -384,6 +386,7 @@ export const Mutation = mutationType({
             where: { comment: { id: commentId }, author: { id: userId } },
           });
         } catch (err) {
+          console.log(err);
           throw new Error('Voting failed, please try again.');
         }
 
@@ -405,6 +408,7 @@ export const Mutation = mutationType({
                 data: { numVotes: comment.numVotes + voteDiff },
               });
             } catch (err) {
+              console.log(err);
               throw new Error('Voting failed, please try again.');
             }
           }
@@ -421,11 +425,12 @@ export const Mutation = mutationType({
               comment: { connect: { id: commentId } },
             },
           });
-          await ctx.prisma.post.update({
+          await ctx.prisma.comment.update({
             where: { id: commentId },
             data: { numVotes: comment.numVotes + value },
           });
         } catch (err) {
+          console.log(err);
           throw new Error('Voting failed, please try again.');
         }
         return {

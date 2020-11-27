@@ -60,8 +60,7 @@ const Comment = (props: CommentProps) => {
   };
   const handleUpdateComment = async (newContent: string) => {
     await editComment({ variables: { id, content: newContent } })
-      .then(({ data }) => {
-        console.log(data);
+      .then(() => {
         setContent(newContent);
         setIsEditing(false);
       })
