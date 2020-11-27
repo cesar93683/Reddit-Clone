@@ -38,7 +38,7 @@ const CustomCard = (props: CustomCardProps) => {
   return (
     <Card className={className}>
       <Card.Body className="d-flex">
-        <VoteSection numVotes={numVotes} postId={postId} />
+        <VoteSection numVotes={numVotes} postId={postId} className="mr-2" />
         <div className="w-100">
           <CustomCardSubtitle
             authorId={authorId}

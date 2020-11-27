@@ -3,17 +3,19 @@ import React, { useMemo, useState } from "react";
 import { Button } from "react-bootstrap";
 import { VOTE_POST_MUTATION } from "../GraphQL/Mutation";
 import { GET_VOTE_QUERY } from "../GraphQL/Query";
+import LoadingSpinner from "./LoadingSpinner";
 
 interface VoteSectionProps {
   numVotes: number;
   postId: string;
+  className?: string;
 }
 
 const VoteSection = (props: VoteSectionProps) => {
-  const { numVotes, postId } = props;
+  const { numVotes, postId, className } = props;
 
   const [votePost] = useMutation(VOTE_POST_MUTATION);
-  const { data } = useQuery(GET_VOTE_QUERY, {
+  const { data, loading } = useQuery(GET_VOTE_QUERY, {
     variables: { postId: Number(postId) },
   });
 
@@ -31,6 +33,7 @@ const VoteSection = (props: VoteSectionProps) => {
       .then(({ data }) => {})
       .catch((err) => {});
     setDownVoteActive(!downVoteActive);
+    setUpVoteActive(false);
   };
 
   const handleUpVote = async () => {
@@ -39,22 +42,32 @@ const VoteSection = (props: VoteSectionProps) => {
       .then(({ data }) => {})
       .catch((err) => {});
     setUpVoteActive(!upVoteActive);
+    setDownVoteActive(false);
   };
 
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
   return (
-    <div>
+    <div className={"d-flex flex-column align-items-center " + className}>
       <Button
         onClick={handleUpVote}
         variant={upVoteActive ? "primary" : "secondary"}
+        disabled={!(data && data.getVote)}
+        size="sm"
       >
-        up
+        ^
       </Button>
       <div>{numVotes}</div>
       <Button
         onClick={handleDownVote}
         variant={downVoteActive ? "primary" : "secondary"}
+        disabled={!(data && data.getVote)}
+        size="sm"
+        className="w-100"
       >
-        down
+        v
       </Button>
     </div>
   );
