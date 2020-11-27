@@ -12,9 +12,10 @@ interface VoteSectionProps {
 }
 
 const VoteSection = (props: VoteSectionProps) => {
-  const { numVotes, postId, className } = props;
+  const { numVotes: numVotesFromProps, postId, className } = props;
 
   const [votePost] = useMutation(VOTE_POST_MUTATION);
+  const [numVotes, setNumVotes] = useState(numVotesFromProps);
   const { data, loading } = useQuery(GET_VOTE_QUERY, {
     variables: { postId: Number(postId) },
   });
@@ -30,19 +31,35 @@ const VoteSection = (props: VoteSectionProps) => {
   const handleDownVote = async () => {
     let value = downVoteActive ? 0 : -1;
     await votePost({ variables: { postId, value } })
-      .then(({ data }) => {})
+      .then(({ data }) => {
+        if (upVoteActive) {
+          setNumVotes(numVotes - 2);
+        } else if (downVoteActive) {
+          setNumVotes(numVotes + 1);
+        } else {
+          setNumVotes(numVotes - 1);
+        }
+        setDownVoteActive(!downVoteActive);
+        setUpVoteActive(false);
+      })
       .catch((err) => {});
-    setDownVoteActive(!downVoteActive);
-    setUpVoteActive(false);
   };
 
   const handleUpVote = async () => {
     let value = upVoteActive ? 0 : 1;
     await votePost({ variables: { postId, value } })
-      .then(({ data }) => {})
+      .then(({ data }) => {
+        if (upVoteActive) {
+          setNumVotes(numVotes - 1);
+        } else if (downVoteActive) {
+          setNumVotes(numVotes + 2);
+        } else {
+          setNumVotes(numVotes + 1);
+        }
+        setUpVoteActive(!upVoteActive);
+        setDownVoteActive(false);
+      })
       .catch((err) => {});
-    setUpVoteActive(!upVoteActive);
-    setDownVoteActive(false);
   };
 
   if (loading) {
