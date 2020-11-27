@@ -21,6 +21,7 @@ const CustomCard = (props: CustomCardInterface) => {
       author: { id: authorId, username },
       title,
       dateCreated,
+      dateUpdated,
       id: postId,
       content,
       numComments,
@@ -37,7 +38,8 @@ const CustomCard = (props: CustomCardInterface) => {
       <Card.Body>
         <CustomCardSubtitle
           authorId={authorId}
-          timeSince={timeSince(currentDate, dateCreated)}
+          timeSinceDateCreated={timeSince(currentDate, dateCreated)}
+          timeSinceDateUpdated={timeSince(currentDate, dateUpdated)}
           username={username}
         />
         <Card.Title>

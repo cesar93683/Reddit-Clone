@@ -8,6 +8,7 @@ export const Post = objectType({
     t.model.content();
     t.model.numComments();
     t.model.dateCreated();
+    t.model.dateUpdated();
     t.model.author();
     t.model.comments();
   },

@@ -6,6 +6,7 @@ const GET_ALL_POSTS_QUERY = gql`
       id
       title
       dateCreated
+      dateUpdated
       numComments
       author {
         id
@@ -22,6 +23,7 @@ const GET_POST_BY_ID_QUERY = gql`
       title
       content
       dateCreated
+      dateUpdated
       numComments
       author {
         id
@@ -31,6 +33,7 @@ const GET_POST_BY_ID_QUERY = gql`
         id
         content
         dateCreated
+        dateUpdated
         author {
           id
           username
@@ -48,6 +51,7 @@ const GET_USER_QUERY = gql`
         id
         title
         dateCreated
+        dateUpdated
         numComments
         author {
           id

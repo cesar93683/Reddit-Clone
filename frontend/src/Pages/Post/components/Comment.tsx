@@ -25,6 +25,7 @@ const Comment = (props: CommentProps) => {
       id,
       author: { id: authorId, username },
       dateCreated,
+      dateUpdated,
       content: contentFromProps,
     },
     currentDate,
@@ -71,7 +72,8 @@ const Comment = (props: CommentProps) => {
       <Card.Body>
         <CustomCardSubtitle
           authorId={authorId}
-          timeSince={timeSince(currentDate, dateCreated)}
+          timeSinceDateCreated={timeSince(currentDate, dateCreated)}
+          timeSinceDateUpdated={timeSince(currentDate, dateUpdated)}
           username={username}
         />
         {isEditing && (

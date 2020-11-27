@@ -126,6 +126,7 @@ export const Mutation = mutationType({
               title,
               numComments: 0,
               dateCreated: String(Date.now()),
+              dateUpdated: String(Date.now()),
               content,
               author: { connect: { id: userId } },
             },
@@ -145,7 +146,7 @@ export const Mutation = mutationType({
       resolve: async (parent, { content, id: postId }, ctx) => {
         try {
           return ctx.prisma.post.update({
-            data: { content },
+            data: { content, dateUpdated: String(Date.now()) },
             where: { id: postId },
           });
         } catch (err) {
@@ -199,6 +200,7 @@ export const Mutation = mutationType({
             data: {
               content,
               dateCreated: String(Date.now()),
+              dateUpdated: String(Date.now()),
               author: { connect: { id: userId } },
               post: { connect: { id: postId } },
             },
@@ -248,9 +250,8 @@ export const Mutation = mutationType({
         id: intArg({ nullable: false }),
       },
       resolve: async (parent, { content, id }, ctx) => {
-        console.log(id + ' ' + content);
         return await ctx.prisma.comment.update({
-          data: { content },
+          data: { content, dateUpdated: String(Date.now()) },
           where: { id },
         });
       },

@@ -10,5 +10,6 @@ export default interface IPost {
   content: string;
   numComments: number;
   dateCreated: number;
+  dateUpdated: number;
   comments: IComment[];
 }

@@ -11,6 +11,7 @@ type Comment {
   author: User!
   content: String!
   dateCreated: String!
+  dateUpdated: String!
   id: Int!
   post: Post!
 }
@@ -39,6 +40,7 @@ type Post {
   comments(after: CommentWhereUniqueInput, before: CommentWhereUniqueInput, first: Int, last: Int): [Comment!]!
   content: String!
   dateCreated: String!
+  dateUpdated: String!
   id: Int!
   numComments: Int!
   title: String!

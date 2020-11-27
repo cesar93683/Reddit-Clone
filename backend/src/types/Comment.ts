@@ -6,6 +6,7 @@ export const Comment = objectType({
     t.model.id();
     t.model.content();
     t.model.dateCreated();
+    t.model.dateUpdated();
     t.model.author();
     t.model.post();
   },

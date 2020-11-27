@@ -44,6 +44,7 @@ const CREATE_COMMENT_MUTATION = gql`
       id
       content
       dateCreated
+      dateUpdated
       author {
         id
         username

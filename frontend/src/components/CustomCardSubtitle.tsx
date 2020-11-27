@@ -1,28 +1,35 @@
 import React from "react";
-import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 interface CustomCardSubtitleProps {
   authorId: number;
   username: string;
-  timeSince: string;
+  timeSinceDateCreated: string;
+  timeSinceDateUpdated: string;
 }
 
-const CustomCardSubtitle = ({
-  username,
-  authorId,
-  timeSince,
-}: CustomCardSubtitleProps) => {
+const CustomCardSubtitle = (props: CustomCardSubtitleProps) => {
+  const {
+    username,
+    authorId,
+    timeSinceDateCreated,
+    timeSinceDateUpdated,
+  } = props;
   return (
-    <Card.Subtitle className="d-flex justify-content-between">
+    <small className="d-flex">
       <div>
         {"Posted by "}
-        <Link className="text-body" to={"/users/" + authorId}>
+        <Link className="text-body font-weight-bold" to={"/users/" + authorId}>
           {username}
         </Link>
       </div>
-      <div>{timeSince}</div>
-    </Card.Subtitle>
+      <div className="ml-1">{timeSinceDateCreated}</div>
+      {timeSinceDateCreated !== timeSinceDateUpdated && (
+        <div className="ml-1 font-italic">
+          {"edited " + timeSinceDateUpdated}
+        </div>
+      )}
+    </small>
   );
 };
 

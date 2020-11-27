@@ -101,6 +101,13 @@
     {
       "tag": "CreateField",
       "model": "Post",
+      "field": "dateUpdated",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Post",
       "field": "author",
       "type": "User",
       "arity": "Required"
@@ -216,6 +223,13 @@
       "tag": "CreateField",
       "model": "Comment",
       "field": "dateCreated",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Comment",
+      "field": "dateUpdated",
       "type": "String",
       "arity": "Required"
     },

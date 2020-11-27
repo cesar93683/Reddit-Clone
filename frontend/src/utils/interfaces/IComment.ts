@@ -6,4 +6,5 @@ export default interface IComment {
   };
   content: string;
   dateCreated: number;
+  dateUpdated: number;
 }
