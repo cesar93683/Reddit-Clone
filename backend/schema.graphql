@@ -33,7 +33,7 @@ type Mutation {
   editPost(content: String!, id: Int!): Post
   logIn(email: String!, password: String!): AuthPayload
   signUp(email: String!, password: String!, username: String!): AuthPayload
-  votePost(postId: Int!, vote: Int!): Message
+  votePost(postId: Int!, value: Int!): Message
 }
 
 type Post {

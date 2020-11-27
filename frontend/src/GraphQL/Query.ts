@@ -5,9 +5,10 @@ const GET_ALL_POSTS_QUERY = gql`
     getAllPosts {
       id
       title
+      numComments
+      numVotes
       dateCreated
       dateUpdated
-      numComments
       author {
         id
         username
@@ -22,9 +23,10 @@ const GET_POST_BY_ID_QUERY = gql`
       id
       title
       content
+      numComments
+      numVotes
       dateCreated
       dateUpdated
-      numComments
       author {
         id
         username
@@ -50,9 +52,10 @@ const GET_USER_QUERY = gql`
       posts {
         id
         title
+        numComments
+        numVotes
         dateCreated
         dateUpdated
-        numComments
         author {
           id
           username

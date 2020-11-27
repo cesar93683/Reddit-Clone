@@ -264,10 +264,10 @@ export const Mutation = mutationType({
       type: 'Message',
       args: {
         postId: intArg({ nullable: false }),
-        vote: intArg({ nullable: false }),
+        value: intArg({ nullable: false }),
       },
-      resolve: async (parent, { postId, vote }, ctx) => {
-        if (vote < -1 || vote > 1) {
+      resolve: async (parent, { postId, value }, ctx) => {
+        if (value < -1 || value > 1) {
           throw new Error('Vote must be -1, 0, or 1');
         }
         let userId;
@@ -296,7 +296,7 @@ export const Mutation = mutationType({
         }
 
         if (oldVoteArr.length) {
-          const voteDiff = vote - oldVoteArr[0].value;
+          const voteDiff = value - oldVoteArr[0].value;
           if (voteDiff !== 0) {
             try {
               await ctx.prisma.vote.updateMany({
@@ -305,7 +305,7 @@ export const Mutation = mutationType({
                   postId,
                 },
                 data: {
-                  value: vote,
+                  value: value,
                 },
               });
               await ctx.prisma.post.update({
@@ -324,14 +324,14 @@ export const Mutation = mutationType({
         try {
           await ctx.prisma.vote.create({
             data: {
-              value: vote,
+              value: value,
               author: { connect: { id: userId } },
               post: { connect: { id: postId } },
             },
           });
           await ctx.prisma.post.update({
             where: { id: postId },
-            data: { numVotes: post.numVotes + vote },
+            data: { numVotes: post.numVotes + value },
           });
         } catch (err) {
           throw new Error('Voting failed, please try again.');
