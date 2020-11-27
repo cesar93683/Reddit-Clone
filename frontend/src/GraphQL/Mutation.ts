@@ -43,6 +43,7 @@ const CREATE_COMMENT_MUTATION = gql`
     createComment(postId: $postId, content: $content) {
       id
       content
+      numVotes
       dateCreated
       dateUpdated
       author {

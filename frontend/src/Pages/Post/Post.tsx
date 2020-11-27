@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 import Comment from "./components/Comment";
@@ -21,14 +21,24 @@ interface PostParams {
 const PostItem = () => {
   const auth = useContext(AuthContext);
   const postId = Number(useParams<PostParams>().postId);
+  const history = useHistory();
+  const currentDate = Date.now();
   const [createComment] = useMutation(CREATE_COMMENT_MUTATION);
   const [deletePost] = useMutation(DELETE_POST_MUTATION);
-  const [newComment, setNewComment] = useState<IComment | null>(null);
+  const [comments, setComments] = useState<IComment[]>([]);
+  const [hasNewCommentBeenAdded, setHasNewCommentBeenAdded] = useState(false);
+
   const { loading, data, error } = useQuery(GET_POST_BY_ID_QUERY, {
     variables: { id: postId },
   });
-  const history = useHistory();
-  const currentDate = Date.now();
+
+  useMemo(() => {
+    setComments(
+      data && data.getPostById && data.getPostById.comments
+        ? data.getPostById.comments
+        : []
+    );
+  }, [data]);
 
   const onDeletePost = async () => {
     await deletePost({ variables: { id: postId } })
@@ -39,8 +49,9 @@ const PostItem = () => {
 
   const onSubmitComment = async (content: string) => {
     await createComment({ variables: { postId, content } })
-      .then(({ data: { createComment } }) => {
-        setNewComment(createComment);
+      .then(({ data: { createComment: newComment } }) => {
+        setComments([newComment, ...comments]);
+        setHasNewCommentBeenAdded(true);
       })
       .catch((err) => {});
   };
@@ -64,22 +75,14 @@ const PostItem = () => {
         onDelete={onDeletePost}
       />
       {auth.isLoggedIn && (
-        <CommentForm onSubmit={onSubmitComment} enableSubmit={!!newComment} />
+        <CommentForm
+          onSubmit={onSubmitComment}
+          enableSubmit={hasNewCommentBeenAdded}
+        />
       )}
-      {data.getPostById.comments.length === 0 && !newComment && (
-        <h2>No Comments</h2>
-      )}
+      {comments.length === 0 && <h2>No Comments</h2>}
       <div className="px-3">
-        {newComment && (
-          <Comment
-            className="my-2"
-            comment={newComment}
-            currentDate={currentDate}
-            postId={postId}
-            userId={Number(auth.userId)}
-          />
-        )}
-        {data.getPostById.comments.map((comment: IComment) => (
+        {comments.map((comment: IComment) => (
           <Comment
             className="my-2"
             key={comment.id}
