@@ -6,7 +6,7 @@ import CommentForm from "./components/CommentForm";
 import { useMutation, useQuery } from "@apollo/client";
 import IComment from "../../utils/interfaces/IComment";
 import { AuthContext } from "../../utils/auth-context";
-import { GET_POST_BY_ID_QUERY } from "../../GraphQL/Query";
+import { POST_QUERY } from "../../GraphQL/Query";
 import {
   CREATE_COMMENT_MUTATION,
   DELETE_POST_MUTATION,
@@ -28,15 +28,13 @@ const PostItem = () => {
   const [comments, setComments] = useState<IComment[]>([]);
   const [hasNewCommentBeenAdded, setHasNewCommentBeenAdded] = useState(false);
 
-  const { loading, data, error } = useQuery(GET_POST_BY_ID_QUERY, {
+  const { loading, data, error } = useQuery(POST_QUERY, {
     variables: { id: postId },
   });
 
   useMemo(() => {
     setComments(
-      data && data.getPostById && data.getPostById.comments
-        ? data.getPostById.comments
-        : []
+      data && data.post && data.post.comments ? data.post.comments : []
     );
   }, [data]);
 
@@ -60,7 +58,7 @@ const PostItem = () => {
     return <LoadingSpinner />;
   }
 
-  if (error || !data || !data.getPostById) {
+  if (error || !data || !data.post) {
     return <h1>An error occured.</h1>;
   }
 
@@ -68,8 +66,8 @@ const PostItem = () => {
     <>
       <CustomCard
         className="my-2"
-        key={data.getPostById.id}
-        post={data.getPostById}
+        key={data.post.id}
+        post={data.post}
         currentDate={currentDate}
         userId={Number(auth.userId)}
         onDelete={onDeletePost}

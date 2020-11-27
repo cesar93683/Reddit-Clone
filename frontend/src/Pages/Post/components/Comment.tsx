@@ -12,7 +12,7 @@ import CustomCardSubtitle from "../../../components/CustomCardSubtitle";
 import DeleteModalWithButton from "../../../components/DeleteModalWithButton";
 import CommentForm from "./CommentForm";
 import LoadingSpinner from "../../../components/LoadingSpinner";
-import { GET_COMMENT_VOTE_QUERY } from "../../../GraphQL/Query";
+import { COMMENT_VOTE_QUERY } from "../../../GraphQL/Query";
 import VoteSection from "../../../components/VoteSection";
 
 interface CommentProps {
@@ -72,14 +72,14 @@ const Comment = (props: CommentProps) => {
   const [currVote, setCurrVote] = useState(0);
 
   const [voteComment] = useMutation(VOTE_COMMENT_MUTATION);
-  const { data, loading: isVoteLoading } = useQuery(GET_COMMENT_VOTE_QUERY, {
+  const { data, loading: isVoteLoading } = useQuery(COMMENT_VOTE_QUERY, {
     variables: { commentId: Number(id) },
   });
 
   useMemo(() => {
     setCurrVote(
-      data && data.getCommentVote && data.getCommentVote.value
-        ? data.getCommentVote.value
+      data && data.commentVote && data.commentVote.value
+        ? data.commentVote.value
         : 0
     );
   }, [data]);

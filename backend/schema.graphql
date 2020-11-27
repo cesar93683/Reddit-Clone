@@ -74,11 +74,11 @@ input PostWhereUniqueInput {
 }
 
 type Query {
-  getAllPosts: [Post]
-  getCommentVote(commentId: Int): CommentVote
-  getPostById(id: Int): Post
-  getPostVote(postId: Int): PostVote
-  getUser(userId: Int): User
+  commentVote(commentId: Int): CommentVote
+  post(id: Int): Post
+  posts: [Post]
+  postVote(postId: Int): PostVote
+  user(userId: Int): User
 }
 
 type User {

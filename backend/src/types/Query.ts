@@ -3,14 +3,14 @@ import { getUserId } from '../utils';
 
 export const Query = queryType({
   definition(t) {
-    t.list.field('getAllPosts', {
+    t.list.field('posts', {
       type: 'Post',
       resolve: (parent, args, ctx) => {
         return ctx.prisma.post.findMany();
       },
     });
 
-    t.field('getPostById', {
+    t.field('post', {
       type: 'Post',
       nullable: true,
       args: { id: intArg() },
@@ -20,7 +20,7 @@ export const Query = queryType({
         });
       },
     });
-    t.field('getUser', {
+    t.field('user', {
       type: 'User',
       args: { userId: intArg() },
       resolve: (parent, { userId }, ctx) => {
@@ -29,7 +29,7 @@ export const Query = queryType({
         });
       },
     });
-    t.field('getPostVote', {
+    t.field('postVote', {
       type: 'PostVote',
       args: { postId: intArg() },
       resolve: (parent, { postId }, ctx) => {
@@ -44,7 +44,7 @@ export const Query = queryType({
         });
       },
     });
-    t.field('getCommentVote', {
+    t.field('commentVote', {
       type: 'CommentVote',
       args: { commentId: intArg() },
       resolve: (parent, { commentId }, ctx) => {

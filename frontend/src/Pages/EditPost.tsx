@@ -4,7 +4,7 @@ import { Alert, Button, Form } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { EDIT_POST_MUTATION } from "../GraphQL/Mutation";
-import { GET_POST_BY_ID_QUERY } from "../GraphQL/Query";
+import { POST_QUERY } from "../GraphQL/Query";
 
 interface PostParams {
   postId: string;
@@ -16,13 +16,13 @@ const EditPost = () => {
   const [content, setContent] = useState("");
   const [editPost] = useMutation(EDIT_POST_MUTATION);
 
-  const { loading, data, error } = useQuery(GET_POST_BY_ID_QUERY, {
+  const { loading, data, error } = useQuery(POST_QUERY, {
     variables: { id: Number(postId) },
   });
 
   useEffect(() => {
     if (!loading && data) {
-      setContent(data.getPostById.content);
+      setContent(data.post.content);
     }
   }, [loading, data]);
 
@@ -51,7 +51,7 @@ const EditPost = () => {
     <Form onSubmit={postUpdateSubmitHandler}>
       <Form.Group>
         <Form.Label>Title</Form.Label>
-        <Form.Control disabled type="text" value={data.getPostById.title} />
+        <Form.Control disabled type="text" value={data.post.title} />
       </Form.Group>
       <Form.Group>
         <Form.Label>Content</Form.Label>

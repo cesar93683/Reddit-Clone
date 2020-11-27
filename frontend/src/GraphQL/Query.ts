@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
-const GET_ALL_POSTS_QUERY = gql`
+const POSTS_QUERY = gql`
   query {
-    getAllPosts {
+    posts {
       id
       title
       numComments
@@ -17,9 +17,9 @@ const GET_ALL_POSTS_QUERY = gql`
   }
 `;
 
-const GET_POST_BY_ID_QUERY = gql`
+const POST_QUERY = gql`
   query($id: Int!) {
-    getPostById(id: $id) {
+    post(id: $id) {
       id
       title
       content
@@ -45,9 +45,9 @@ const GET_POST_BY_ID_QUERY = gql`
     }
   }
 `;
-const GET_USER_QUERY = gql`
+const USER_QUERY = gql`
   query($userId: Int!) {
-    getUser(userId: $userId) {
+    user(userId: $userId) {
       id
       username
       posts {
@@ -65,25 +65,25 @@ const GET_USER_QUERY = gql`
     }
   }
 `;
-const GET_POST_VOTE_QUERY = gql`
+const POST_VOTE_QUERY = gql`
   query($postId: Int!) {
-    getPostVote(postId: $postId) {
+    postVote(postId: $postId) {
       value
     }
   }
 `;
-const GET_COMMENT_VOTE_QUERY = gql`
+const COMMENT_VOTE_QUERY = gql`
   query($commentId: Int!) {
-    getCommentVote(commentId: $commentId) {
+    commentVote(commentId: $commentId) {
       value
     }
   }
 `;
 
 export {
-  GET_ALL_POSTS_QUERY,
-  GET_POST_BY_ID_QUERY,
-  GET_USER_QUERY,
-  GET_POST_VOTE_QUERY,
-  GET_COMMENT_VOTE_QUERY,
+  POSTS_QUERY,
+  POST_QUERY,
+  USER_QUERY,
+  POST_VOTE_QUERY,
+  COMMENT_VOTE_QUERY,
 };
