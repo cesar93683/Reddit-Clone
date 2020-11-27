@@ -80,7 +80,7 @@ const CustomCard = (props: CustomCardProps) => {
   const onDownVote = async () => {
     let value = currVote === -1 ? 0 : -1;
     await votePost({ variables: { postId, value } })
-      .then(({ data }) => {
+      .then(() => {
         downVote();
       })
       .catch((err) => {});
@@ -89,7 +89,7 @@ const CustomCard = (props: CustomCardProps) => {
   const onUpVote = async () => {
     let value = currVote === 1 ? 0 : 1;
     await votePost({ variables: { postId, value } })
-      .then(({ data }) => {
+      .then(() => {
         upVote();
       })
       .catch((err) => {});

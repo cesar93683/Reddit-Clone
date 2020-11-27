@@ -109,7 +109,7 @@ const Comment = (props: CommentProps) => {
   const onDownVote = async () => {
     let value = currVote === -1 ? 0 : -1;
     await voteComment({ variables: { commentId: id, value } })
-      .then(({ data }) => {
+      .then(() => {
         downVote();
       })
       .catch((err) => {});
@@ -118,7 +118,7 @@ const Comment = (props: CommentProps) => {
   const onUpVote = async () => {
     let value = currVote === 1 ? 0 : 1;
     await voteComment({ variables: { commentId: id, value } })
-      .then(({ data }) => {
+      .then(() => {
         upVote();
       })
       .catch((err) => {});
