@@ -641,6 +641,13 @@
       "field": "comments",
       "type": "Comment",
       "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "votes",
+      "type": "Vote",
+      "arity": "List"
     }
   ]
 }
