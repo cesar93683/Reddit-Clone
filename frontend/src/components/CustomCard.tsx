@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import IPost from "../utils/interfaces/IPost";
 import timeSince from "../utils/timeSince";
@@ -6,6 +6,10 @@ import { Button, Card } from "react-bootstrap";
 import CustomCardSubtitle from "./CustomCardSubtitle";
 import DeleteModalWithButton from "./DeleteModalWithButton";
 import VoteSection from "./VoteSection";
+import { useMutation, useQuery } from "@apollo/client";
+import { GET_VOTE_QUERY } from "../GraphQL/Query";
+import { VOTE_POST_MUTATION } from "../GraphQL/Mutation";
+import LoadingSpinner from "./LoadingSpinner";
 
 interface CustomCardProps {
   post: IPost;
@@ -24,7 +28,7 @@ const CustomCard = (props: CustomCardProps) => {
       content,
       author: { id: authorId, username },
       numComments,
-      numVotes,
+      numVotes: numVotesFromProps,
       dateCreated,
       dateUpdated,
     },
@@ -35,10 +39,80 @@ const CustomCard = (props: CustomCardProps) => {
     className,
   } = props;
 
+  const [numVotes, setNumVotes] = useState(numVotesFromProps);
+  const [currVote, setCurrVote] = useState(0);
+
+  const [votePost] = useMutation(VOTE_POST_MUTATION);
+  const { data, loading: isVoteLoading } = useQuery(GET_VOTE_QUERY, {
+    variables: { postId: Number(postId) },
+  });
+
+  useMemo(() => {
+    setCurrVote(
+      data && data.getVote && data.getVote.value ? data.getVote.value : 0
+    );
+  }, [data]);
+
+  const downVote = () => {
+    if (currVote === 1) {
+      setNumVotes(numVotes - 2);
+    } else if (currVote === -1) {
+      setNumVotes(numVotes + 1);
+    } else {
+      setNumVotes(numVotes - 1);
+    }
+    setCurrVote(currVote === -1 ? 0 : -1);
+  };
+
+  const upVote = () => {
+    if (currVote === 1) {
+      setNumVotes(numVotes - 1);
+    } else if (currVote === -1) {
+      setNumVotes(numVotes + 2);
+    } else {
+      setNumVotes(numVotes + 1);
+    }
+    setCurrVote(currVote === 1 ? 0 : 1);
+  };
+
+  const onDownVote = async () => {
+    let value = currVote === -1 ? 0 : -1;
+    await votePost({ variables: { postId, value } })
+      .then(({ data }) => {
+        downVote();
+      })
+      .catch((err) => {});
+  };
+
+  const onUpVote = async () => {
+    let value = currVote === 1 ? 0 : 1;
+    await votePost({ variables: { postId, value } })
+      .then(({ data }) => {
+        upVote();
+      })
+      .catch((err) => {});
+  };
+
+  if (isVoteLoading) {
+    return (
+      <Card className={className}>
+        <Card.Body className="d-flex">
+          <LoadingSpinner />;
+        </Card.Body>
+      </Card>
+    );
+  }
+
   return (
     <Card className={className}>
       <Card.Body className="d-flex">
-        <VoteSection numVotes={numVotes} postId={postId} className="mr-2" />
+        <VoteSection
+          numVotes={numVotes}
+          className="mr-2"
+          onUpVote={onUpVote}
+          onDownVote={onDownVote}
+          currVote={currVote}
+        />
         <div className="w-100">
           <CustomCardSubtitle
             authorId={authorId}
