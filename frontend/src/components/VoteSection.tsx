@@ -14,50 +14,56 @@ interface VoteSectionProps {
 const VoteSection = (props: VoteSectionProps) => {
   const { numVotes: numVotesFromProps, postId, className } = props;
 
-  const [votePost] = useMutation(VOTE_POST_MUTATION);
   const [numVotes, setNumVotes] = useState(numVotesFromProps);
+  const [currVote, setCurrVote] = useState(0);
+
+  const [votePost] = useMutation(VOTE_POST_MUTATION);
   const { data, loading } = useQuery(GET_VOTE_QUERY, {
     variables: { postId: Number(postId) },
   });
 
-  const [upVoteActive, setUpVoteActive] = useState(false);
-  const [downVoteActive, setDownVoteActive] = useState(false);
-
   useMemo(() => {
-    setUpVoteActive(data && data.getVote && data.getVote.value === 1);
-    setDownVoteActive(data && data.getVote && data.getVote.value === -1);
+    setCurrVote(
+      data && data.getVote && data.getVote.value ? data.getVote.value : 0
+    );
   }, [data]);
 
+  const downVote = () => {
+    if (currVote === 1) {
+      setNumVotes(numVotes - 2);
+    } else if (currVote === -1) {
+      setNumVotes(numVotes + 1);
+    } else {
+      setNumVotes(numVotes - 1);
+    }
+    setCurrVote(currVote === -1 ? 0 : -1);
+  };
+
+  const upVote = () => {
+    if (currVote === 1) {
+      setNumVotes(numVotes - 1);
+    } else if (currVote === -1) {
+      setNumVotes(numVotes + 2);
+    } else {
+      setNumVotes(numVotes + 1);
+    }
+    setCurrVote(currVote === 1 ? 0 : 1);
+  };
+
   const handleDownVote = async () => {
-    let value = downVoteActive ? 0 : -1;
+    let value = currVote === -1 ? 0 : -1;
     await votePost({ variables: { postId, value } })
       .then(({ data }) => {
-        if (upVoteActive) {
-          setNumVotes(numVotes - 2);
-        } else if (downVoteActive) {
-          setNumVotes(numVotes + 1);
-        } else {
-          setNumVotes(numVotes - 1);
-        }
-        setDownVoteActive(!downVoteActive);
-        setUpVoteActive(false);
+        downVote();
       })
       .catch((err) => {});
   };
 
   const handleUpVote = async () => {
-    let value = upVoteActive ? 0 : 1;
+    let value = currVote === 1 ? 0 : 1;
     await votePost({ variables: { postId, value } })
       .then(({ data }) => {
-        if (upVoteActive) {
-          setNumVotes(numVotes - 1);
-        } else if (downVoteActive) {
-          setNumVotes(numVotes + 2);
-        } else {
-          setNumVotes(numVotes + 1);
-        }
-        setUpVoteActive(!upVoteActive);
-        setDownVoteActive(false);
+        upVote();
       })
       .catch((err) => {});
   };
@@ -70,7 +76,7 @@ const VoteSection = (props: VoteSectionProps) => {
     <div className={"d-flex flex-column align-items-center " + className}>
       <Button
         onClick={handleUpVote}
-        variant={upVoteActive ? "primary" : "secondary"}
+        variant={currVote === 1 ? "primary" : "secondary"}
         disabled={!(data && data.getVote)}
         size="sm"
       >
@@ -79,7 +85,7 @@ const VoteSection = (props: VoteSectionProps) => {
       <div>{numVotes}</div>
       <Button
         onClick={handleDownVote}
-        variant={downVoteActive ? "primary" : "secondary"}
+        variant={currVote === -1 ? "primary" : "secondary"}
         disabled={!(data && data.getVote)}
         size="sm"
         className="w-100"
