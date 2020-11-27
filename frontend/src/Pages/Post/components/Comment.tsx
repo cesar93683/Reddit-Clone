@@ -3,8 +3,9 @@ import timeSince from "../../../utils/timeSince";
 import IComment from "../../../utils/interfaces/IComment";
 import { DELETE_COMMENT_MUTATION } from "../../../GraphQL/Mutation";
 import { useMutation } from "@apollo/client";
-import { Button, Card } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import CustomCardSubtitle from "../../../components/CustomCardSubtitle";
+import DeleteModalWithButton from "../../../components/DeleteModalWithButton";
 
 interface CommentProps {
   currentDate: number;
@@ -54,9 +55,7 @@ const Comment = (props: CommentProps) => {
         <Card.Text>{content}</Card.Text>
         {userId === authorId && (
           <div className="d-flex justify-content-end">
-            <Button variant="danger" onClick={onDelete}>
-              Delete
-            </Button>
+            <DeleteModalWithButton type="comment" onDelete={onDelete} />
           </div>
         )}
       </Card.Body>

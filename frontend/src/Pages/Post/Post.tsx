@@ -30,7 +30,7 @@ const PostItem = () => {
   const history = useHistory();
   const currentDate = Date.now();
 
-  const onDelete = async () => {
+  const onDeletePost = async () => {
     await deletePost({ variables: { id: postId } })
       .then(({ data }) => {})
       .catch((err) => {});
@@ -59,7 +59,7 @@ const PostItem = () => {
         key={data.getPostById.id}
         post={data.getPostById}
         currentDate={currentDate}
-        onDelete={onDelete}
+        onDelete={onDeletePost}
         linkable={false}
         userId={auth.userId}
       />

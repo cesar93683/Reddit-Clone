@@ -4,6 +4,7 @@ import IPost from "../utils/interfaces/IPost";
 import timeSince from "../utils/timeSince";
 import { Button, Card } from "react-bootstrap";
 import CustomCardSubtitle from "./CustomCardSubtitle";
+import DeleteModalWithButton from "./DeleteModalWithButton";
 
 interface CustomCardInterface {
   post: IPost;
@@ -62,12 +63,10 @@ const CustomCard = (props: CustomCardInterface) => {
 
           {onDelete && authorId === Number(userId) && (
             <div>
-              <Link to={`/posts/${postId}/edit`}>
+              <Link className="mr-2" to={`/posts/${postId}/edit`}>
                 <Button variant="outline-primary">EDIT</Button>
               </Link>
-              <Button variant="danger" className="ml-1" onClick={onDelete}>
-                DELETE
-              </Button>
+              <DeleteModalWithButton type="post" onDelete={onDelete} />
             </div>
           )}
         </div>
