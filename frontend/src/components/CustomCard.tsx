@@ -7,7 +7,7 @@ import CustomCardSubtitle from "./CustomCardSubtitle";
 import DeleteModalWithButton from "./DeleteModalWithButton";
 import VoteSection from "./VoteSection";
 import { useMutation, useQuery } from "@apollo/client";
-import { GET_VOTE_QUERY } from "../GraphQL/Query";
+import { GET_POST_VOTE_QUERY } from "../GraphQL/Query";
 import { VOTE_POST_MUTATION } from "../GraphQL/Mutation";
 import LoadingSpinner from "./LoadingSpinner";
 
@@ -43,13 +43,15 @@ const CustomCard = (props: CustomCardProps) => {
   const [currVote, setCurrVote] = useState(0);
 
   const [votePost] = useMutation(VOTE_POST_MUTATION);
-  const { data, loading: isVoteLoading } = useQuery(GET_VOTE_QUERY, {
+  const { data, loading: isVoteLoading } = useQuery(GET_POST_VOTE_QUERY, {
     variables: { postId: Number(postId) },
   });
 
   useMemo(() => {
     setCurrVote(
-      data && data.getVote && data.getVote.value ? data.getVote.value : 0
+      data && data.getPostVote && data.getPostVote.value
+        ? data.getPostVote.value
+        : 0
     );
   }, [data]);
 

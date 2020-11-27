@@ -34,6 +34,7 @@ const GET_POST_BY_ID_QUERY = gql`
       comments {
         id
         content
+        numVotes
         dateCreated
         dateUpdated
         author {
@@ -64,9 +65,16 @@ const GET_USER_QUERY = gql`
     }
   }
 `;
-const GET_VOTE_QUERY = gql`
+const GET_POST_VOTE_QUERY = gql`
   query($postId: Int!) {
-    getVote(postId: $postId) {
+    getPostVote(postId: $postId) {
+      value
+    }
+  }
+`;
+const GET_COMMENT_VOTE_QUERY = gql`
+  query($commentId: Int!) {
+    getCommentVote(commentId: $commentId) {
       value
     }
   }
@@ -76,5 +84,6 @@ export {
   GET_ALL_POSTS_QUERY,
   GET_POST_BY_ID_QUERY,
   GET_USER_QUERY,
-  GET_VOTE_QUERY,
+  GET_POST_VOTE_QUERY,
+  GET_COMMENT_VOTE_QUERY,
 };

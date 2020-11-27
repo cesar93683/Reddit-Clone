@@ -162,8 +162,11 @@ export const Mutation = mutationType({
       args: { id: intArg({ nullable: false }) },
       resolve: async (parent, { id }, ctx) => {
         try {
+          await ctx.prisma.commentVote.deleteMany({
+            where: { comment: { post: { id } } },
+          });
           await ctx.prisma.comment.deleteMany({ where: { post: { id } } });
-          await ctx.prisma.vote.deleteMany({ where: { post: { id } } });
+          await ctx.prisma.postVote.deleteMany({ where: { post: { id } } });
           await ctx.prisma.post.delete({ where: { id } });
           return {
             message: 'Success',
@@ -206,6 +209,7 @@ export const Mutation = mutationType({
               dateUpdated: String(Date.now()),
               author: { connect: { id: userId } },
               post: { connect: { id: postId } },
+              numVotes: 0,
             },
           });
           await ctx.prisma.post.update({
@@ -233,6 +237,9 @@ export const Mutation = mutationType({
         }
         try {
           await ctx.prisma.comment.delete({ where: { id } });
+          await ctx.prisma.commentVote.deleteMany({
+            where: { comment: { id } },
+          });
           await ctx.prisma.post.update({
             where: { id: postId },
             data: { numComments: post.numComments - 1 },
@@ -285,10 +292,10 @@ export const Mutation = mutationType({
         if (!post) {
           throw new Error('Post does not exist');
         }
-        let oldVote;
 
+        let oldVote;
         try {
-          oldVote = await ctx.prisma.vote.findFirst({
+          oldVote = await ctx.prisma.postVote.findFirst({
             where: { post: { id: postId }, author: { id: userId } },
           });
         } catch (err) {
@@ -299,7 +306,7 @@ export const Mutation = mutationType({
           const voteDiff = value - oldVote.value;
           if (voteDiff !== 0) {
             try {
-              await ctx.prisma.vote.updateMany({
+              await ctx.prisma.postVote.updateMany({
                 where: {
                   authorId: userId,
                   postId,
@@ -322,7 +329,7 @@ export const Mutation = mutationType({
         }
 
         try {
-          await ctx.prisma.vote.create({
+          await ctx.prisma.postVote.create({
             data: {
               value: value,
               author: { connect: { id: userId } },
@@ -332,6 +339,90 @@ export const Mutation = mutationType({
           await ctx.prisma.post.update({
             where: { id: postId },
             data: { numVotes: post.numVotes + value },
+          });
+        } catch (err) {
+          throw new Error('Voting failed, please try again.');
+        }
+        return {
+          message: 'Success',
+        };
+      },
+    });
+
+    t.field('voteComment', {
+      type: 'Message',
+      args: {
+        commentId: intArg({ nullable: false }),
+        value: intArg({ nullable: false }),
+      },
+      resolve: async (parent, { commentId, value }, ctx) => {
+        if (value < -1 || value > 1) {
+          throw new Error('Vote must be -1, 0, or 1');
+        }
+        let userId;
+        try {
+          userId = Number(getUserId(ctx));
+        } catch (err) {
+          throw new Error('Voting failed, please try again.');
+        }
+        let comment;
+        try {
+          comment = await ctx.prisma.comment.findOne({
+            where: { id: commentId },
+          });
+        } catch (err) {
+          throw new Error('Voting failed, please try again.');
+        }
+        if (!comment) {
+          throw new Error('Comment does not exist');
+        }
+
+        let oldVote;
+        try {
+          oldVote = await ctx.prisma.commentVote.findFirst({
+            where: { comment: { id: commentId }, author: { id: userId } },
+          });
+        } catch (err) {
+          throw new Error('Voting failed, please try again.');
+        }
+
+        if (oldVote) {
+          const voteDiff = value - oldVote.value;
+          if (voteDiff !== 0) {
+            try {
+              await ctx.prisma.commentVote.updateMany({
+                where: {
+                  authorId: userId,
+                  commentId,
+                },
+                data: {
+                  value: value,
+                },
+              });
+              await ctx.prisma.comment.update({
+                where: { id: commentId },
+                data: { numVotes: comment.numVotes + voteDiff },
+              });
+            } catch (err) {
+              throw new Error('Voting failed, please try again.');
+            }
+          }
+          return {
+            message: 'Success',
+          };
+        }
+
+        try {
+          await ctx.prisma.commentVote.create({
+            data: {
+              value: value,
+              author: { connect: { id: userId } },
+              comment: { connect: { id: commentId } },
+            },
+          });
+          await ctx.prisma.post.update({
+            where: { id: commentId },
+            data: { numVotes: comment.numVotes + value },
           });
         } catch (err) {
           throw new Error('Voting failed, please try again.');

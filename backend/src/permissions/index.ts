@@ -33,7 +33,8 @@ export const permissions = shield(
       votePost: rules.isAuthenticatedUser,
     },
     Query: {
-      getVote: rules.isAuthenticatedUser,
+      getPostVote: rules.isAuthenticatedUser,
+      getCommentVote: rules.isAuthenticatedUser,
     },
   },
   { allowExternalErrors: true },

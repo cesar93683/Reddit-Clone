@@ -85,6 +85,14 @@ const VOTE_POST_MUTATION = gql`
   }
 `;
 
+const VOTE_COMMENT_MUTATION = gql`
+  mutation($commentId: Int!, $value: Int!) {
+    voteComment(commentId: $commentId, value: $value) {
+      message
+    }
+  }
+`;
+
 export {
   LOGIN_MUTATION,
   SIGNUP_MUTATION,
@@ -95,4 +103,5 @@ export {
   DELETE_COMMENT_MUTATION,
   EDIT_COMMENT_MUTATION,
   VOTE_POST_MUTATION,
+  VOTE_COMMENT_MUTATION,
 };

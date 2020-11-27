@@ -155,7 +155,7 @@
       "tag": "CreateField",
       "model": "Post",
       "field": "votes",
-      "type": "Vote",
+      "type": "PostVote",
       "arity": "List"
     },
     {
@@ -181,11 +181,11 @@
     },
     {
       "tag": "CreateModel",
-      "model": "Vote"
+      "model": "PostVote"
     },
     {
       "tag": "CreateField",
-      "model": "Vote",
+      "model": "PostVote",
       "field": "id",
       "type": "Int",
       "arity": "Required"
@@ -195,7 +195,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Vote",
+          "model": "PostVote",
           "field": "id"
         },
         "directive": "default"
@@ -207,7 +207,7 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "Vote",
+          "model": "PostVote",
           "field": "id"
         },
         "directive": "default"
@@ -220,7 +220,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Vote",
+          "model": "PostVote",
           "field": "id"
         },
         "directive": "id"
@@ -228,14 +228,14 @@
     },
     {
       "tag": "CreateField",
-      "model": "Vote",
+      "model": "PostVote",
       "field": "value",
       "type": "Int",
       "arity": "Required"
     },
     {
       "tag": "CreateField",
-      "model": "Vote",
+      "model": "PostVote",
       "field": "author",
       "type": "User",
       "arity": "Required"
@@ -245,7 +245,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Vote",
+          "model": "PostVote",
           "field": "author"
         },
         "directive": "relation"
@@ -257,7 +257,7 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "Vote",
+          "model": "PostVote",
           "field": "author"
         },
         "directive": "relation"
@@ -271,7 +271,7 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "Vote",
+          "model": "PostVote",
           "field": "author"
         },
         "directive": "relation"
@@ -281,14 +281,14 @@
     },
     {
       "tag": "CreateField",
-      "model": "Vote",
+      "model": "PostVote",
       "field": "authorId",
       "type": "Int",
       "arity": "Required"
     },
     {
       "tag": "CreateField",
-      "model": "Vote",
+      "model": "PostVote",
       "field": "post",
       "type": "Post",
       "arity": "Required"
@@ -298,7 +298,7 @@
       "location": {
         "path": {
           "tag": "Field",
-          "model": "Vote",
+          "model": "PostVote",
           "field": "post"
         },
         "directive": "relation"
@@ -310,7 +310,7 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "Vote",
+          "model": "PostVote",
           "field": "post"
         },
         "directive": "relation"
@@ -324,7 +324,7 @@
         "tag": "Directive",
         "path": {
           "tag": "Field",
-          "model": "Vote",
+          "model": "PostVote",
           "field": "post"
         },
         "directive": "relation"
@@ -334,8 +334,168 @@
     },
     {
       "tag": "CreateField",
-      "model": "Vote",
+      "model": "PostVote",
       "field": "postId",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateModel",
+      "model": "CommentVote"
+    },
+    {
+      "tag": "CreateField",
+      "model": "CommentVote",
+      "field": "id",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "CommentVote",
+          "field": "id"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "CommentVote",
+          "field": "id"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "autoincrement()"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "CommentVote",
+          "field": "id"
+        },
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateField",
+      "model": "CommentVote",
+      "field": "value",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "CommentVote",
+      "field": "author",
+      "type": "User",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "CommentVote",
+          "field": "author"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "CommentVote",
+          "field": "author"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[authorId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "CommentVote",
+          "field": "author"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "CommentVote",
+      "field": "authorId",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "CommentVote",
+      "field": "comment",
+      "type": "Comment",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "CommentVote",
+          "field": "comment"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "CommentVote",
+          "field": "comment"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[commentId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "CommentVote",
+          "field": "comment"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "CommentVote",
+      "field": "commentId",
       "type": "Int",
       "arity": "Required"
     },
@@ -502,6 +662,20 @@
     {
       "tag": "CreateField",
       "model": "Comment",
+      "field": "votes",
+      "type": "PostVote",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Comment",
+      "field": "numVotes",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Comment",
       "field": "dateCreated",
       "type": "String",
       "arity": "Required"
@@ -645,8 +819,15 @@
     {
       "tag": "CreateField",
       "model": "User",
-      "field": "votes",
-      "type": "Vote",
+      "field": "postVotes",
+      "type": "PostVote",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "commentVotes",
+      "type": "CommentVote",
       "arity": "List"
     }
   ]

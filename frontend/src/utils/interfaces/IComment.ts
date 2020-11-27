@@ -5,6 +5,7 @@ export default interface IComment {
     username: string;
   };
   content: string;
+  numVotes: number;
   dateCreated: number;
   dateUpdated: number;
 }

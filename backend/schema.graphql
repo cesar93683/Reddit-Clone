@@ -13,7 +13,15 @@ type Comment {
   dateCreated: String!
   dateUpdated: String!
   id: Int!
+  numVotes: Int!
   post: Post!
+}
+
+type CommentVote {
+  author: User!
+  comment: Comment!
+  id: Int!
+  value: Int!
 }
 
 input CommentWhereUniqueInput {
@@ -33,6 +41,7 @@ type Mutation {
   editPost(content: String!, id: Int!): Post
   logIn(email: String!, password: String!): AuthPayload
   signUp(email: String!, password: String!, username: String!): AuthPayload
+  voteComment(commentId: Int!, value: Int!): Message
   votePost(postId: Int!, value: Int!): Message
 }
 
@@ -46,7 +55,18 @@ type Post {
   numComments: Int!
   numVotes: Int!
   title: String!
-  votes(after: VoteWhereUniqueInput, before: VoteWhereUniqueInput, first: Int, last: Int): [Vote!]!
+  votes(after: PostVoteWhereUniqueInput, before: PostVoteWhereUniqueInput, first: Int, last: Int): [PostVote!]!
+}
+
+type PostVote {
+  author: User!
+  id: Int!
+  post: Post!
+  value: Int!
+}
+
+input PostVoteWhereUniqueInput {
+  id: Int
 }
 
 input PostWhereUniqueInput {
@@ -55,9 +75,10 @@ input PostWhereUniqueInput {
 
 type Query {
   getAllPosts: [Post]
+  getCommentVote(commentId: Int): CommentVote
   getPostById(id: Int): Post
+  getPostVote(postId: Int): PostVote
   getUser(userId: Int): User
-  getVote(postId: Int): Vote
 }
 
 type User {
@@ -65,15 +86,4 @@ type User {
   id: Int!
   posts(after: PostWhereUniqueInput, before: PostWhereUniqueInput, first: Int, last: Int): [Post!]!
   username: String!
-}
-
-type Vote {
-  author: User!
-  id: Int!
-  post: Post!
-  value: Int!
-}
-
-input VoteWhereUniqueInput {
-  id: Int
 }

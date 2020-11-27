@@ -29,8 +29,8 @@ export const Query = queryType({
         });
       },
     });
-    t.field('getVote', {
-      type: 'Vote',
+    t.field('getPostVote', {
+      type: 'PostVote',
       args: { postId: intArg() },
       resolve: (parent, { postId }, ctx) => {
         let userId;
@@ -39,8 +39,23 @@ export const Query = queryType({
         } catch (err) {
           throw new Error('Getting vote failed, please try again.');
         }
-        return ctx.prisma.vote.findFirst({
+        return ctx.prisma.postVote.findFirst({
           where: { postId, authorId: userId },
+        });
+      },
+    });
+    t.field('getCommentVote', {
+      type: 'CommentVote',
+      args: { commentId: intArg() },
+      resolve: (parent, { commentId }, ctx) => {
+        let userId;
+        try {
+          userId = Number(getUserId(ctx));
+        } catch (err) {
+          throw new Error('Getting vote failed, please try again.');
+        }
+        return ctx.prisma.commentVote.findFirst({
+          where: { commentId, authorId: userId },
         });
       },
     });

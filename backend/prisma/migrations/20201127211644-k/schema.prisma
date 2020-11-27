@@ -15,19 +15,29 @@ model Post {
   authorId    Int
   comments    Comment[]
   numComments Int
-  votes       Vote[]
+  votes       PostVote[]
   numVotes    Int
   dateCreated String
   dateUpdated String
 }
 
-model Vote {
+model PostVote {
   id          Int       @default(autoincrement()) @id
   value       Int
   author      User      @relation(fields: [authorId], references: [id])
   authorId    Int
   post        Post      @relation(fields: [postId], references: [id])
   postId      Int
+}
+
+
+model CommentVote {
+  id          Int       @default(autoincrement()) @id
+  value       Int
+  author      User      @relation(fields: [authorId], references: [id])
+  authorId    Int
+  comment     Comment   @relation(fields: [commentId], references: [id])
+  commentId   Int
 }
 
 model Comment {
@@ -37,16 +47,19 @@ model Comment {
   authorId    Int
   post        Post      @relation(fields: [postId], references: [id])
   postId      Int
+  votes       PostVote[]
+  numVotes    Int
   dateCreated String
   dateUpdated String
 }
 
 model User {
-  id          Int       @default(autoincrement()) @id
-  email       String    @unique
-  password    String    @default("")
-  username    String    @unique
-  posts       Post[]
-  comments    Comment[]
-  votes       Vote[]
+  id           Int       @default(autoincrement()) @id
+  email        String    @unique
+  password     String    @default("")
+  username     String    @unique
+  posts        Post[]
+  comments     Comment[]
+  postVotes    PostVote[]
+  commentVotes CommentVote[]
 }

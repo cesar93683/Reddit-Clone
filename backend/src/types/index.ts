@@ -5,4 +5,5 @@ export * from './Query';
 export * from './User';
 export * from './Comment';
 export * from './Message';
-export * from './Vote';
+export * from './PostVote';
+export * from './CommentVote';
