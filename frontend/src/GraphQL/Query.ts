@@ -64,5 +64,17 @@ const GET_USER_QUERY = gql`
     }
   }
 `;
+const GET_VOTE_QUERY = gql`
+  query($postId: Int!) {
+    getVote(postId: $postId) {
+      value
+    }
+  }
+`;
 
-export { GET_ALL_POSTS_QUERY, GET_POST_BY_ID_QUERY, GET_USER_QUERY };
+export {
+  GET_ALL_POSTS_QUERY,
+  GET_POST_BY_ID_QUERY,
+  GET_USER_QUERY,
+  GET_VOTE_QUERY,
+};

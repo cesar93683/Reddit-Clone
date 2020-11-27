@@ -39,7 +39,7 @@ const CustomCard = (props: CustomCardProps) => {
     <Card className={className}>
       <Card.Body className="d-flex">
         <VoteSection numVotes={numVotes} postId={postId} />
-        <div>
+        <div className="w-100">
           <CustomCardSubtitle
             authorId={authorId}
             timeSinceDateCreated={timeSince(currentDate, dateCreated)}

@@ -1,7 +1,8 @@
-import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import React, { useMemo, useState } from "react";
 import { Button } from "react-bootstrap";
 import { VOTE_POST_MUTATION } from "../GraphQL/Mutation";
+import { GET_VOTE_QUERY } from "../GraphQL/Query";
 
 interface VoteSectionProps {
   numVotes: number;
@@ -11,10 +12,18 @@ interface VoteSectionProps {
 const VoteSection = (props: VoteSectionProps) => {
   const { numVotes, postId } = props;
 
+  const [votePost] = useMutation(VOTE_POST_MUTATION);
+  const { data } = useQuery(GET_VOTE_QUERY, {
+    variables: { postId: Number(postId) },
+  });
+
   const [upVoteActive, setUpVoteActive] = useState(false);
   const [downVoteActive, setDownVoteActive] = useState(false);
 
-  const [votePost] = useMutation(VOTE_POST_MUTATION);
+  useMemo(() => {
+    setUpVoteActive(data && data.getVote && data.getVote.value === 1);
+    setDownVoteActive(data && data.getVote && data.getVote.value === -1);
+  }, [data]);
 
   const handleDownVote = async () => {
     let value = downVoteActive ? 0 : -1;
