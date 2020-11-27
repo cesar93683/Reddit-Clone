@@ -236,15 +236,16 @@ export const Mutation = mutationType({
           throw new Error('Deleting comment failed, please try again.');
         }
         try {
-          await ctx.prisma.comment.delete({ where: { id } });
           await ctx.prisma.commentVote.deleteMany({
             where: { comment: { id } },
           });
+          await ctx.prisma.comment.delete({ where: { id } });
           await ctx.prisma.post.update({
             where: { id: postId },
             data: { numComments: post.numComments - 1 },
           });
         } catch (err) {
+          console.log(err);
           throw new Error('Deleting comment failed, please try again.');
         }
         return {
