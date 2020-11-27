@@ -9,9 +9,10 @@ import DeleteModalWithButton from "./DeleteModalWithButton";
 interface CustomCardInterface {
   post: IPost;
   currentDate: number;
-  linkable: boolean;
-  userId: string | null;
-  onDelete: (() => void) | null;
+  userId?: number | null;
+  linkable?: boolean;
+  onDelete?: (() => void) | null;
+  className?: string;
 }
 
 const CustomCard = (props: CustomCardInterface) => {
@@ -28,10 +29,11 @@ const CustomCard = (props: CustomCardInterface) => {
     currentDate,
     linkable,
     onDelete,
+    className,
   } = props;
 
   return (
-    <Card className="my-2">
+    <Card className={className}>
       <Card.Body>
         <CustomCardSubtitle
           authorId={authorId}
@@ -61,7 +63,7 @@ const CustomCard = (props: CustomCardInterface) => {
             </div>
           )}
 
-          {onDelete && authorId === Number(userId) && (
+          {onDelete && authorId === userId && (
             <div>
               <Link className="mr-2" to={`/posts/${postId}/edit`}>
                 <Button variant="outline-primary">EDIT</Button>

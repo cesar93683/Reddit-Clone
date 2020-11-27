@@ -56,12 +56,12 @@ const PostItem = () => {
   return (
     <>
       <CustomCard
+        className="my-2"
         key={data.getPostById.id}
         post={data.getPostById}
         currentDate={currentDate}
+        userId={Number(auth.userId)}
         onDelete={onDeletePost}
-        linkable={false}
-        userId={auth.userId}
       />
       {auth.isLoggedIn && (
         <CommentForm onSubmit={onSubmitComment} enableSubmit={!!newComment} />
@@ -72,7 +72,7 @@ const PostItem = () => {
       <div className="px-3">
         {newComment && (
           <Comment
-            key={newComment.id}
+            className="my-2"
             comment={newComment}
             currentDate={currentDate}
             postId={postId}
@@ -81,6 +81,7 @@ const PostItem = () => {
         )}
         {data.getPostById.comments.map((comment: IComment) => (
           <Comment
+            className="my-2"
             key={comment.id}
             comment={comment}
             currentDate={currentDate}

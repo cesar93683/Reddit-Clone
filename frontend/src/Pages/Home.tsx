@@ -27,12 +27,11 @@ const Home = () => {
     <div>
       {data.getAllPosts.map((post: IPost) => (
         <CustomCard
+          className="my-2"
           key={post.id}
           post={post}
           currentDate={currentDate}
           linkable
-          userId={null}
-          onDelete={null}
         />
       ))}
     </div>

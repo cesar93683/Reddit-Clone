@@ -31,12 +31,11 @@ const User = () => {
       {data.getUser.posts.length === 0 && <h1>No Posts</h1>}
       {data.getUser.posts.map((post: IPost) => (
         <CustomCard
+          className="my-2"
           key={post.id}
           post={post}
           currentDate={currentDate}
           linkable
-          onDelete={null}
-          userId={null}
         />
       ))}
     </div>

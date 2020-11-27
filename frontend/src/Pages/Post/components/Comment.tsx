@@ -12,6 +12,7 @@ interface CommentProps {
   comment: IComment;
   postId: number;
   userId: number;
+  className: string;
 }
 
 const Comment = (props: CommentProps) => {
@@ -25,6 +26,7 @@ const Comment = (props: CommentProps) => {
     currentDate,
     postId,
     userId,
+    className,
   } = props;
 
   const [isCommentDeleted, setIsCommentDeleted] = useState(false);
@@ -41,11 +43,11 @@ const Comment = (props: CommentProps) => {
   };
 
   if (isCommentDeleted) {
-    return <div className="my-2">Comment deleted</div>;
+    return <div className={className}>Comment deleted</div>;
   }
 
   return (
-    <Card className="my-2">
+    <Card className={className}>
       <Card.Body>
         <CustomCardSubtitle
           authorId={authorId}
