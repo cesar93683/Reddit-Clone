@@ -15,26 +15,26 @@ const Home = () => {
     return <LoadingSpinner />;
   }
 
-  if (error) {
-    return <h1 className="text-light">An error occured.</h1>;
+  if (error || !data) {
+    return <h1>An error occured.</h1>;
+  }
+
+  if (data.getAllPosts.length === 0) {
+    return <h1>No Posts</h1>;
   }
 
   return (
     <div>
-      {data && data.getAllPosts.length === 0 && (
-        <h1 className="text-light">No Posts</h1>
-      )}
-      {data &&
-        data.getAllPosts.map((post: IPost) => (
-          <CustomCard
-            key={post.id}
-            post={post}
-            currentDate={currentDate}
-            linkable
-            userId={null}
-            onDelete={null}
-          />
-        ))}
+      {data.getAllPosts.map((post: IPost) => (
+        <CustomCard
+          key={post.id}
+          post={post}
+          currentDate={currentDate}
+          linkable
+          userId={null}
+          onDelete={null}
+        />
+      ))}
     </div>
   );
 };
