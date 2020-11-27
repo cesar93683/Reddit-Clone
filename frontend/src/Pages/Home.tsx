@@ -4,7 +4,7 @@ import IPost from "../utils/interfaces/IPost";
 import { useQuery } from "@apollo/client";
 import { GET_ALL_POSTS_QUERY } from "../GraphQL/Query";
 
-import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "../components/LoadingSpinner";
 import CustomCard from "../components/CustomCard";
 
 const Home = () => {

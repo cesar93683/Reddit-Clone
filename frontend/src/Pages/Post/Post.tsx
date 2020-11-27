@@ -11,7 +11,7 @@ import {
   CREATE_COMMENT_MUTATION,
   DELETE_POST_MUTATION,
 } from "../../GraphQL/Mutation";
-import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import CustomCard from "../../components/CustomCard";
 
 interface PostParams {
@@ -20,7 +20,6 @@ interface PostParams {
 
 const PostItem = () => {
   const auth = useContext(AuthContext);
-
   const postId = Number(useParams<PostParams>().postId);
   const [createComment] = useMutation(CREATE_COMMENT_MUTATION);
   const [deletePost] = useMutation(DELETE_POST_MUTATION);
@@ -77,7 +76,7 @@ const PostItem = () => {
             comment={newComment}
             currentDate={currentDate}
             postId={postId}
-            userId={auth.userId}
+            userId={Number(auth.userId)}
           />
         )}
         {data.getPostById.comments.map((comment: IComment) => (
@@ -86,7 +85,7 @@ const PostItem = () => {
             comment={comment}
             currentDate={currentDate}
             postId={postId}
-            userId={auth.userId}
+            userId={Number(auth.userId)}
           />
         ))}
       </div>

@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import "./EditPost";
 import { useMutation } from "@apollo/client";
 import { NEW_POST_MUTATION } from "../GraphQL/Mutation";
-import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "../components/LoadingSpinner";
 import { Alert, Button, Form } from "react-bootstrap";
 
 const NewPost = () => {

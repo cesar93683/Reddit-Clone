@@ -7,21 +7,23 @@ interface CommentFormProps {
 }
 
 const CommentForm = (props: CommentFormProps) => {
-  const [comment, setComment] = useState("");
+  const [content, setContent] = useState("");
   const [error, setError] = useState("");
 
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(event.target.value);
+  const handleContentChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setContent(event.target.value);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!comment) {
+    if (!content) {
       setError("Please Enter A Comment.");
       return;
     }
     setError("");
-    props.onSubmit(comment);
+    props.onSubmit(content);
   };
 
   return (
@@ -29,8 +31,8 @@ const CommentForm = (props: CommentFormProps) => {
       <Form.Control
         as="textarea"
         rows={3}
-        value={comment}
-        onChange={handleChange}
+        value={content}
+        onChange={handleContentChange}
       />
       <div className="d-flex justify-content-end mt-1">
         <Button type="submit" disabled={props.enableSubmit}>

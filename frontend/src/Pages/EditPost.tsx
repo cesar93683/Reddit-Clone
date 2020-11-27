@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
-import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "../components/LoadingSpinner";
 import { EDIT_POST_MUTATION } from "../GraphQL/Mutation";
 import { GET_POST_BY_ID_QUERY } from "../GraphQL/Query";
 
@@ -34,9 +34,7 @@ const EditPost = () => {
       .then(({ data }) => {
         history.push("/posts/" + postId);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   const handleContentChange = (

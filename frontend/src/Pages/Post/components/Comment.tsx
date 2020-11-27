@@ -10,7 +10,7 @@ interface CommentProps {
   currentDate: number;
   comment: IComment;
   postId: number;
-  userId: string;
+  userId: number;
 }
 
 const Comment = (props: CommentProps) => {
@@ -27,7 +27,6 @@ const Comment = (props: CommentProps) => {
   } = props;
 
   const [isCommentDeleted, setIsCommentDeleted] = useState(false);
-
   const [deleteComment] = useMutation(DELETE_COMMENT_MUTATION);
 
   const onDelete = async () => {
@@ -41,7 +40,7 @@ const Comment = (props: CommentProps) => {
   };
 
   if (isCommentDeleted) {
-    return <div className="mb-3">Comment deleted</div>;
+    return <div className="my-2">Comment deleted</div>;
   }
 
   return (
@@ -53,13 +52,13 @@ const Comment = (props: CommentProps) => {
           username={username}
         />
         <Card.Text>{content}</Card.Text>
-        <div className="d-flex justify-content-end">
-          {Number(userId) === authorId && (
+        {userId === authorId && (
+          <div className="d-flex justify-content-end">
             <Button variant="danger" onClick={onDelete}>
               Delete
             </Button>
-          )}
-        </div>
+          </div>
+        )}
       </Card.Body>
     </Card>
   );

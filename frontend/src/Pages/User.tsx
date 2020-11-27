@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import React from "react";
 import { useParams } from "react-router-dom";
 import CustomCard from "../components/CustomCard";
-import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "../components/LoadingSpinner";
 import { GET_USER_QUERY } from "../GraphQL/Query";
 import IPost from "../utils/interfaces/IPost";
 
@@ -22,8 +22,8 @@ const User = () => {
     return <LoadingSpinner />;
   }
 
-  if (error || !data) {
-    return <h1 className="text-light">An error occured.</h1>;
+  if (error || !data || !data.getUser) {
+    return <h1>An error occured.</h1>;
   }
 
   return (

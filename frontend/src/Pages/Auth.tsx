@@ -52,15 +52,17 @@ const Auth = ({ isLogInMode }: AuthProps) => {
     }
   };
 
-  const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
 
-  const handleUsername = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
   };
 
-  const handlePasssword = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePassswordChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setPassword(event.target.value);
   };
 
@@ -74,7 +76,7 @@ const Auth = ({ isLogInMode }: AuthProps) => {
               type="email"
               placeholder="Enter email"
               value={email}
-              onChange={handleEmail}
+              onChange={handleEmailChange}
             />
           </Form.Group>
           {!isLogInMode && (
@@ -84,7 +86,7 @@ const Auth = ({ isLogInMode }: AuthProps) => {
                 type="text"
                 placeholder="Enter username"
                 value={username}
-                onChange={handleUsername}
+                onChange={handleUsernameChange}
               />
             </Form.Group>
           )}
@@ -94,7 +96,7 @@ const Auth = ({ isLogInMode }: AuthProps) => {
               type="password"
               placeholder="Enter password"
               value={password}
-              onChange={handlePasssword}
+              onChange={handlePassswordChange}
             />
           </Form.Group>
           {error && <Alert variant="danger">{error}</Alert>}
