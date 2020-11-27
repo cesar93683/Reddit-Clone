@@ -3,11 +3,15 @@ import { Alert, Button, Form } from "react-bootstrap";
 
 interface CommentFormProps {
   onSubmit: (comment: string) => void;
-  enableSubmit: boolean;
+  enableSubmit?: boolean;
+  buttonText?: string;
+  defaultValue?: string;
 }
 
 const CommentForm = (props: CommentFormProps) => {
-  const [content, setContent] = useState("");
+  const { onSubmit, enableSubmit, buttonText, defaultValue } = props;
+
+  const [content, setContent] = useState(defaultValue ? defaultValue : "");
   const [error, setError] = useState("");
 
   const handleContentChange = (
@@ -23,7 +27,7 @@ const CommentForm = (props: CommentFormProps) => {
       return;
     }
     setError("");
-    props.onSubmit(content);
+    onSubmit(content);
   };
 
   return (
@@ -35,8 +39,8 @@ const CommentForm = (props: CommentFormProps) => {
         onChange={handleContentChange}
       />
       <div className="d-flex justify-content-end mt-1">
-        <Button type="submit" disabled={props.enableSubmit}>
-          Comment
+        <Button type="submit" disabled={enableSubmit}>
+          {buttonText ? buttonText : "Comment"}
         </Button>
       </div>
       {error && <Alert variant="danger">{error}</Alert>}

@@ -240,5 +240,20 @@ export const Mutation = mutationType({
         };
       },
     });
+
+    t.field('editComment', {
+      type: 'Comment',
+      args: {
+        content: stringArg({ nullable: false }),
+        id: intArg({ nullable: false }),
+      },
+      resolve: async (parent, { content, id }, ctx) => {
+        console.log(id + ' ' + content);
+        return await ctx.prisma.comment.update({
+          data: { content },
+          where: { id },
+        });
+      },
+    });
   },
 });
