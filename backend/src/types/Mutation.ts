@@ -124,11 +124,12 @@ export const Mutation = mutationType({
           return ctx.prisma.post.create({
             data: {
               title,
-              numComments: 0,
-              dateCreated: String(Date.now()),
-              dateUpdated: String(Date.now()),
               content,
               author: { connect: { id: userId } },
+              numComments: 0,
+              numVotes: 0,
+              dateCreated: String(Date.now()),
+              dateUpdated: String(Date.now()),
             },
           });
         } catch (err) {
@@ -162,11 +163,13 @@ export const Mutation = mutationType({
       resolve: async (parent, { id }, ctx) => {
         try {
           await ctx.prisma.comment.deleteMany({ where: { post: { id } } });
+          await ctx.prisma.vote.deleteMany({ where: { post: { id } } });
           await ctx.prisma.post.delete({ where: { id } });
           return {
             message: 'Success',
           };
         } catch (err) {
+          console.log(err);
           throw new Error('Deleting post failed, please try again.');
         }
       },
@@ -254,6 +257,88 @@ export const Mutation = mutationType({
           data: { content, dateUpdated: String(Date.now()) },
           where: { id },
         });
+      },
+    });
+
+    t.field('votePost', {
+      type: 'Message',
+      args: {
+        postId: intArg({ nullable: false }),
+        vote: intArg({ nullable: false }),
+      },
+      resolve: async (parent, { postId, vote }, ctx) => {
+        if (vote < -1 || vote > 1) {
+          throw new Error('Vote must be -1, 0, or 1');
+        }
+        let userId;
+        try {
+          userId = Number(getUserId(ctx));
+        } catch (err) {
+          throw new Error('Voting failed, please try again.');
+        }
+        let post;
+        try {
+          post = await ctx.prisma.post.findOne({ where: { id: postId } });
+        } catch (err) {
+          throw new Error('Voting failed, please try again.');
+        }
+        if (!post) {
+          throw new Error('Post does not exist');
+        }
+        let oldVoteArr;
+
+        try {
+          oldVoteArr = await ctx.prisma.vote.findMany({
+            where: { post: { id: postId }, author: { id: userId } },
+          });
+        } catch (err) {
+          throw new Error('Voting failed, please try again.');
+        }
+
+        if (oldVoteArr.length) {
+          const voteDiff = vote - oldVoteArr[0].value;
+          if (voteDiff !== 0) {
+            try {
+              await ctx.prisma.vote.updateMany({
+                where: {
+                  authorId: userId,
+                  postId,
+                },
+                data: {
+                  value: vote,
+                },
+              });
+              await ctx.prisma.post.update({
+                where: { id: postId },
+                data: { numVotes: post.numVotes + voteDiff },
+              });
+            } catch (err) {
+              throw new Error('Voting failed, please try again.');
+            }
+          }
+          return {
+            message: 'Success',
+          };
+        }
+
+        try {
+          await ctx.prisma.vote.create({
+            data: {
+              value: vote,
+              author: { connect: { id: userId } },
+              post: { connect: { id: postId } },
+            },
+          });
+          await ctx.prisma.post.update({
+            where: { id: postId },
+            data: { numVotes: post.numVotes + vote },
+          });
+        } catch (err) {
+          throw new Error('Voting failed, please try again.');
+        }
+        return {
+          message: 'Success',
+        };
       },
     });
   },

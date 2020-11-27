@@ -33,6 +33,7 @@ type Mutation {
   editPost(content: String!, id: Int!): Post
   logIn(email: String!, password: String!): AuthPayload
   signUp(email: String!, password: String!, username: String!): AuthPayload
+  votePost(postId: Int!, vote: Int!): Message
 }
 
 type Post {
@@ -43,7 +44,9 @@ type Post {
   dateUpdated: String!
   id: Int!
   numComments: Int!
+  numVotes: Int!
   title: String!
+  votes(after: VoteWhereUniqueInput, before: VoteWhereUniqueInput, first: Int, last: Int): [Vote!]!
 }
 
 input PostWhereUniqueInput {
@@ -61,4 +64,15 @@ type User {
   id: Int!
   posts(after: PostWhereUniqueInput, before: PostWhereUniqueInput, first: Int, last: Int): [Post!]!
   username: String!
+}
+
+type Vote {
+  author: User!
+  id: Int!
+  post: Post!
+  value: Int!
+}
+
+input VoteWhereUniqueInput {
+  id: Int
 }

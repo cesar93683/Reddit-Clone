@@ -11,23 +11,34 @@ model Post {
   id          Int     @default(autoincrement()) @id
   title       String
   content     String
-  numComments Int
-  dateCreated String
-  dateUpdated String
   author      User    @relation(fields: [authorId], references: [id])
   authorId    Int
   comments    Comment[]
+  numComments Int
+  votes       Vote[]
+  numVotes    Int
+  dateCreated String
+  dateUpdated String
+}
+
+model Vote {
+  id          Int     @default(autoincrement()) @id
+  value       Int
+  author      User    @relation(fields: [authorId], references: [id])
+  authorId    Int
+  post        Post    @relation(fields: [postId], references: [id])
+  postId      Int
 }
 
 model Comment {
   id          Int     @default(autoincrement()) @id
   content     String
-  dateCreated String
-  dateUpdated String
   author      User    @relation(fields: [authorId], references: [id])
   authorId    Int
   post        Post    @relation(fields: [postId], references: [id])
   postId      Int
+  dateCreated String
+  dateUpdated String
 }
 
 model User {

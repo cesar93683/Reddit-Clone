@@ -1,13 +1,11 @@
 import { objectType } from '@nexus/schema';
 
-export const Comment = objectType({
-  name: 'Comment',
+export const Vote = objectType({
+  name: 'Vote',
   definition(t) {
     t.model.id();
-    t.model.content();
+    t.model.value();
     t.model.author();
     t.model.post();
-    t.model.dateCreated();
-    t.model.dateUpdated();
   },
 });

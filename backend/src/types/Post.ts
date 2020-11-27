@@ -6,10 +6,12 @@ export const Post = objectType({
     t.model.id();
     t.model.title();
     t.model.content();
-    t.model.numComments();
-    t.model.dateCreated();
-    t.model.dateUpdated();
     t.model.author();
     t.model.comments();
+    t.model.numComments();
+    t.model.votes();
+    t.model.numVotes();
+    t.model.dateCreated();
+    t.model.dateUpdated();
   },
 });
