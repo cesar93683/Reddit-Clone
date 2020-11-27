@@ -5,7 +5,7 @@ import "./EditPost";
 import { useMutation } from "@apollo/client";
 import { NEW_POST_MUTATION } from "../GraphQL/Mutation";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
-import { Alert, Button, Col, Form, Row } from "react-bootstrap";
+import { Alert, Button, Form } from "react-bootstrap";
 
 const NewPost = () => {
   const [newPost, { loading }] = useMutation(NEW_POST_MUTATION);
@@ -42,33 +42,29 @@ const NewPost = () => {
   }
 
   return (
-    <Row className="justify-content-md-center">
-      <Col xl={6} lg={8}>
-        <Form onSubmit={postSubmitHandler}>
-          <Form.Group>
-            <Form.Label>Title</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter title"
-              value={title}
-              onChange={handleTitleChange}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Content</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={3}
-              placeholder="Enter content"
-              value={content}
-              onChange={handleContentChange}
-            />
-          </Form.Group>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <Button type="submit">New Post</Button>
-        </Form>
-      </Col>
-    </Row>
+    <Form onSubmit={postSubmitHandler}>
+      <Form.Group>
+        <Form.Label>Title</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Enter title"
+          value={title}
+          onChange={handleTitleChange}
+        />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Content</Form.Label>
+        <Form.Control
+          as="textarea"
+          rows={3}
+          placeholder="Enter content"
+          value={content}
+          onChange={handleContentChange}
+        />
+      </Form.Group>
+      {error && <Alert variant="danger">{error}</Alert>}
+      <Button type="submit">New Post</Button>
+    </Form>
   );
 };
 

@@ -45,39 +45,29 @@ const EditPost = () => {
     setContent(event.target.value);
   };
 
-  if (loading) {
+  if (loading || !data) {
     return <LoadingSpinner />;
   }
 
   return (
-    <Row className="justify-content-md-center">
-      <Col xl={6} lg={8}>
-        {data && (
-          <Form onSubmit={postUpdateSubmitHandler}>
-            <Form.Group>
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                disabled
-                type="text"
-                value={data.getPostById.title}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Content</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                placeholder="Enter content"
-                value={content}
-                onChange={handleContentChange}
-              />
-            </Form.Group>
-            {error && <Alert variant="danger">{error}</Alert>}
-            <Button type="submit">Update Post</Button>
-          </Form>
-        )}
-      </Col>
-    </Row>
+    <Form onSubmit={postUpdateSubmitHandler}>
+      <Form.Group>
+        <Form.Label>Title</Form.Label>
+        <Form.Control disabled type="text" value={data.getPostById.title} />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Content</Form.Label>
+        <Form.Control
+          as="textarea"
+          rows={3}
+          placeholder="Enter content"
+          value={content}
+          onChange={handleContentChange}
+        />
+      </Form.Group>
+      {error && <Alert variant="danger">{error}</Alert>}
+      <Button type="submit">Update Post</Button>
+    </Form>
   );
 };
 export default EditPost;
