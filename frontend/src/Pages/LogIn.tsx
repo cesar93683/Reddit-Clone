@@ -1,9 +1,18 @@
 import React, { useContext, useState } from "react";
-import { useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { AuthContext } from "../utils/auth-context";
-import { LOGIN_MUTATION } from "../GraphQL/Mutation";
 import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+
+const LOGIN_MUTATION = gql`
+  mutation logIn($email: String!, $password: String!) {
+    logIn(email: $email, password: $password) {
+      token
+      userId
+      error
+    }
+  }
+`;
 
 const Auth = () => {
   const auth = useContext(AuthContext);

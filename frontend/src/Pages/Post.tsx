@@ -1,19 +1,66 @@
 import React, { useContext, useMemo, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
-
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
-import { useMutation, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import IComment from "../utils/interfaces/IComment";
 import { AuthContext } from "../utils/auth-context";
-import { POST_QUERY } from "../GraphQL/Query";
-import {
-  CREATE_COMMENT_MUTATION,
-  DELETE_POST_MUTATION,
-} from "../GraphQL/Mutation";
 import LoadingSpinner from "../components/LoadingSpinner";
 import CustomCard from "../components/CustomCard";
 import SortDropDown from "../components/SortDropDown";
+
+const POST_QUERY = gql`
+  query($id: Int!) {
+    post(id: $id) {
+      id
+      title
+      content
+      numComments
+      numVotes
+      dateCreated
+      dateUpdated
+      author {
+        id
+        username
+      }
+      comments {
+        id
+        content
+        numVotes
+        dateCreated
+        dateUpdated
+        author {
+          id
+          username
+        }
+      }
+    }
+  }
+`;
+
+const CREATE_COMMENT_MUTATION = gql`
+  mutation($postId: Int!, $content: String!) {
+    createComment(postId: $postId, content: $content) {
+      id
+      content
+      numVotes
+      dateCreated
+      dateUpdated
+      author {
+        id
+        username
+      }
+    }
+  }
+`;
+
+const DELETE_POST_MUTATION = gql`
+  mutation($id: Int!) {
+    deletePost(id: $id) {
+      message
+    }
+  }
+`;
 
 interface PostParams {
   postId: string;

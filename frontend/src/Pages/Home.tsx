@@ -1,12 +1,26 @@
 import React, { useMemo, useState } from "react";
-
 import IPost from "../utils/interfaces/IPost";
-import { useQuery } from "@apollo/client";
-import { POSTS_QUERY } from "../GraphQL/Query";
-
+import { gql, useQuery } from "@apollo/client";
 import LoadingSpinner from "../components/LoadingSpinner";
 import CustomCard from "../components/CustomCard";
 import SortDropDown from "../components/SortDropDown";
+
+const POSTS_QUERY = gql`
+  query {
+    posts {
+      id
+      title
+      numComments
+      numVotes
+      dateCreated
+      dateUpdated
+      author {
+        id
+        username
+      }
+    }
+  }
+`;
 
 const Home = () => {
   const currentDate = Date.now();

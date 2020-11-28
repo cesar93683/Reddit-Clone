@@ -1,20 +1,46 @@
 import React, { useContext, useMemo, useState } from "react";
 import timeSince from "../utils/timeSince";
 import IComment from "../utils/interfaces/IComment";
-import {
-  DELETE_COMMENT_MUTATION,
-  EDIT_COMMENT_MUTATION,
-  VOTE_COMMENT_MUTATION,
-} from "../GraphQL/Mutation";
-import { useMutation, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { Button, Card } from "react-bootstrap";
 import CustomCardSubtitle from "./CustomCardSubtitle";
 import DeleteModalWithButton from "./DeleteModalWithButton";
 import CommentForm from "./CommentForm";
 import LoadingSpinner from "./LoadingSpinner";
-import { COMMENT_VOTE_QUERY } from "../GraphQL/Query";
 import VoteSection from "./VoteSection";
 import { AuthContext } from "../utils/auth-context";
+
+const COMMENT_VOTE_QUERY = gql`
+  query($commentId: Int!) {
+    commentVote(commentId: $commentId) {
+      value
+    }
+  }
+`;
+
+const DELETE_COMMENT_MUTATION = gql`
+  mutation($id: Int!, $postId: Int!) {
+    deleteComment(id: $id, postId: $postId) {
+      message
+    }
+  }
+`;
+
+const EDIT_COMMENT_MUTATION = gql`
+  mutation($id: Int!, $content: String!) {
+    editComment(id: $id, content: $content) {
+      id
+    }
+  }
+`;
+
+const VOTE_COMMENT_MUTATION = gql`
+  mutation($commentId: Int!, $value: Int!) {
+    voteComment(commentId: $commentId, value: $value) {
+      message
+    }
+  }
+`;
 
 interface CommentProps {
   currentDate: number;

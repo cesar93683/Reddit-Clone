@@ -6,11 +6,25 @@ import { Button, Card } from "react-bootstrap";
 import CustomCardSubtitle from "./CustomCardSubtitle";
 import DeleteModalWithButton from "./DeleteModalWithButton";
 import VoteSection from "./VoteSection";
-import { useMutation, useQuery } from "@apollo/client";
-import { POST_VOTE_QUERY } from "../GraphQL/Query";
-import { VOTE_POST_MUTATION } from "../GraphQL/Mutation";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import LoadingSpinner from "./LoadingSpinner";
 import { AuthContext } from "../utils/auth-context";
+
+const POST_VOTE_QUERY = gql`
+  query($postId: Int!) {
+    postVote(postId: $postId) {
+      value
+    }
+  }
+`;
+
+const VOTE_POST_MUTATION = gql`
+  mutation($postId: Int!, $value: Int!) {
+    votePost(postId: $postId, value: $value) {
+      message
+    }
+  }
+`;
 
 interface CustomCardProps {
   post: IPost;
