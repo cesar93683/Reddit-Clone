@@ -760,31 +760,6 @@
       "arity": "Required"
     },
     {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "User",
-          "field": "password"
-        },
-        "directive": "default"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "User",
-          "field": "password"
-        },
-        "directive": "default"
-      },
-      "argument": "",
-      "value": "\"\""
-    },
-    {
       "tag": "CreateField",
       "model": "User",
       "field": "username",
