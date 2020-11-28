@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import timeSince from "../../../utils/timeSince";
 import IComment from "../../../utils/interfaces/IComment";
 import {
@@ -14,6 +14,7 @@ import CommentForm from "./CommentForm";
 import LoadingSpinner from "../../../components/LoadingSpinner";
 import { COMMENT_VOTE_QUERY } from "../../../GraphQL/Query";
 import VoteSection from "../../../components/VoteSection";
+import { AuthContext } from "../../../utils/auth-context";
 
 interface CommentProps {
   currentDate: number;
@@ -39,6 +40,7 @@ const Comment = (props: CommentProps) => {
     className,
   } = props;
 
+  const { isLoggedIn } = useContext(AuthContext);
   const [deleteComment] = useMutation(DELETE_COMMENT_MUTATION);
   const [editComment] = useMutation(EDIT_COMMENT_MUTATION);
   const [voteComment] = useMutation(VOTE_COMMENT_MUTATION);
@@ -50,7 +52,7 @@ const Comment = (props: CommentProps) => {
 
   const { data, loading: isVoteLoading } = useQuery(COMMENT_VOTE_QUERY, {
     variables: { commentId: Number(id) },
-    skip: !userId,
+    skip: !isLoggedIn,
   });
 
   useMemo(() => {

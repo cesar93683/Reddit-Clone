@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import IPost from "../utils/interfaces/IPost";
 import timeSince from "../utils/timeSince";
@@ -10,6 +10,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { POST_VOTE_QUERY } from "../GraphQL/Query";
 import { VOTE_POST_MUTATION } from "../GraphQL/Mutation";
 import LoadingSpinner from "./LoadingSpinner";
+import { AuthContext } from "../utils/auth-context";
 
 interface CustomCardProps {
   post: IPost;
@@ -39,13 +40,14 @@ const CustomCard = (props: CustomCardProps) => {
     className,
   } = props;
 
+  const { isLoggedIn } = useContext(AuthContext);
   const [numVotes, setNumVotes] = useState(numVotesFromProps);
   const [currVote, setCurrVote] = useState(0);
 
   const [votePost] = useMutation(VOTE_POST_MUTATION);
   const { data, loading: isVoteLoading } = useQuery(POST_VOTE_QUERY, {
     variables: { postId: Number(postId) },
-    skip: !userId,
+    skip: !isLoggedIn,
   });
 
   useMemo(() => {
