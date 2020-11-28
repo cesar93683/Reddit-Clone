@@ -1,8 +1,8 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import IComment from "../../../utils/interfaces/IComment";
-import Comment from "../../../components/Comment";
+import IComment from "../utils/interfaces/IComment";
+import Comment from "./Comment";
 
 interface CommentWithPostTitleProps {
   className?: string;
