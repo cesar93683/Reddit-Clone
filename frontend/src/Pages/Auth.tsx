@@ -34,22 +34,25 @@ const Auth = ({ isLogInMode }: AuthProps) => {
     if (isLogInMode) {
       await logIn({ variables: { email, password } })
         .then(({ data }) => {
-          console.log(data);
+          if (data.logIn.error) {
+            setError(data.logIn.error);
+            return;
+          }
           auth.login(data.logIn.userId, data.logIn.token, null);
           history.push("/");
         })
-        .catch((err) => {
-          setError(err.message);
-        });
+        .catch(() => {});
     } else {
       await signUp({ variables: { email, username, password } })
         .then(({ data }) => {
+          if (data.signUp.error) {
+            setError(data.signUp.error);
+            return;
+          }
           auth.login(data.signUp.userId, data.signUp.token, null);
           history.push("/");
         })
-        .catch((err) => {
-          setError(err.message);
-        });
+        .catch(() => {});
     }
   };
 

@@ -5,5 +5,6 @@ export const AuthPayload = objectType({
   definition(t) {
     t.string('token');
     t.string('userId');
+    t.string('error');
   },
 });

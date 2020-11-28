@@ -5,6 +5,7 @@ const LOGIN_MUTATION = gql`
     logIn(email: $email, password: $password) {
       token
       userId
+      error
     }
   }
 `;
@@ -14,6 +15,7 @@ const SIGNUP_MUTATION = gql`
     signUp(username: $username, email: $email, password: $password) {
       token
       userId
+      error
     }
   }
 `;

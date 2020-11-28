@@ -21,7 +21,21 @@ export const Mutation = mutationType({
         }
 
         if (existingUser) {
-          throw new Error('User exists already, please login instead.');
+          return {
+            error: 'Email already exists, please login instead.',
+          };
+        }
+
+        try {
+          existingUser = await ctx.prisma.user.findOne({ where: { username } });
+        } catch (err) {
+          throw new Error('Signing up failed, please try again later.');
+        }
+
+        if (existingUser) {
+          return {
+            error: 'Username already exists, please login instead.',
+          };
         }
 
         let hashedPassword;
@@ -79,7 +93,9 @@ export const Mutation = mutationType({
         }
 
         if (!user) {
-          throw new Error(`No user found for email: ${email}`);
+          return {
+            error: `No user found for email: ${email}`,
+          };
         }
 
         let isValidPassword = false;
@@ -90,7 +106,9 @@ export const Mutation = mutationType({
         }
 
         if (!isValidPassword) {
-          throw new Error('Invalid password');
+          return {
+            error: 'Invalid password',
+          };
         }
 
         let token;
