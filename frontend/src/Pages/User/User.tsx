@@ -1,5 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import React, { useMemo, useState } from "react";
+import { Tab, Tabs } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import CustomCard from "../../components/CustomCard";
 import LoadingSpinner from "../../components/LoadingSpinner";
@@ -63,7 +64,7 @@ const User = () => {
   const [newActive, setNewActive] = useState(true);
 
   useMemo(() => {
-    if (data) {
+    if (data && data.user) {
       setPosts(
         [...data.user.posts].sort(
           (a: IPost, b: IPost) => b.dateCreated - a.dateCreated
@@ -112,59 +113,86 @@ const User = () => {
     return <LoadingSpinner />;
   }
 
-  if (error) {
+  if (error || !data.user) {
     return <h1>An error occured.</h1>;
   }
 
-  if (posts.length === 0) {
-    return <h1>No Posts</h1>;
-  }
-
-  console.log(postsAndComments);
+  const sortDropDown = (
+    <SortDropDown
+      className="mt-2"
+      sortByVotes={sortByVotes}
+      topActive={topActive}
+      sortByNew={sortByNew}
+      newActive={newActive}
+    />
+  );
 
   return (
     <div>
-      <SortDropDown
-        sortByVotes={sortByVotes}
-        topActive={topActive}
-        sortByNew={sortByNew}
-        newActive={newActive}
-      />
-      {postsAndComments.map((item: IPost | IComment) =>
-        item.__typename === "Post" ? (
-          <CustomCard
-            className="my-2"
-            key={"post" + item.id}
-            post={item as IPost}
-            currentDate={currentDate}
-            linkable
-          />
-        ) : (
-          <CommentWithPostTitle
-            className="my-2"
-            key={"comment" + item.id}
-            comment={item as IComment}
-            currentDate={currentDate}
-          />
-        )
-      )}
-      {/* {posts.map((post: IPost) => (
-        <CustomCard
-          className="my-2"
-          key={post.id}
-          post={post}
-          currentDate={currentDate}
-          linkable
-        />
-      ))}
-      {comments.map((comment) => (
-        <CommentWithPostTitle
-          className="my-2"
-          key={comment.id}
-          comment={comment}
-          currentDate={currentDate}
-        />
-      ))} */}
+      <Tabs defaultActiveKey="overview">
+        <Tab eventKey="overview" title="Overview">
+          {postsAndComments.length === 0 ? (
+            <h1>No posts or comments</h1>
+          ) : (
+            <>
+              {sortDropDown}
+              {postsAndComments.map((item: IPost | IComment) =>
+                item.__typename === "Post" ? (
+                  <CustomCard
+                    className="my-2"
+                    key={"post" + item.id}
+                    post={item as IPost}
+                    currentDate={currentDate}
+                    linkable
+                  />
+                ) : (
+                  <CommentWithPostTitle
+                    className="my-2"
+                    key={"comment" + item.id}
+                    comment={item as IComment}
+                    currentDate={currentDate}
+                  />
+                )
+              )}
+            </>
+          )}
+        </Tab>
+        <Tab eventKey="posts" title="Posts">
+          {posts.length === 0 ? (
+            <h1>No Posts</h1>
+          ) : (
+            <>
+              {sortDropDown}
+              {posts.map((post: IPost) => (
+                <CustomCard
+                  className="my-2"
+                  key={post.id}
+                  post={post}
+                  currentDate={currentDate}
+                  linkable
+                />
+              ))}
+            </>
+          )}
+        </Tab>
+        <Tab eventKey="comments" title="Comments">
+          {comments.length === 0 ? (
+            <h1>No Comments</h1>
+          ) : (
+            <>
+              {sortDropDown}
+              {comments.map((comment) => (
+                <CommentWithPostTitle
+                  className="my-2"
+                  key={comment.id}
+                  comment={comment}
+                  currentDate={currentDate}
+                />
+              ))}
+            </>
+          )}
+        </Tab>
+      </Tabs>
     </div>
   );
 };

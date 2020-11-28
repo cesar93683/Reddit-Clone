@@ -2,6 +2,7 @@ import React from "react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 
 interface SortDropDownProps {
+  className?: string;
   disabled?: boolean;
   sortByVotes: () => void;
   topActive: boolean;
@@ -10,6 +11,7 @@ interface SortDropDownProps {
 }
 
 const SortDropDown = ({
+  className,
   disabled,
   sortByVotes,
   topActive,
@@ -17,7 +19,7 @@ const SortDropDown = ({
   newActive,
 }: SortDropDownProps) => {
   return (
-    <DropdownButton disabled={disabled} title="Sort By">
+    <DropdownButton className={className} disabled={disabled} title="Sort By">
       <Dropdown.Item onClick={sortByVotes} active={topActive}>
         Top
       </Dropdown.Item>
