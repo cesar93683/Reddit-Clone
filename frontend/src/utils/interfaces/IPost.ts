@@ -13,4 +13,5 @@ export default interface IPost {
   numVotes: number;
   dateCreated: number;
   dateUpdated: number;
+  __typename: string;
 }

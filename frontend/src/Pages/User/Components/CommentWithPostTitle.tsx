@@ -16,11 +16,17 @@ const CommentWithPostTitle = (props: CommentWithPostTitleProps) => {
     <Card className={className}>
       <Card.Body>
         <div>
-          <Link className="text-body font-weight-bold" to="">
+          <Link
+            className="text-body font-weight-bold"
+            to={"users/" + comment.author.id}
+          >
             {comment.author.username}
           </Link>
           {" commented on "}
-          <Link className="text-body font-weight-bold" to="">
+          <Link
+            className="text-body font-weight-bold"
+            to={"posts/" + comment.post.id}
+          >
             {comment.post.title}
           </Link>
         </div>

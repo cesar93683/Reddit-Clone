@@ -56,6 +56,9 @@ const User = () => {
   });
   const [posts, setPosts] = useState<IPost[]>([]);
   const [comments, setComments] = useState<IComment[]>([]);
+  const [postsAndComments, setPostsAndComments] = useState<
+    IPost[] & IComment[]
+  >([]);
   const [topActive, setTopActive] = useState(false);
   const [newActive, setNewActive] = useState(true);
 
@@ -71,12 +74,23 @@ const User = () => {
           (a: IComment, b: IComment) => b.dateCreated - a.dateCreated
         )
       );
+      setPostsAndComments(
+        [...data.user.comments, ...data.user.posts].sort(
+          (a: IPost | IComment, b: IPost | IComment) =>
+            b.dateCreated - a.dateCreated
+        )
+      );
     }
   }, [data]);
 
   const sortByVotes = () => {
     setPosts([...posts].sort((a, b) => b.numVotes - a.numVotes));
     setComments([...comments].sort((a, b) => b.numVotes - a.numVotes));
+    setPostsAndComments(
+      [...data.user.comments, ...data.user.posts].sort(
+        (a: IPost | IComment, b: IPost | IComment) => b.numVotes - a.numVotes
+      )
+    );
     setTopActive(true);
     setNewActive(false);
   };
@@ -84,6 +98,12 @@ const User = () => {
   const sortByNew = () => {
     setPosts([...posts].sort((a, b) => b.dateCreated - a.dateCreated));
     setComments([...comments].sort((a, b) => b.dateCreated - a.dateCreated));
+    setPostsAndComments(
+      [...data.user.comments, ...data.user.posts].sort(
+        (a: IPost | IComment, b: IPost | IComment) =>
+          b.dateCreated - a.dateCreated
+      )
+    );
     setTopActive(false);
     setNewActive(true);
   };
@@ -100,6 +120,8 @@ const User = () => {
     return <h1>No Posts</h1>;
   }
 
+  console.log(postsAndComments);
+
   return (
     <div>
       <SortDropDown
@@ -108,7 +130,25 @@ const User = () => {
         sortByNew={sortByNew}
         newActive={newActive}
       />
-      {posts.map((post: IPost) => (
+      {postsAndComments.map((item: IPost | IComment) =>
+        item.__typename === "Post" ? (
+          <CustomCard
+            className="my-2"
+            key={"post" + item.id}
+            post={item as IPost}
+            currentDate={currentDate}
+            linkable
+          />
+        ) : (
+          <CommentWithPostTitle
+            className="my-2"
+            key={"comment" + item.id}
+            comment={item as IComment}
+            currentDate={currentDate}
+          />
+        )
+      )}
+      {/* {posts.map((post: IPost) => (
         <CustomCard
           className="my-2"
           key={post.id}
@@ -124,7 +164,7 @@ const User = () => {
           comment={comment}
           currentDate={currentDate}
         />
-      ))}
+      ))} */}
     </div>
   );
 };

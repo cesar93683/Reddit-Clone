@@ -11,4 +11,5 @@ export default interface IComment {
   dateCreated: number;
   dateUpdated: number;
   post: IPost;
+  __typename: string;
 }
