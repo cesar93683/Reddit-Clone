@@ -38,7 +38,7 @@ const Auth = ({ isLogInMode }: AuthProps) => {
           history.push("/");
         })
         .catch((err) => {
-          setError(err);
+          setError(err.message);
         });
     } else {
       await signUp({ variables: { email, username, password } })
@@ -47,7 +47,7 @@ const Auth = ({ isLogInMode }: AuthProps) => {
           history.push("/");
         })
         .catch((err) => {
-          setError(err);
+          setError(err.message);
         });
     }
   };
