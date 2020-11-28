@@ -14,7 +14,7 @@ interface UserParams {
 
 const USER_QUERY = gql`
   query($id: Int!) {
-    user(userId: $id) {
+    user(id: $id) {
       id
       username
       posts {

@@ -22,10 +22,10 @@ export const Query = queryType({
     });
     t.field('user', {
       type: 'User',
-      args: { userId: intArg() },
-      resolve: (parent, { userId }, ctx) => {
+      args: { id: intArg() },
+      resolve: (parent, { id }, ctx) => {
         return ctx.prisma.user.findOne({
-          where: { id: userId },
+          where: { id },
         });
       },
     });

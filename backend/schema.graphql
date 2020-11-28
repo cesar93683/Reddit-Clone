@@ -79,7 +79,7 @@ type Query {
   post(id: Int): Post
   posts: [Post]
   postVote(postId: Int): PostVote
-  user(userId: Int): User
+  user(id: Int): User
 }
 
 type User {
