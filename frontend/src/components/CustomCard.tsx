@@ -45,6 +45,7 @@ const CustomCard = (props: CustomCardProps) => {
   const [votePost] = useMutation(VOTE_POST_MUTATION);
   const { data, loading: isVoteLoading } = useQuery(POST_VOTE_QUERY, {
     variables: { postId: Number(postId) },
+    skip: !userId,
   });
 
   useMemo(() => {

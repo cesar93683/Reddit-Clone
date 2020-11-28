@@ -50,6 +50,7 @@ const Comment = (props: CommentProps) => {
 
   const { data, loading: isVoteLoading } = useQuery(COMMENT_VOTE_QUERY, {
     variables: { commentId: Number(id) },
+    skip: !userId,
   });
 
   useMemo(() => {
