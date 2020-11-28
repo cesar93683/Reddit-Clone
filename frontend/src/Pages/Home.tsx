@@ -6,7 +6,6 @@ import { POSTS_QUERY } from "../GraphQL/Query";
 
 import LoadingSpinner from "../components/LoadingSpinner";
 import CustomCard from "../components/CustomCard";
-import { Dropdown, DropdownButton } from "react-bootstrap";
 import SortDropDown from "../components/SortDropDown";
 
 const Home = () => {

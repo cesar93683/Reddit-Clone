@@ -13,6 +13,7 @@ import {
 } from "../../GraphQL/Mutation";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import CustomCard from "../../components/CustomCard";
+import SortDropDown from "../../components/SortDropDown";
 
 interface PostParams {
   postId: string;
@@ -27,21 +28,39 @@ const PostItem = () => {
   const [deletePost] = useMutation(DELETE_POST_MUTATION);
   const [comments, setComments] = useState<IComment[]>([]);
   const [hasNewCommentBeenAdded, setHasNewCommentBeenAdded] = useState(false);
+  const [topActive, setTopActive] = useState(false);
+  const [newActive, setNewActive] = useState(true);
 
   const { loading, data, error } = useQuery(POST_QUERY, {
     variables: { id: postId },
   });
 
   useMemo(() => {
-    setComments(
-      data && data.post && data.post.comments ? data.post.comments : []
-    );
+    if (data && data.post && data.post.comments) {
+      setComments(
+        [...data.post.comments].sort(
+          (a: IComment, b: IComment) => b.dateCreated - a.dateCreated
+        )
+      );
+    }
   }, [data]);
+
+  const sortByVotes = () => {
+    setComments([...comments].sort((a, b) => b.numVotes - a.numVotes));
+    setTopActive(true);
+    setNewActive(false);
+  };
+
+  const sortByNew = () => {
+    setComments([...comments].sort((a, b) => b.dateCreated - a.dateCreated));
+    setTopActive(false);
+    setNewActive(true);
+  };
 
   const onDeletePost = async () => {
     await deletePost({ variables: { id: postId } })
-      .then(({ data }) => {})
-      .catch((err) => {});
+      .then(() => {})
+      .catch(() => {});
     history.push("/");
   };
 
@@ -51,7 +70,7 @@ const PostItem = () => {
         setComments([newComment, ...comments]);
         setHasNewCommentBeenAdded(true);
       })
-      .catch((err) => {});
+      .catch(() => {});
   };
 
   if (loading) {
@@ -78,6 +97,13 @@ const PostItem = () => {
           enableSubmit={hasNewCommentBeenAdded}
         />
       )}
+      <SortDropDown
+        sortByVotes={sortByVotes}
+        topActive={topActive}
+        sortByNew={sortByNew}
+        newActive={newActive}
+        disabled={comments.length === 0}
+      />
       {comments.length === 0 && <h2>No Comments</h2>}
       <div className="px-3">
         {comments.map((comment: IComment) => (
