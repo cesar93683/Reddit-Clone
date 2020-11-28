@@ -1,59 +1,47 @@
 import React, { useContext, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { AuthContext } from "../utils/auth-context";
-import { LOGIN_MUTATION, SIGNUP_MUTATION } from "../GraphQL/Mutation";
+import { SIGNUP_MUTATION } from "../GraphQL/Mutation";
 import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
-interface AuthProps {
-  isLogInMode: boolean;
-}
-
-const Auth = ({ isLogInMode }: AuthProps) => {
+const SignUp = () => {
   const auth = useContext(AuthContext);
-  const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [signUp] = useMutation(SIGNUP_MUTATION);
-  const [logIn] = useMutation(LOGIN_MUTATION);
   const history = useHistory();
 
-  const authSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+  const signUpSubmitHandler = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
 
     if (!email) {
       setError("Please enter your email");
       return;
     }
-    if (!isLogInMode && !username) {
+    if (!username) {
       setError("Please enter your username");
       return;
     }
-
-    if (isLogInMode) {
-      await logIn({ variables: { email, password } })
-        .then(({ data }) => {
-          if (data.logIn.error) {
-            setError(data.logIn.error);
-            return;
-          }
-          auth.login(String(data.logIn.userId), data.logIn.token, null);
-          history.push("/");
-        })
-        .catch(() => {});
-    } else {
-      await signUp({ variables: { email, username, password } })
-        .then(({ data }) => {
-          if (data.signUp.error) {
-            setError(data.signUp.error);
-            return;
-          }
-          auth.login(String(data.signUp.userId), data.signUp.token, null);
-          history.push("/");
-        })
-        .catch(() => {});
+    if (!password) {
+      setError("Please enter your password");
+      return;
     }
+
+    await signUp({ variables: { email, username, password } })
+      .then(({ data }) => {
+        if (data.signUp.error) {
+          setError(data.signUp.error);
+          return;
+        }
+        auth.login(String(data.signUp.userId), data.signUp.token, null);
+        history.push("/");
+      })
+      .catch(() => {});
   };
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +61,7 @@ const Auth = ({ isLogInMode }: AuthProps) => {
   return (
     <Row className="justify-content-md-center">
       <Col xl={6} lg={8}>
-        <Form onSubmit={authSubmitHandler}>
+        <Form onSubmit={signUpSubmitHandler}>
           <Form.Group>
             <Form.Label>Email address</Form.Label>
             <Form.Control
@@ -83,17 +71,15 @@ const Auth = ({ isLogInMode }: AuthProps) => {
               onChange={handleEmailChange}
             />
           </Form.Group>
-          {!isLogInMode ? (
-            <Form.Group>
-              <Form.Label>Username</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter username"
-                value={username}
-                onChange={handleUsernameChange}
-              />
-            </Form.Group>
-          ) : null}
+          <Form.Group>
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter username"
+              value={username}
+              onChange={handleUsernameChange}
+            />
+          </Form.Group>
           <Form.Group>
             <Form.Label>Password</Form.Label>
             <Form.Control
@@ -105,7 +91,7 @@ const Auth = ({ isLogInMode }: AuthProps) => {
           </Form.Group>
           {error ? <Alert variant="danger">{error}</Alert> : null}
           <Button className="mt-1" variant="primary" type="submit">
-            {isLogInMode ? "Log In" : "Sign Up"}
+            Sign Up
           </Button>
         </Form>
       </Col>
@@ -113,4 +99,4 @@ const Auth = ({ isLogInMode }: AuthProps) => {
   );
 };
 
-export default Auth;
+export default SignUp;

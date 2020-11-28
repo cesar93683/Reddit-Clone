@@ -19,7 +19,8 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import { setContext } from "apollo-link-context";
-import Auth from "./Pages/Auth";
+import SignUp from "./Pages/SignUp";
+import LogIn from "./Pages/LogIn";
 import { Container } from "react-bootstrap";
 import NavBar from "./components/Navbar";
 
@@ -79,10 +80,10 @@ const App = () => {
           <User />
         </Route>
         <Route path="/login" exact>
-          <Auth isLogInMode />
+          <LogIn />
         </Route>
         <Route path="/signup" exact>
-          <Auth isLogInMode={false} />
+          <SignUp />
         </Route>
         <Redirect to="/" />
       </Switch>
