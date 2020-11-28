@@ -12,18 +12,18 @@ export const Mutation = mutationType({
         email: stringArg({ nullable: false }),
         password: stringArg({ nullable: false }),
       },
-      resolve: async (_parent, { username, email, password }, ctx) => {
+      resolve: async (parent, { username, email, password }, ctx) => {
         let existingUser = await ctx.prisma.user.findOne({ where: { email } });
         if (existingUser) {
           return {
-            error: 'Email already exists, please login instead.',
+            error: 'Email already exists.',
           };
         }
 
         existingUser = await ctx.prisma.user.findOne({ where: { username } });
         if (existingUser) {
           return {
-            error: 'Username already exists, please login instead.',
+            error: 'Username already exists.',
           };
         }
 
@@ -37,10 +37,8 @@ export const Mutation = mutationType({
           },
         });
 
-        const token = sign({ userId: user.id }, APP_SECRET);
-
         return {
-          token,
+          token: sign({ userId: user.id }, APP_SECRET),
           userId: user.id,
         };
       },
@@ -52,7 +50,7 @@ export const Mutation = mutationType({
         email: stringArg({ nullable: false }),
         password: stringArg({ nullable: false }),
       },
-      resolve: async (_parent, { email, password }, ctx) => {
+      resolve: async (parent, { email, password }, ctx) => {
         const user = await ctx.prisma.user.findOne({
           where: {
             email,

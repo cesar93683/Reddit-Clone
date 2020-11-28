@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
-import React, { useEffect, useMemo, useState } from "react";
-import { Alert, Button, Form } from "react-bootstrap";
+import React, { useMemo, useState } from "react";
+import { Button, Form } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { EDIT_POST_MUTATION } from "../GraphQL/Mutation";
