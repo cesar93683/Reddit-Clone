@@ -56,6 +56,7 @@ const Comment = (props: CommentProps) => {
   });
 
   useMemo(() => {
+    console.log(data);
     if (data && data.commentVote && data.commentVote.value) {
       setCurrVote(data.commentVote.value);
     }

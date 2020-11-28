@@ -21,7 +21,7 @@ const EditPost = () => {
   });
 
   useMemo(() => {
-    if (data && data.post && data.post.content) {
+    if (data && data.post) {
       setContent(data.post.content);
     }
   }, [data]);
@@ -46,7 +46,7 @@ const EditPost = () => {
     return <LoadingSpinner />;
   }
 
-  if (error || !data || !data.post) {
+  if (error) {
     return <h1>An error occured.</h1>;
   }
 
