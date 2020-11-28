@@ -1,3 +1,5 @@
+import IPost from "./IPost";
+
 export default interface IComment {
   id: string;
   author: {
@@ -8,4 +10,5 @@ export default interface IComment {
   numVotes: number;
   dateCreated: number;
   dateUpdated: number;
+  post: IPost;
 }

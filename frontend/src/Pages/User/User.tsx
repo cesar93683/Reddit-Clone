@@ -1,15 +1,51 @@
-import { useQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import React, { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
-import CustomCard from "../components/CustomCard";
-import LoadingSpinner from "../components/LoadingSpinner";
-import SortDropDown from "../components/SortDropDown";
-import { USER_QUERY } from "../GraphQL/Query";
-import IPost from "../utils/interfaces/IPost";
+import CustomCard from "../../components/CustomCard";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import SortDropDown from "../../components/SortDropDown";
+import IComment from "../../utils/interfaces/IComment";
+import IPost from "../../utils/interfaces/IPost";
+import CommentWithPostTitle from "./Components/CommentWithPostTitle";
 
 interface UserParams {
   userId: string;
 }
+
+const USER_QUERY = gql`
+  query($userId: Int!) {
+    user(userId: $userId) {
+      id
+      username
+      posts {
+        id
+        title
+        numComments
+        numVotes
+        dateCreated
+        dateUpdated
+        author {
+          id
+          username
+        }
+      }
+      comments {
+        content
+        numVotes
+        dateCreated
+        dateUpdated
+        author {
+          id
+          username
+        }
+        post {
+          id
+          title
+        }
+      }
+    }
+  }
+`;
 
 const User = () => {
   const param = useParams<UserParams>().userId;
@@ -19,6 +55,7 @@ const User = () => {
     variables: { userId },
   });
   const [posts, setPosts] = useState<IPost[]>([]);
+  const [comments, setComments] = useState<IComment[]>([]);
   const [topActive, setTopActive] = useState(false);
   const [newActive, setNewActive] = useState(true);
 
@@ -29,17 +66,24 @@ const User = () => {
           (a: IPost, b: IPost) => b.dateCreated - a.dateCreated
         )
       );
+      setComments(
+        [...data.user.comments].sort(
+          (a: IComment, b: IComment) => b.dateCreated - a.dateCreated
+        )
+      );
     }
   }, [data]);
 
   const sortByVotes = () => {
     setPosts([...posts].sort((a, b) => b.numVotes - a.numVotes));
+    setComments([...comments].sort((a, b) => b.numVotes - a.numVotes));
     setTopActive(true);
     setNewActive(false);
   };
 
   const sortByNew = () => {
     setPosts([...posts].sort((a, b) => b.dateCreated - a.dateCreated));
+    setComments([...comments].sort((a, b) => b.dateCreated - a.dateCreated));
     setTopActive(false);
     setNewActive(true);
   };
@@ -71,6 +115,14 @@ const User = () => {
           post={post}
           currentDate={currentDate}
           linkable
+        />
+      ))}
+      {comments.map((comment) => (
+        <CommentWithPostTitle
+          className="my-2"
+          key={comment.id}
+          comment={comment}
+          currentDate={currentDate}
         />
       ))}
     </div>

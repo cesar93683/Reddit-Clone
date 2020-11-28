@@ -36,7 +36,6 @@ const PostItem = () => {
   });
 
   useMemo(() => {
-    console.log(data);
     if (data && data.post) {
       setComments(
         [...data.post.comments].sort(
@@ -114,7 +113,6 @@ const PostItem = () => {
             comment={comment}
             currentDate={currentDate}
             postId={postId}
-            userId={Number(auth.userId)}
           />
         ))}
       </div>

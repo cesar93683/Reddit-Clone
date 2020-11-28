@@ -45,26 +45,6 @@ const POST_QUERY = gql`
     }
   }
 `;
-const USER_QUERY = gql`
-  query($userId: Int!) {
-    user(userId: $userId) {
-      id
-      username
-      posts {
-        id
-        title
-        numComments
-        numVotes
-        dateCreated
-        dateUpdated
-        author {
-          id
-          username
-        }
-      }
-    }
-  }
-`;
 const POST_VOTE_QUERY = gql`
   query($postId: Int!) {
     postVote(postId: $postId) {
@@ -80,10 +60,4 @@ const COMMENT_VOTE_QUERY = gql`
   }
 `;
 
-export {
-  POSTS_QUERY,
-  POST_QUERY,
-  USER_QUERY,
-  POST_VOTE_QUERY,
-  COMMENT_VOTE_QUERY,
-};
+export { POSTS_QUERY, POST_QUERY, POST_VOTE_QUERY, COMMENT_VOTE_QUERY };

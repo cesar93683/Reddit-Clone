@@ -20,8 +20,7 @@ interface CommentProps {
   currentDate: number;
   comment: IComment;
   postId: number;
-  userId: number;
-  className: string;
+  className?: string;
 }
 
 const Comment = (props: CommentProps) => {
@@ -36,10 +35,10 @@ const Comment = (props: CommentProps) => {
     },
     currentDate,
     postId,
-    userId,
     className,
   } = props;
 
+  const userId = Number(useContext(AuthContext).userId);
   const { isLoggedIn } = useContext(AuthContext);
   const [deleteComment] = useMutation(DELETE_COMMENT_MUTATION);
   const [editComment] = useMutation(EDIT_COMMENT_MUTATION);
@@ -56,7 +55,6 @@ const Comment = (props: CommentProps) => {
   });
 
   useMemo(() => {
-    console.log(data);
     if (data && data.commentVote && data.commentVote.value) {
       setCurrVote(data.commentVote.value);
     }

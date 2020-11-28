@@ -11,7 +11,7 @@ import NewPost from "./Pages/NewPost";
 import { AuthContext } from "./utils/auth-context";
 import { useAuth } from "./utils/auth-hook";
 import EditPost from "./Pages/EditPost";
-import User from "./Pages/User";
+import User from "./Pages/User/User";
 import {
   ApolloClient,
   ApolloProvider,
