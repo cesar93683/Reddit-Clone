@@ -104,7 +104,7 @@ const PostItem = () => {
         newActive={newActive}
         disabled={comments.length === 0}
       />
-      {comments.length === 0 && <h2>No Comments</h2>}
+      {comments.length === 0 ? <h2>No Comments</h2> : null}
       <div className="px-3">
         {comments.map((comment: IComment) => (
           <Comment

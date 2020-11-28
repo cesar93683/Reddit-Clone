@@ -43,7 +43,7 @@ const CommentForm = (props: CommentFormProps) => {
           {buttonText ? buttonText : "Comment"}
         </Button>
       </div>
-      {error && <Alert variant="danger">{error}</Alert>}
+      {error ? <Alert variant="danger">{error}</Alert> : null}
     </Form>
   );
 };

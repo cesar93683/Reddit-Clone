@@ -129,7 +129,7 @@ const CustomCard = (props: CustomCardProps) => {
               <div>{title}</div>
             )}
           </Card.Title>
-          {content && <Card.Text>{content}</Card.Text>}
+          {content ? <Card.Text>{content}</Card.Text> : null}
           <div className="d-flex justify-content-between align-items-center">
             {linkable ? (
               <Link className="text-body" to={"/posts/" + postId}>
@@ -143,14 +143,14 @@ const CustomCard = (props: CustomCardProps) => {
               </div>
             )}
 
-            {onDelete && authorId === userId && (
+            {onDelete && authorId === userId ? (
               <div>
                 <Link className="mr-2" to={`/posts/${postId}/edit`}>
                   <Button variant="outline-primary">EDIT</Button>
                 </Link>
                 <DeleteModalWithButton type="post" onDelete={onDelete} />
               </div>
-            )}
+            ) : null}
           </div>
         </div>
       </Card.Body>

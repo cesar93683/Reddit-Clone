@@ -152,15 +152,15 @@ const Comment = (props: CommentProps) => {
             timeSinceDateUpdated={timeSince(currentDate, dateUpdated)}
             username={username}
           />
-          {isEditing && (
+          {isEditing ? (
             <CommentForm
               onSubmit={handleUpdateComment}
               buttonText="Update"
               defaultValue={content}
             />
-          )}
-          {!isEditing && <Card.Text>{content}</Card.Text>}
-          {!isEditing && userId === authorId && (
+          ) : null}
+          {!isEditing ? <Card.Text>{content}</Card.Text> : null}
+          {!isEditing && userId === authorId ? (
             <div className="d-flex justify-content-end">
               <Button
                 onClick={handleEdit}
@@ -171,7 +171,7 @@ const Comment = (props: CommentProps) => {
               </Button>
               <DeleteModalWithButton type="comment" onDelete={onDelete} />
             </div>
-          )}
+          ) : null}
         </div>
       </Card.Body>
     </Card>

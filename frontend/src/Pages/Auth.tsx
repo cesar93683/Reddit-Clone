@@ -79,7 +79,7 @@ const Auth = ({ isLogInMode }: AuthProps) => {
               onChange={handleEmailChange}
             />
           </Form.Group>
-          {!isLogInMode && (
+          {!isLogInMode ? (
             <Form.Group>
               <Form.Label>Username</Form.Label>
               <Form.Control
@@ -89,7 +89,7 @@ const Auth = ({ isLogInMode }: AuthProps) => {
                 onChange={handleUsernameChange}
               />
             </Form.Group>
-          )}
+          ) : null}
           <Form.Group>
             <Form.Label>Password</Form.Label>
             <Form.Control
@@ -99,7 +99,7 @@ const Auth = ({ isLogInMode }: AuthProps) => {
               onChange={handlePassswordChange}
             />
           </Form.Group>
-          {error && <Alert variant="danger">{error}</Alert>}
+          {error ? <Alert variant="danger">{error}</Alert> : null}
           <Button className="mt-1" variant="primary" type="submit">
             {isLogInMode ? "Log In" : "Sign Up"}
           </Button>

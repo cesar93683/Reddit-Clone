@@ -62,7 +62,7 @@ const NewPost = () => {
           onChange={handleContentChange}
         />
       </Form.Group>
-      {error && <Alert variant="danger">{error}</Alert>}
+      {error ? <Alert variant="danger">{error}</Alert> : null}
       <Button type="submit">New Post</Button>
     </Form>
   );

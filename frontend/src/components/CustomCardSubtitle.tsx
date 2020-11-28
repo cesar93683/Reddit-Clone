@@ -24,11 +24,11 @@ const CustomCardSubtitle = (props: CustomCardSubtitleProps) => {
         </Link>
       </div>
       <div className="ml-1">{timeSinceDateCreated}</div>
-      {timeSinceDateCreated !== timeSinceDateUpdated && (
+      {timeSinceDateCreated !== timeSinceDateUpdated ? (
         <div className="ml-1 font-italic">
           {"edited " + timeSinceDateUpdated}
         </div>
-      )}
+      ) : null}
     </small>
   );
 };
