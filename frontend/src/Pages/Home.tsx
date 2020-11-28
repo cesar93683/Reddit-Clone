@@ -7,6 +7,7 @@ import { POSTS_QUERY } from "../GraphQL/Query";
 import LoadingSpinner from "../components/LoadingSpinner";
 import CustomCard from "../components/CustomCard";
 import { Dropdown, DropdownButton } from "react-bootstrap";
+import SortDropDown from "../components/SortDropDown";
 
 const Home = () => {
   const currentDate = Date.now();
@@ -25,20 +26,6 @@ const Home = () => {
     }
   }, [data]);
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
-
-  if (error || !data) {
-    return <h1>An error occured.</h1>;
-  }
-
-  if (posts.length === 0) {
-    return <h1>No Posts</h1>;
-  }
-
-  console.log(posts);
-
   const sortByVotes = () => {
     setPosts([...posts].sort((a, b) => b.numVotes - a.numVotes));
     setTopActive(true);
@@ -51,16 +38,26 @@ const Home = () => {
     setNewActive(true);
   };
 
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
+  if (error || !data) {
+    return <h1>An error occured.</h1>;
+  }
+
+  if (posts.length === 0) {
+    return <h1>No Posts</h1>;
+  }
+
   return (
     <div>
-      <DropdownButton title="Sort By">
-        <Dropdown.Item onClick={sortByVotes} active={topActive}>
-          Top
-        </Dropdown.Item>
-        <Dropdown.Item onClick={sortByNew} active={newActive}>
-          New
-        </Dropdown.Item>
-      </DropdownButton>
+      <SortDropDown
+        sortByVotes={sortByVotes}
+        topActive={topActive}
+        sortByNew={sortByNew}
+        newActive={newActive}
+      />
       {posts.map((post: IPost) => (
         <CustomCard
           className="my-2"
