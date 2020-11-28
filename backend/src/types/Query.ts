@@ -33,12 +33,7 @@ export const Query = queryType({
       type: 'PostVote',
       args: { postId: intArg() },
       resolve: (parent, { postId }, ctx) => {
-        let userId;
-        try {
-          userId = Number(getUserId(ctx));
-        } catch (err) {
-          throw new Error('Getting vote failed, please try again.');
-        }
+        const userId = Number(getUserId(ctx));
         return ctx.prisma.postVote.findFirst({
           where: { postId, authorId: userId },
         });
@@ -48,12 +43,7 @@ export const Query = queryType({
       type: 'CommentVote',
       args: { commentId: intArg() },
       resolve: (parent, { commentId }, ctx) => {
-        let userId;
-        try {
-          userId = Number(getUserId(ctx));
-        } catch (err) {
-          throw new Error('Getting vote failed, please try again.');
-        }
+        const userId = Number(getUserId(ctx));
         return ctx.prisma.commentVote.findFirst({
           where: { commentId, authorId: userId },
         });

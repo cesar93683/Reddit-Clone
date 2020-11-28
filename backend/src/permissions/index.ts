@@ -22,20 +22,17 @@ const rules = {
   }),
 };
 
-export const permissions = shield(
-  {
-    Mutation: {
-      createPost: rules.isAuthenticatedUser,
-      editPost: rules.isPostOwner,
-      deletePost: rules.isPostOwner,
-      createComment: rules.isAuthenticatedUser,
-      deleteComment: rules.isCommentOwner,
-      votePost: rules.isAuthenticatedUser,
-    },
-    Query: {
-      postVote: rules.isAuthenticatedUser,
-      commentVote: rules.isAuthenticatedUser,
-    },
+export const permissions = shield({
+  Mutation: {
+    createPost: rules.isAuthenticatedUser,
+    editPost: rules.isPostOwner,
+    deletePost: rules.isPostOwner,
+    createComment: rules.isAuthenticatedUser,
+    deleteComment: rules.isCommentOwner,
+    votePost: rules.isAuthenticatedUser,
   },
-  { allowExternalErrors: true },
-);
+  Query: {
+    postVote: rules.isAuthenticatedUser,
+    commentVote: rules.isAuthenticatedUser,
+  },
+});
