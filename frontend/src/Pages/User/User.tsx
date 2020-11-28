@@ -30,6 +30,7 @@ const USER_QUERY = gql`
         }
       }
       comments {
+        id
         content
         numVotes
         dateCreated
