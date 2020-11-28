@@ -54,7 +54,7 @@ export const Mutation = mutationType({
 
         return {
           token,
-          user,
+          userId: user.id,
         };
       },
     });
@@ -102,7 +102,7 @@ export const Mutation = mutationType({
 
         return {
           token,
-          user,
+          userId: user.id,
         };
       },
     });

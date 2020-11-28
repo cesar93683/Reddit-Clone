@@ -34,7 +34,8 @@ const Auth = ({ isLogInMode }: AuthProps) => {
     if (isLogInMode) {
       await logIn({ variables: { email, password } })
         .then(({ data }) => {
-          auth.login(data.logIn.user.id, data.logIn.token, null);
+          console.log(data);
+          auth.login(data.logIn.userId, data.logIn.token, null);
           history.push("/");
         })
         .catch((err) => {
@@ -43,7 +44,7 @@ const Auth = ({ isLogInMode }: AuthProps) => {
     } else {
       await signUp({ variables: { email, username, password } })
         .then(({ data }) => {
-          auth.login(data.signUp.user.id, data.signUp.token, null);
+          auth.login(data.signUp.userId, data.signUp.token, null);
           history.push("/");
         })
         .catch((err) => {

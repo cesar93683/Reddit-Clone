@@ -4,7 +4,7 @@
 
 type AuthPayload {
   token: String
-  user: User
+  userId: String
 }
 
 type Comment {
