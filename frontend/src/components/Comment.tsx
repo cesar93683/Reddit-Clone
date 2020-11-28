@@ -1,20 +1,20 @@
 import React, { useContext, useMemo, useState } from "react";
-import timeSince from "../../../utils/timeSince";
-import IComment from "../../../utils/interfaces/IComment";
+import timeSince from "../utils/timeSince";
+import IComment from "../utils/interfaces/IComment";
 import {
   DELETE_COMMENT_MUTATION,
   EDIT_COMMENT_MUTATION,
   VOTE_COMMENT_MUTATION,
-} from "../../../GraphQL/Mutation";
+} from "../GraphQL/Mutation";
 import { useMutation, useQuery } from "@apollo/client";
 import { Button, Card } from "react-bootstrap";
-import CustomCardSubtitle from "../../../components/CustomCardSubtitle";
-import DeleteModalWithButton from "../../../components/DeleteModalWithButton";
+import CustomCardSubtitle from "./CustomCardSubtitle";
+import DeleteModalWithButton from "./DeleteModalWithButton";
 import CommentForm from "./CommentForm";
-import LoadingSpinner from "../../../components/LoadingSpinner";
-import { COMMENT_VOTE_QUERY } from "../../../GraphQL/Query";
-import VoteSection from "../../../components/VoteSection";
-import { AuthContext } from "../../../utils/auth-context";
+import LoadingSpinner from "./LoadingSpinner";
+import { COMMENT_VOTE_QUERY } from "../GraphQL/Query";
+import VoteSection from "./VoteSection";
+import { AuthContext } from "../utils/auth-context";
 
 interface CommentProps {
   currentDate: number;
@@ -38,7 +38,7 @@ const Comment = (props: CommentProps) => {
     className,
   } = props;
 
-  const userId = Number(useContext(AuthContext).userId);
+  const userId = useContext(AuthContext).userId;
   const { isLoggedIn } = useContext(AuthContext);
   const [deleteComment] = useMutation(DELETE_COMMENT_MUTATION);
   const [editComment] = useMutation(EDIT_COMMENT_MUTATION);

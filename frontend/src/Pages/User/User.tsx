@@ -9,12 +9,12 @@ import IPost from "../../utils/interfaces/IPost";
 import CommentWithPostTitle from "./Components/CommentWithPostTitle";
 
 interface UserParams {
-  userId: string;
+  id: string;
 }
 
 const USER_QUERY = gql`
-  query($userId: Int!) {
-    user(userId: $userId) {
+  query($id: Int!) {
+    user(userId: $id) {
       id
       username
       posts {
@@ -48,11 +48,10 @@ const USER_QUERY = gql`
 `;
 
 const User = () => {
-  const param = useParams<UserParams>().userId;
-  let userId = Number(param);
+  let userIdFromParam = Number(useParams<UserParams>().id);
   const currentDate = Date.now();
   const { loading, data, error } = useQuery(USER_QUERY, {
-    variables: { userId },
+    variables: { id: userIdFromParam },
   });
   const [posts, setPosts] = useState<IPost[]>([]);
   const [comments, setComments] = useState<IComment[]>([]);

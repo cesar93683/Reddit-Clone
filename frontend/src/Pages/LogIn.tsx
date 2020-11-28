@@ -33,7 +33,7 @@ const Auth = () => {
           setError(data.logIn.error);
           return;
         }
-        auth.login(String(data.logIn.userId), data.logIn.token, null);
+        auth.login(data.logIn.userId, data.logIn.token, null);
         history.push("/");
       })
       .catch(() => {});

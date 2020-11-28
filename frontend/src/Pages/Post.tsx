@@ -1,26 +1,26 @@
 import React, { useContext, useMemo, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
-import Comment from "./components/Comment";
-import CommentForm from "./components/CommentForm";
+import Comment from "../components/Comment";
+import CommentForm from "../components/CommentForm";
 import { useMutation, useQuery } from "@apollo/client";
-import IComment from "../../utils/interfaces/IComment";
-import { AuthContext } from "../../utils/auth-context";
-import { POST_QUERY } from "../../GraphQL/Query";
+import IComment from "../utils/interfaces/IComment";
+import { AuthContext } from "../utils/auth-context";
+import { POST_QUERY } from "../GraphQL/Query";
 import {
   CREATE_COMMENT_MUTATION,
   DELETE_POST_MUTATION,
-} from "../../GraphQL/Mutation";
-import LoadingSpinner from "../../components/LoadingSpinner";
-import CustomCard from "../../components/CustomCard";
-import SortDropDown from "../../components/SortDropDown";
+} from "../GraphQL/Mutation";
+import LoadingSpinner from "../components/LoadingSpinner";
+import CustomCard from "../components/CustomCard";
+import SortDropDown from "../components/SortDropDown";
 
 interface PostParams {
   postId: string;
 }
 
 const PostItem = () => {
-  const auth = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const postId = Number(useParams<PostParams>().postId);
   const history = useHistory();
   const currentDate = Date.now();
@@ -88,10 +88,9 @@ const PostItem = () => {
         key={data.post.id}
         post={data.post}
         currentDate={currentDate}
-        userId={Number(auth.userId)}
         onDelete={onDeletePost}
       />
-      {auth.isLoggedIn && (
+      {isLoggedIn && (
         <CommentForm
           onSubmit={onSubmitComment}
           enableSubmit={hasNewCommentBeenAdded}

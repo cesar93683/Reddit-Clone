@@ -5,7 +5,7 @@ import {
   Redirect,
   Switch,
 } from "react-router-dom";
-import Post from "./Pages/Post/Post";
+import Post from "./Pages/Post";
 import Home from "./Pages/Home";
 import NewPost from "./Pages/NewPost";
 import { AuthContext } from "./utils/auth-context";
@@ -61,7 +61,7 @@ const App = () => {
         <Route path="/posts/:postId/edit" exact>
           <EditPost />
         </Route>
-        <Route path="/users/:userId" exact>
+        <Route path="/users/:id" exact>
           <User />
         </Route>
         <Redirect to="/" />
@@ -76,7 +76,7 @@ const App = () => {
         <Route path="/posts/:postId" exact>
           <Post />
         </Route>
-        <Route path="/users/:userId" exact>
+        <Route path="/users/:id" exact>
           <User />
         </Route>
         <Route path="/login" exact>

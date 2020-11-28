@@ -15,7 +15,6 @@ import { AuthContext } from "../utils/auth-context";
 interface CustomCardProps {
   post: IPost;
   currentDate: number;
-  userId?: number | null;
   linkable?: boolean;
   onDelete?: (() => void) | null;
   className?: string;
@@ -33,14 +32,16 @@ const CustomCard = (props: CustomCardProps) => {
       dateCreated,
       dateUpdated,
     },
-    userId,
     currentDate,
     linkable,
     onDelete,
     className,
   } = props;
 
-  const { isLoggedIn } = useContext(AuthContext);
+  const auth = useContext(AuthContext);
+  const isLoggedIn = auth.isLoggedIn;
+  const userId = auth.userId;
+
   const [numVotes, setNumVotes] = useState(numVotesFromProps);
   const [currVote, setCurrVote] = useState(0);
 
