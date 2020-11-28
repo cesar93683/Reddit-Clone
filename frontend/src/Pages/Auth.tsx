@@ -38,7 +38,7 @@ const Auth = ({ isLogInMode }: AuthProps) => {
             setError(data.logIn.error);
             return;
           }
-          auth.login(data.logIn.userId, data.logIn.token, null);
+          auth.login(String(data.logIn.userId), data.logIn.token, null);
           history.push("/");
         })
         .catch(() => {});
@@ -49,7 +49,7 @@ const Auth = ({ isLogInMode }: AuthProps) => {
             setError(data.signUp.error);
             return;
           }
-          auth.login(data.signUp.userId, data.signUp.token, null);
+          auth.login(String(data.signUp.userId), data.signUp.token, null);
           history.push("/");
         })
         .catch(() => {});
