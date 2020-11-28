@@ -41,7 +41,7 @@ const Home = () => {
     return <LoadingSpinner />;
   }
 
-  if (error || !data) {
+  if (error) {
     return <h1>An error occured.</h1>;
   }
 

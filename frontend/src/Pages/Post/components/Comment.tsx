@@ -39,9 +39,24 @@ const Comment = (props: CommentProps) => {
     className,
   } = props;
 
+  const [deleteComment] = useMutation(DELETE_COMMENT_MUTATION);
+  const [editComment] = useMutation(EDIT_COMMENT_MUTATION);
+  const [voteComment] = useMutation(VOTE_COMMENT_MUTATION);
   const [content, setContent] = useState(contentFromProps);
   const [isCommentDeleted, setIsCommentDeleted] = useState(false);
-  const [deleteComment] = useMutation(DELETE_COMMENT_MUTATION);
+  const [isEditing, setIsEditing] = useState(false);
+  const [numVotes, setNumVotes] = useState(numVotesFromProps);
+  const [currVote, setCurrVote] = useState(0);
+
+  const { data, loading: isVoteLoading } = useQuery(COMMENT_VOTE_QUERY, {
+    variables: { commentId: Number(id) },
+  });
+
+  useMemo(() => {
+    if (data && data.commentVote && data.commentVote.value) {
+      setCurrVote(data.commentVote.value);
+    }
+  }, [data]);
 
   const onDelete = async () => {
     await deleteComment({ variables: { id, postId } })
@@ -50,38 +65,21 @@ const Comment = (props: CommentProps) => {
           setIsCommentDeleted(true);
         }
       })
-      .catch((err) => {});
+      .catch(() => {});
   };
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [editComment] = useMutation(EDIT_COMMENT_MUTATION);
   const handleEdit = () => {
     setIsEditing(true);
   };
+
   const handleUpdateComment = async (newContent: string) => {
     await editComment({ variables: { id, content: newContent } })
       .then(() => {
         setContent(newContent);
         setIsEditing(false);
       })
-      .catch((err) => {});
+      .catch(() => {});
   };
-
-  const [numVotes, setNumVotes] = useState(numVotesFromProps);
-  const [currVote, setCurrVote] = useState(0);
-
-  const [voteComment] = useMutation(VOTE_COMMENT_MUTATION);
-  const { data, loading: isVoteLoading } = useQuery(COMMENT_VOTE_QUERY, {
-    variables: { commentId: Number(id) },
-  });
-
-  useMemo(() => {
-    setCurrVote(
-      data && data.commentVote && data.commentVote.value
-        ? data.commentVote.value
-        : 0
-    );
-  }, [data]);
 
   const downVote = () => {
     if (currVote === 1) {

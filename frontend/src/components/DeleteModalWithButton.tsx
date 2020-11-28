@@ -27,7 +27,7 @@ const DeleteModalWithButton = (props: DeleteModalWithButtonProps) => {
       <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
         <Modal.Header closeButton>
           <Modal.Title>
-            Are you sure you want to delete this {type}?
+            {`Are you sure you want to delete this ${type}?`}
           </Modal.Title>
         </Modal.Header>
         <Modal.Footer>

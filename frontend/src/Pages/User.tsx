@@ -23,7 +23,7 @@ const User = () => {
   const [newActive, setNewActive] = useState(true);
 
   useMemo(() => {
-    if (data && data.user) {
+    if (data) {
       setPosts(
         [...data.user.posts].sort(
           (a: IPost, b: IPost) => b.dateCreated - a.dateCreated
@@ -48,7 +48,7 @@ const User = () => {
     return <LoadingSpinner />;
   }
 
-  if (error || !data) {
+  if (error) {
     return <h1>An error occured.</h1>;
   }
 

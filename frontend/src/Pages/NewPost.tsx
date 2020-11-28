@@ -34,7 +34,7 @@ const NewPost = () => {
       .then(({ data }) => {
         history.push(`/posts/${data.createPost.id}`);
       })
-      .catch((err) => {});
+      .catch(() => {});
   };
 
   if (loading) {

@@ -81,7 +81,7 @@ const CustomCard = (props: CustomCardProps) => {
       .then(() => {
         downVote();
       })
-      .catch((err) => {});
+      .catch(() => {});
   };
 
   const onUpVote = async () => {
@@ -90,7 +90,7 @@ const CustomCard = (props: CustomCardProps) => {
       .then(() => {
         upVote();
       })
-      .catch((err) => {});
+      .catch(() => {});
   };
 
   if (isVoteLoading) {

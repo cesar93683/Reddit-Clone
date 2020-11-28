@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -20,21 +20,21 @@ const EditPost = () => {
     variables: { id: Number(postId) },
   });
 
-  useEffect(() => {
-    if (!loading && data) {
+  useMemo(() => {
+    if (data && data.post && data.post.content) {
       setContent(data.post.content);
     }
-  }, [loading, data]);
+  }, [data]);
 
   const postUpdateSubmitHandler = async (
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
     await editPost({ variables: { id: Number(postId), content } })
-      .then(({ data }) => {
+      .then(() => {
         history.push("/posts/" + postId);
       })
-      .catch((err) => {});
+      .catch(() => {});
   };
 
   const handleContentChange = (
@@ -42,9 +42,12 @@ const EditPost = () => {
   ) => {
     setContent(event.target.value);
   };
-
-  if (loading || !data) {
+  if (loading) {
     return <LoadingSpinner />;
+  }
+
+  if (error || !data || !data.post) {
+    return <h1>An error occured.</h1>;
   }
 
   return (
@@ -63,7 +66,6 @@ const EditPost = () => {
           onChange={handleContentChange}
         />
       </Form.Group>
-      {error && <Alert variant="danger">{error}</Alert>}
       <Button type="submit">Update Post</Button>
     </Form>
   );
