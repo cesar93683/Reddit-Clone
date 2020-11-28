@@ -38,9 +38,7 @@ const CustomCard = (props: CustomCardProps) => {
     className,
   } = props;
 
-  const auth = useContext(AuthContext);
-  const isLoggedIn = auth.isLoggedIn;
-  const userId = auth.userId;
+  const { isLoggedIn, userId } = useContext(AuthContext);
 
   const [numVotes, setNumVotes] = useState(numVotesFromProps);
   const [currVote, setCurrVote] = useState(0);
@@ -145,7 +143,7 @@ const CustomCard = (props: CustomCardProps) => {
               </div>
             )}
 
-            {onDelete && authorId === userId ? (
+            {onDelete && authorId === Number(userId) ? (
               <div>
                 <Link className="mr-2" to={`/posts/${postId}/edit`}>
                   <Button variant="outline-primary">EDIT</Button>

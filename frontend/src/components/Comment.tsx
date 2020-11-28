@@ -162,7 +162,7 @@ const Comment = (props: CommentProps) => {
             />
           ) : null}
           {!isEditing ? <Card.Text>{content}</Card.Text> : null}
-          {!isEditing && userId === authorId ? (
+          {!isEditing && Number(userId) === authorId ? (
             <div className="d-flex justify-content-end">
               <Button
                 onClick={handleEdit}
