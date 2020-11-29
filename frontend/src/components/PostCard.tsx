@@ -89,7 +89,7 @@ const CustomCard = (props: CustomCardProps) => {
     setCurrVote(currVote === 1 ? 0 : 1);
   };
 
-  const handleDownVote = async () => {
+  const onDownVote = async () => {
     let value = currVote === -1 ? 0 : -1;
     await votePost({ variables: { postId, value } })
       .then(() => {
@@ -98,7 +98,7 @@ const CustomCard = (props: CustomCardProps) => {
       .catch(() => {});
   };
 
-  const handleUpVote = async () => {
+  const onUpVote = async () => {
     let value = currVote === 1 ? 0 : 1;
     await votePost({ variables: { postId, value } })
       .then(() => {
@@ -123,8 +123,8 @@ const CustomCard = (props: CustomCardProps) => {
         <VoteSection
           numVotes={numVotes}
           className="mr-2"
-          handleUpVote={handleUpVote}
-          handleDownVote={handleDownVote}
+          onUpVote={onUpVote}
+          onDownVote={onDownVote}
           currVote={currVote}
         />
         <div className="w-100">

@@ -99,7 +99,7 @@ const Comment = (props: CommentProps) => {
     setIsEditing(true);
   };
 
-  const handleUpdateComment = async (newContent: string) => {
+  const onCommentUpdate = async (newContent: string) => {
     await editComment({ variables: { id, content: newContent } })
       .then(() => {
         setContent(newContent);
@@ -130,22 +130,22 @@ const Comment = (props: CommentProps) => {
     setCurrVote(currVote === 1 ? 0 : 1);
   };
 
-  const handleDownVote = async () => {
+  const onDownVote = async () => {
     let value = currVote === -1 ? 0 : -1;
     await voteComment({ variables: { commentId: id, value } })
       .then(() => {
         downVote();
       })
-      .catch((err) => {});
+      .catch(() => {});
   };
 
-  const handleUpVote = async () => {
+  const onUpVote = async () => {
     let value = currVote === 1 ? 0 : 1;
     await voteComment({ variables: { commentId: id, value } })
       .then(() => {
         upVote();
       })
-      .catch((err) => {});
+      .catch(() => {});
   };
 
   if (isVoteLoading) {
@@ -168,8 +168,8 @@ const Comment = (props: CommentProps) => {
         <VoteSection
           numVotes={numVotes}
           className="mr-2"
-          handleUpVote={handleUpVote}
-          handleDownVote={handleDownVote}
+          onUpVote={onUpVote}
+          onDownVote={onDownVote}
           currVote={currVote}
         />
         <div className="w-100">
@@ -181,9 +181,9 @@ const Comment = (props: CommentProps) => {
           />
           {isEditing ? (
             <CommentForm
-              onSubmit={handleUpdateComment}
+              onSubmit={onCommentUpdate}
               buttonText="Update"
-              defaultValue={content}
+              defaultContent={content}
             />
           ) : null}
           {!isEditing ? <Card.Text>{content}</Card.Text> : null}

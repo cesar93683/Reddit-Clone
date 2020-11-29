@@ -10,8 +10,8 @@ interface CustomCardSubtitleProps {
 
 const CustomCardSubtitle = (props: CustomCardSubtitleProps) => {
   const {
-    username,
     authorId,
+    username,
     timeSinceDateCreated,
     timeSinceDateUpdated,
   } = props;

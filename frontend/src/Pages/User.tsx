@@ -2,7 +2,7 @@ import { gql, useQuery } from "@apollo/client";
 import React, { useMemo, useState } from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import CustomCard from "../components/CustomCard";
+import CustomCard from "../components/PostCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 import SortDropDown from "../components/SortDropDown";
 import IComment from "../utils/interfaces/IComment";

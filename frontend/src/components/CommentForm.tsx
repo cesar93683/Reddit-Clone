@@ -5,13 +5,13 @@ interface CommentFormProps {
   onSubmit: (comment: string) => void;
   enableSubmit?: boolean;
   buttonText?: string;
-  defaultValue?: string;
+  defaultContent?: string;
 }
 
 const CommentForm = (props: CommentFormProps) => {
-  const { onSubmit, enableSubmit, buttonText, defaultValue } = props;
+  const { onSubmit, enableSubmit, buttonText, defaultContent } = props;
 
-  const [content, setContent] = useState(defaultValue ? defaultValue : "");
+  const [content, setContent] = useState(defaultContent ? defaultContent : "");
   const [error, setError] = useState("");
 
   const handleContentChange = (

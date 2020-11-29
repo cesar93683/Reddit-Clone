@@ -5,19 +5,19 @@ import { AuthContext } from "../utils/auth-context";
 interface VoteSectionProps {
   numVotes: number;
   className?: string;
-  handleUpVote: () => void;
-  handleDownVote: () => void;
+  onUpVote: () => void;
+  onDownVote: () => void;
   currVote: number;
 }
 
 const VoteSection = (props: VoteSectionProps) => {
-  const { numVotes, className, handleUpVote, handleDownVote, currVote } = props;
+  const { numVotes, className, onUpVote, onDownVote, currVote } = props;
   const { isLoggedIn } = useContext(AuthContext);
 
   return (
     <div className={"d-flex flex-column align-items-center " + className}>
       <Button
-        onClick={handleUpVote}
+        onClick={onUpVote}
         variant={currVote === 1 ? "primary" : "secondary"}
         disabled={!isLoggedIn}
         size="sm"
@@ -26,7 +26,7 @@ const VoteSection = (props: VoteSectionProps) => {
       </Button>
       <div>{numVotes}</div>
       <Button
-        onClick={handleDownVote}
+        onClick={onDownVote}
         variant={currVote === -1 ? "primary" : "secondary"}
         disabled={!isLoggedIn}
         size="sm"

@@ -6,7 +6,7 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import IComment from "../utils/interfaces/IComment";
 import { AuthContext } from "../utils/auth-context";
 import LoadingSpinner from "../components/LoadingSpinner";
-import CustomCard from "../components/CustomCard";
+import CustomCard from "../components/PostCard";
 import SortDropDown from "../components/SortDropDown";
 
 const POST_QUERY = gql`
@@ -66,7 +66,7 @@ interface PostParams {
   postId: string;
 }
 
-const PostItem = () => {
+const Post = () => {
   const { isLoggedIn } = useContext(AuthContext);
   const postId = Number(useParams<PostParams>().postId);
   const history = useHistory();
@@ -166,4 +166,4 @@ const PostItem = () => {
   );
 };
 
-export default PostItem;
+export default Post;
