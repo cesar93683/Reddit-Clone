@@ -43,8 +43,8 @@ const VOTE_COMMENT_MUTATION = gql`
 `;
 
 interface CommentProps {
-  currentDate: number;
   comment: IComment;
+  currentDate: number;
   postId: number;
   className?: string;
 }
@@ -130,7 +130,7 @@ const Comment = (props: CommentProps) => {
     setCurrVote(currVote === 1 ? 0 : 1);
   };
 
-  const onDownVote = async () => {
+  const handleDownVote = async () => {
     let value = currVote === -1 ? 0 : -1;
     await voteComment({ variables: { commentId: id, value } })
       .then(() => {
@@ -139,7 +139,7 @@ const Comment = (props: CommentProps) => {
       .catch((err) => {});
   };
 
-  const onUpVote = async () => {
+  const handleUpVote = async () => {
     let value = currVote === 1 ? 0 : 1;
     await voteComment({ variables: { commentId: id, value } })
       .then(() => {
@@ -168,8 +168,8 @@ const Comment = (props: CommentProps) => {
         <VoteSection
           numVotes={numVotes}
           className="mr-2"
-          onUpVote={onUpVote}
-          onDownVote={onDownVote}
+          handleUpVote={handleUpVote}
+          handleDownVote={handleDownVote}
           currVote={currVote}
         />
         <div className="w-100">
