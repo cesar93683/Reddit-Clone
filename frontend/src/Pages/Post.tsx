@@ -83,7 +83,7 @@ const Post = () => {
   });
 
   useMemo(() => {
-    if (data && data.post) {
+    if (data?.post?.comments) {
       setComments(
         [...data.post.comments].sort(
           (a: IComment, b: IComment) => b.dateCreated - a.dateCreated
@@ -124,7 +124,7 @@ const Post = () => {
     return <LoadingSpinner />;
   }
 
-  if (error) {
+  if (error || !data.post) {
     return <h1>An error occured.</h1>;
   }
 
