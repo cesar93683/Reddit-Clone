@@ -22,17 +22,17 @@ const EDIT_POST_MUTATION = gql`
 `;
 
 interface PostParams {
-  postId: string;
+  id: string;
 }
 
 const EditPost = () => {
-  const postId = useParams<PostParams>().postId;
+  const id = useParams<PostParams>().id;
   const history = useHistory();
   const [content, setContent] = useState("");
   const [editPost] = useMutation(EDIT_POST_MUTATION);
 
   const { loading, data, error } = useQuery(POST_QUERY, {
-    variables: { id: Number(postId) },
+    variables: { id: Number(id) },
   });
 
   useMemo(() => {
@@ -45,9 +45,9 @@ const EditPost = () => {
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
-    await editPost({ variables: { id: Number(postId), content } })
+    await editPost({ variables: { id: Number(id), content } })
       .then(() => {
-        history.push("/posts/" + postId);
+        history.push("/posts/" + id);
       })
       .catch(() => {});
   };

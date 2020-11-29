@@ -55,10 +55,10 @@ const App = () => {
         <Route path="/post/new" exact>
           <NewPost />
         </Route>
-        <Route path="/posts/:postId" exact>
+        <Route path="/posts/:id" exact>
           <Post />
         </Route>
-        <Route path="/posts/:postId/edit" exact>
+        <Route path="/posts/:id/edit" exact>
           <EditPost />
         </Route>
         <Route path="/users/:id" exact>
@@ -73,7 +73,7 @@ const App = () => {
         <Route path="/" exact>
           <Home />
         </Route>
-        <Route path="/posts/:postId" exact>
+        <Route path="/posts/:id" exact>
           <Post />
         </Route>
         <Route path="/users/:id" exact>

@@ -63,12 +63,12 @@ const DELETE_POST_MUTATION = gql`
 `;
 
 interface PostParams {
-  postId: string;
+  id: string;
 }
 
 const Post = () => {
   const { isLoggedIn } = useContext(AuthContext);
-  const postId = Number(useParams<PostParams>().postId);
+  const id = Number(useParams<PostParams>().id);
   const history = useHistory();
   const currentDate = Date.now();
   const [createComment] = useMutation(CREATE_COMMENT_MUTATION);
@@ -79,7 +79,7 @@ const Post = () => {
   const [newActive, setNewActive] = useState(true);
 
   const { loading, data, error } = useQuery(POST_QUERY, {
-    variables: { id: postId },
+    variables: { id },
   });
 
   useMemo(() => {
@@ -105,14 +105,14 @@ const Post = () => {
   };
 
   const onDeletePost = async () => {
-    await deletePost({ variables: { id: postId } })
+    await deletePost({ variables: { id } })
       .then(() => {})
       .catch(() => {});
     history.push("/");
   };
 
   const onSubmitComment = async (content: string) => {
-    await createComment({ variables: { postId, content } })
+    await createComment({ variables: { postId: id, content } })
       .then(({ data: { createComment: newComment } }) => {
         setComments([newComment, ...comments]);
         setHasNewCommentBeenAdded(true);
@@ -158,7 +158,7 @@ const Post = () => {
             key={comment.id}
             comment={comment}
             currentDate={currentDate}
-            postId={postId}
+            postId={id}
           />
         ))}
       </div>
