@@ -136,7 +136,7 @@ export default function CustomCard(props: CustomCardProps) {
           />
           <Card.Title>
             {linkable ? (
-              <Link className="text-body" to={"/posts/" + postId}>
+              <Link className="text-body" to={"/post/" + postId}>
                 {title}
               </Link>
             ) : (
@@ -146,7 +146,7 @@ export default function CustomCard(props: CustomCardProps) {
           {content ? <Card.Text>{content}</Card.Text> : null}
           <div className="d-flex justify-content-between align-items-center">
             {linkable ? (
-              <Link className="text-body" to={"/posts/" + postId}>
+              <Link className="text-body" to={"/post/" + postId}>
                 {numComments} Comment
                 {numComments === 1 ? "" : "s"}
               </Link>
@@ -159,7 +159,7 @@ export default function CustomCard(props: CustomCardProps) {
 
             {onDelete && authorId === Number(userId) ? (
               <div>
-                <Link className="mr-2" to={`/posts/${postId}/edit`}>
+                <Link className="mr-2" to={`/post/${postId}/edit`}>
                   <Button variant="outline-primary">EDIT</Button>
                 </Link>
                 <DeleteModalWithButton type="post" onDelete={onDelete} />

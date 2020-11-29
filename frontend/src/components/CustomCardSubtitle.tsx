@@ -19,7 +19,7 @@ export default function CustomCardSubtitle(props: CustomCardSubtitleProps) {
     <small className="d-flex">
       <div>
         {"Posted by "}
-        <Link className="text-body font-weight-bold" to={"/users/" + authorId}>
+        <Link className="text-body font-weight-bold" to={"/user/" + authorId}>
           {username}
         </Link>
       </div>

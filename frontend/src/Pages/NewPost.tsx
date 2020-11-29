@@ -38,7 +38,7 @@ export default function NewPost() {
 
     await newPost({ variables: { title, content } })
       .then(({ data }) => {
-        history.push(`/posts/${data.createPost.id}`);
+        history.push(`/post/${data.createPost.id}`);
       })
       .catch(() => {});
   };

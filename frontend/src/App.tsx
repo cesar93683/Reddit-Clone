@@ -59,9 +59,9 @@ export default function App() {
             <Switch>
               <Route path="/" component={Home} exact />
               <Route path="/post/new" component={NewPost} exact />
-              <Route path="/posts/:id" component={Post} exact />
-              <Route path="/posts/:id/edit" component={EditPost} exact />
-              <Route path="/users/:id" component={User} exact />
+              <Route path="/post/:id" component={Post} exact />
+              <Route path="/post/:id/edit" component={EditPost} exact />
+              <Route path="/user/:id" component={User} exact />
               <Route path="/login" component={LogIn} exact />
               <Route path="/signup" component={SignUp} exact />
               <Redirect to="/" />

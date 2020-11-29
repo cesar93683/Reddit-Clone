@@ -47,7 +47,7 @@ export default function EditPost() {
     event.preventDefault();
     await editPost({ variables: { id: Number(id), content } })
       .then(() => {
-        history.push("/posts/" + id);
+        history.push("/post/" + id);
       })
       .catch(() => {});
   };
