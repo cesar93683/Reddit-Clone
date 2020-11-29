@@ -10,14 +10,15 @@ interface SortDropDownProps {
   newActive: boolean;
 }
 
-const SortDropDown = ({
-  className,
-  disabled,
-  sortByVotes,
-  topActive,
-  sortByNew,
-  newActive,
-}: SortDropDownProps) => {
+export default function SortDropDown(props: SortDropDownProps) {
+  const {
+    className,
+    disabled,
+    sortByVotes,
+    topActive,
+    sortByNew,
+    newActive,
+  } = props;
   return (
     <DropdownButton className={className} disabled={disabled} title="Sort By">
       <Dropdown.Item onClick={sortByVotes} active={topActive}>
@@ -28,6 +29,4 @@ const SortDropDown = ({
       </Dropdown.Item>
     </DropdownButton>
   );
-};
-
-export default SortDropDown;
+}

@@ -49,7 +49,7 @@ const USER_QUERY = gql`
   }
 `;
 
-const User = () => {
+export default function User() {
   let userIdFromParam = Number(useParams<UserParams>().id);
   const currentDate = Date.now();
   const { loading, data, error } = useQuery(USER_QUERY, {
@@ -195,6 +195,4 @@ const User = () => {
       </Tabs>
     </div>
   );
-};
-
-export default User;
+}

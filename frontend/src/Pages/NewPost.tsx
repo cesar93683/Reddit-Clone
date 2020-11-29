@@ -13,7 +13,7 @@ const NEW_POST_MUTATION = gql`
   }
 `;
 
-const NewPost = () => {
+export default function NewPost() {
   const [newPost, { loading }] = useMutation(NEW_POST_MUTATION);
   const [error, setError] = useState("");
   const [title, setTitle] = useState("");
@@ -72,6 +72,4 @@ const NewPost = () => {
       <Button type="submit">New Post</Button>
     </Form>
   );
-};
-
-export default NewPost;
+}

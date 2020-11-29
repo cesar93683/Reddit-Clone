@@ -22,7 +22,7 @@ const POSTS_QUERY = gql`
   }
 `;
 
-const Home = () => {
+export default function Home() {
   const currentDate = Date.now();
   const { loading, data, error } = useQuery(POSTS_QUERY);
   const [posts, setPosts] = useState<IPost[]>([]);
@@ -82,6 +82,4 @@ const Home = () => {
       ))}
     </div>
   );
-};
-
-export default Home;
+}

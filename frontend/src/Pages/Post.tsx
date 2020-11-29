@@ -66,7 +66,7 @@ interface PostParams {
   id: string;
 }
 
-const Post = () => {
+export default function Post() {
   const { isLoggedIn } = useContext(AuthContext);
   const id = Number(useParams<PostParams>().id);
   const history = useHistory();
@@ -164,6 +164,4 @@ const Post = () => {
       </div>
     </>
   );
-};
-
-export default Post;
+}

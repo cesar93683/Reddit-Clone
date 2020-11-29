@@ -8,7 +8,7 @@ interface CustomCardSubtitleProps {
   timeSinceDateUpdated: string;
 }
 
-const CustomCardSubtitle = (props: CustomCardSubtitleProps) => {
+export default function CustomCardSubtitle(props: CustomCardSubtitleProps) {
   const {
     authorId,
     username,
@@ -31,6 +31,4 @@ const CustomCardSubtitle = (props: CustomCardSubtitleProps) => {
       ) : null}
     </small>
   );
-};
-
-export default CustomCardSubtitle;
+}

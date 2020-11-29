@@ -14,7 +14,7 @@ const SIGNUP_MUTATION = gql`
   }
 `;
 
-const SignUp = () => {
+export default function SignUp() {
   const auth = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -106,6 +106,4 @@ const SignUp = () => {
       </Col>
     </Row>
   );
-};
-
-export default SignUp;
+}

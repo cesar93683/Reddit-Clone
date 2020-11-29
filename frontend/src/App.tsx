@@ -50,7 +50,7 @@ const client = new ApolloClient({
   },
 });
 
-const App = () => {
+export default function App() {
   const { token, login, logout, userId } = useAuth();
 
   let routes;
@@ -116,6 +116,4 @@ const App = () => {
       </AuthContext.Provider>
     </ApolloProvider>
   );
-};
-
-export default App;
+}

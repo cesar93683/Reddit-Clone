@@ -14,7 +14,7 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-const Auth = () => {
+export default function LogIn() {
   const auth = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -88,6 +88,4 @@ const Auth = () => {
       </Col>
     </Row>
   );
-};
-
-export default Auth;
+}

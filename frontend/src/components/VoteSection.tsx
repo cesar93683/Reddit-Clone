@@ -10,7 +10,7 @@ interface VoteSectionProps {
   currVote: number;
 }
 
-const VoteSection = (props: VoteSectionProps) => {
+export default function VoteSection(props: VoteSectionProps) {
   const { numVotes, className, onUpVote, onDownVote, currVote } = props;
   const { isLoggedIn } = useContext(AuthContext);
 
@@ -36,5 +36,4 @@ const VoteSection = (props: VoteSectionProps) => {
       </Button>
     </div>
   );
-};
-export default VoteSection;
+}

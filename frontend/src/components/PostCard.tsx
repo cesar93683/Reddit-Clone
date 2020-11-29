@@ -34,7 +34,7 @@ interface CustomCardProps {
   className?: string;
 }
 
-const CustomCard = (props: CustomCardProps) => {
+export default function CustomCard(props: CustomCardProps) {
   const {
     post: {
       id: postId,
@@ -170,6 +170,4 @@ const CustomCard = (props: CustomCardProps) => {
       </Card.Body>
     </Card>
   );
-};
-
-export default CustomCard;
+}

@@ -6,7 +6,9 @@ interface DeleteModalWithButtonProps {
   type: string;
 }
 
-const DeleteModalWithButton = (props: DeleteModalWithButtonProps) => {
+export default function DeleteModalWithButton(
+  props: DeleteModalWithButtonProps
+) {
   const { onDelete, type } = props;
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -41,6 +43,4 @@ const DeleteModalWithButton = (props: DeleteModalWithButtonProps) => {
       </Modal>
     </>
   );
-};
-
-export default DeleteModalWithButton;
+}

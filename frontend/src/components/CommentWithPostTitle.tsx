@@ -9,7 +9,7 @@ interface CommentWithPostTitleProps {
   comment: IComment;
   currentDate: number;
 }
-const CommentWithPostTitle = (props: CommentWithPostTitleProps) => {
+export default function CommentWithPostTitle(props: CommentWithPostTitleProps) {
   const { className, comment, currentDate } = props;
 
   return (
@@ -38,6 +38,4 @@ const CommentWithPostTitle = (props: CommentWithPostTitleProps) => {
       </Card.Body>
     </Card>
   );
-};
-
-export default CommentWithPostTitle;
+}

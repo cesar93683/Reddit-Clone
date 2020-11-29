@@ -8,7 +8,7 @@ interface CommentFormProps {
   defaultContent?: string;
 }
 
-const CommentForm = (props: CommentFormProps) => {
+export default function CommentForm(props: CommentFormProps) {
   const { onSubmit, enableSubmit, buttonText, defaultContent } = props;
 
   const [content, setContent] = useState(defaultContent ? defaultContent : "");
@@ -46,5 +46,4 @@ const CommentForm = (props: CommentFormProps) => {
       {error ? <Alert variant="danger">{error}</Alert> : null}
     </Form>
   );
-};
-export default CommentForm;
+}

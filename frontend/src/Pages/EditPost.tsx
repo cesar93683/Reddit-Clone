@@ -25,7 +25,7 @@ interface PostParams {
   id: string;
 }
 
-const EditPost = () => {
+export default function EditPost() {
   const id = useParams<PostParams>().id;
   const history = useHistory();
   const [content, setContent] = useState("");
@@ -84,5 +84,4 @@ const EditPost = () => {
       <Button type="submit">Update Post</Button>
     </Form>
   );
-};
-export default EditPost;
+}

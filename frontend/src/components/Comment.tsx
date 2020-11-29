@@ -49,7 +49,7 @@ interface CommentProps {
   className?: string;
 }
 
-const Comment = (props: CommentProps) => {
+export default function Comment(props: CommentProps) {
   let {
     comment: {
       id,
@@ -203,5 +203,4 @@ const Comment = (props: CommentProps) => {
       </Card.Body>
     </Card>
   );
-};
-export default Comment;
+}
