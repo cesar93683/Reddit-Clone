@@ -12,14 +12,14 @@ interface VoteSectionProps {
 
 const VoteSection = (props: VoteSectionProps) => {
   const { numVotes, className, onUpVote, onDownVote, currVote } = props;
-  const auth = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
 
   return (
     <div className={"d-flex flex-column align-items-center " + className}>
       <Button
         onClick={onUpVote}
         variant={currVote === 1 ? "primary" : "secondary"}
-        disabled={!auth.isLoggedIn}
+        disabled={!isLoggedIn}
         size="sm"
       >
         ^
@@ -28,7 +28,7 @@ const VoteSection = (props: VoteSectionProps) => {
       <Button
         onClick={onDownVote}
         variant={currVote === -1 ? "primary" : "secondary"}
-        disabled={!auth.isLoggedIn}
+        disabled={!isLoggedIn}
         size="sm"
         className="w-100"
       >

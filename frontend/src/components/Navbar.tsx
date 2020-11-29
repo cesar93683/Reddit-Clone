@@ -4,7 +4,7 @@ import { Button, Container, Navbar } from "react-bootstrap";
 import { AuthContext } from "../utils/auth-context";
 
 const NavBar = () => {
-  const auth = useContext(AuthContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   return (
     <Navbar bg="light" variant="light">
@@ -12,14 +12,14 @@ const NavBar = () => {
         <Link to="/" className="mr-auto">
           <Navbar.Brand>Home</Navbar.Brand>
         </Link>
-        {auth.isLoggedIn ? (
+        {isLoggedIn ? (
           <>
             <Link to="/post/new">
               <Button variant="primary" className="mr-1">
                 New Post
               </Button>
             </Link>
-            <Button variant="secondary" onClick={auth.logout}>
+            <Button variant="secondary" onClick={logout}>
               Log Out
             </Button>
           </>
