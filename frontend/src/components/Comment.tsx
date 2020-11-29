@@ -153,7 +153,7 @@ const Comment = (props: CommentProps) => {
     return (
       <Card className={className}>
         <Card.Body className="d-flex">
-          <LoadingSpinner />;
+          <LoadingSpinner />
         </Card.Body>
       </Card>
     );
