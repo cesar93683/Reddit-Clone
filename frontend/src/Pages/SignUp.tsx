@@ -47,7 +47,7 @@ const SignUp = () => {
           setError(data.signUp.error);
           return;
         }
-        auth.login(data.signUp.userId, data.signUp.token, null);
+        auth.login(data.signUp.userId, data.signUp.token);
         history.push("/");
       })
       .catch(() => {});

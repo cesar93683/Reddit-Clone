@@ -42,7 +42,7 @@ const Auth = () => {
           setError(data.logIn.error);
           return;
         }
-        auth.login(data.logIn.userId, data.logIn.token, null);
+        auth.login(data.logIn.userId, data.logIn.token);
         history.push("/");
       })
       .catch(() => {});
