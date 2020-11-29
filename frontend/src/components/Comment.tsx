@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import timeSince from "../utils/timeSince";
 import IComment from "../utils/interfaces/IComment";
 import { gql, useMutation, useQuery } from "@apollo/client";
@@ -8,7 +8,7 @@ import DeleteModalWithButton from "./DeleteModalWithButton";
 import CommentForm from "./CommentForm";
 import LoadingSpinner from "./LoadingSpinner";
 import VoteSection from "./VoteSection";
-import { AuthContext } from "../utils/auth-context";
+import { useAuth } from "../utils/auth-hook";
 
 const COMMENT_VOTE_QUERY = gql`
   query($commentId: Int!) {
@@ -64,7 +64,7 @@ export default function Comment(props: CommentProps) {
     className,
   } = props;
 
-  const { isLoggedIn, userId } = useContext(AuthContext);
+  const { userId } = useAuth();
   const [deleteComment] = useMutation(DELETE_COMMENT_MUTATION);
   const [editComment] = useMutation(EDIT_COMMENT_MUTATION);
   const [voteComment] = useMutation(VOTE_COMMENT_MUTATION);
@@ -76,7 +76,7 @@ export default function Comment(props: CommentProps) {
 
   const { data, loading: isVoteLoading } = useQuery(COMMENT_VOTE_QUERY, {
     variables: { commentId: Number(id) },
-    skip: !isLoggedIn,
+    skip: !userId,
   });
 
   useMemo(() => {

@@ -8,8 +8,7 @@ import {
 import Post from "./Pages/Post";
 import Home from "./Pages/Home";
 import NewPost from "./Pages/NewPost";
-import { AuthContext } from "./utils/auth-context";
-import { useAuth } from "./utils/auth-hook";
+import { AuthProvider } from "./utils/auth-hook";
 import EditPost from "./Pages/EditPost";
 import User from "./Pages/User";
 import {
@@ -51,69 +50,27 @@ const client = new ApolloClient({
 });
 
 export default function App() {
-  const { token, login, logout, userId } = useAuth();
-
-  let routes;
-  if (token) {
-    routes = (
-      <Switch>
-        <Route path="/" exact>
-          <Home />
-        </Route>
-        <Route path="/post/new" exact>
-          <NewPost />
-        </Route>
-        <Route path="/posts/:id" exact>
-          <Post />
-        </Route>
-        <Route path="/posts/:id/edit" exact>
-          <EditPost />
-        </Route>
-        <Route path="/users/:id" exact>
-          <User />
-        </Route>
-        <Redirect to="/" />
-      </Switch>
-    );
-  } else {
-    routes = (
-      <Switch>
-        <Route path="/" exact>
-          <Home />
-        </Route>
-        <Route path="/posts/:id" exact>
-          <Post />
-        </Route>
-        <Route path="/users/:id" exact>
-          <User />
-        </Route>
-        <Route path="/login" exact>
-          <LogIn />
-        </Route>
-        <Route path="/signup" exact>
-          <SignUp />
-        </Route>
-        <Redirect to="/" />
-      </Switch>
-    );
-  }
+  const routes = (
+    <Switch>
+      <Route path="/" component={Home} exact />
+      <Route path="/post/new" component={NewPost} exact />
+      <Route path="/posts/:id" component={Post} exact />
+      <Route path="/posts/:id/edit" component={EditPost} exact />
+      <Route path="/users/:id" component={User} exact />
+      <Route path="/login" component={LogIn} exact />
+      <Route path="/signup" component={SignUp} exact />
+      <Redirect to="/" />
+    </Switch>
+  );
 
   return (
     <ApolloProvider client={client}>
-      <AuthContext.Provider
-        value={{
-          isLoggedIn: !!token,
-          token: token,
-          userId: userId,
-          login: login,
-          logout: logout,
-        }}
-      >
+      <AuthProvider>
         <Router>
           <NavBar />
           <Container>{routes}</Container>
         </Router>
-      </AuthContext.Provider>
+      </AuthProvider>
     </ApolloProvider>
   );
 }

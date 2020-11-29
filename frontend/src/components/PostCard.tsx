@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import IPost from "../utils/interfaces/IPost";
 import timeSince from "../utils/timeSince";
@@ -8,7 +8,7 @@ import DeleteModalWithButton from "./DeleteModalWithButton";
 import VoteSection from "./VoteSection";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import LoadingSpinner from "./LoadingSpinner";
-import { AuthContext } from "../utils/auth-context";
+import { useAuth } from "../utils/auth-hook";
 
 const POST_VOTE_QUERY = gql`
   query($postId: Int!) {
@@ -52,7 +52,7 @@ export default function CustomCard(props: CustomCardProps) {
     className,
   } = props;
 
-  const { isLoggedIn, userId } = useContext(AuthContext);
+  const { userId } = useAuth();
 
   const [numVotes, setNumVotes] = useState(numVotesFromProps);
   const [currVote, setCurrVote] = useState(0);
@@ -60,7 +60,7 @@ export default function CustomCard(props: CustomCardProps) {
   const [votePost] = useMutation(VOTE_POST_MUTATION);
   const { data, loading: isVoteLoading } = useQuery(POST_VOTE_QUERY, {
     variables: { postId: Number(postId) },
-    skip: !isLoggedIn,
+    skip: !userId,
   });
 
   useMemo(() => {

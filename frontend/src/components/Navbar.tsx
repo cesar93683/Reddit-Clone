@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Container, Navbar } from "react-bootstrap";
-import { AuthContext } from "../utils/auth-context";
+import { useAuth } from "../utils/auth-hook";
 
 export default function NavBar() {
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { userId, logout } = useAuth();
 
   return (
     <Navbar bg="light" variant="light">
@@ -12,7 +12,7 @@ export default function NavBar() {
         <Link to="/" className="mr-auto">
           <Navbar.Brand>Home</Navbar.Brand>
         </Link>
-        {isLoggedIn ? (
+        {userId ? (
           <>
             <Link to="/post/new">
               <Button variant="primary" className="mr-1">

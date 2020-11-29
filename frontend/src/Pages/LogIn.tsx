@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { AuthContext } from "../utils/auth-context";
 import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { useAuth } from "../utils/auth-hook";
 
 const LOGIN_MUTATION = gql`
   mutation logIn($email: String!, $password: String!) {
@@ -15,7 +15,7 @@ const LOGIN_MUTATION = gql`
 `;
 
 export default function LogIn() {
-  const auth = useContext(AuthContext);
+  const auth = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");

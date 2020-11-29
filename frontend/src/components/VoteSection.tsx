@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button } from "react-bootstrap";
-import { AuthContext } from "../utils/auth-context";
+import { useAuth } from "../utils/auth-hook";
 
 interface VoteSectionProps {
   numVotes: number;
@@ -12,14 +12,14 @@ interface VoteSectionProps {
 
 export default function VoteSection(props: VoteSectionProps) {
   const { numVotes, className, onUpVote, onDownVote, currVote } = props;
-  const { isLoggedIn } = useContext(AuthContext);
+  const { userId } = useAuth();
 
   return (
     <div className={"d-flex flex-column align-items-center " + className}>
       <Button
         onClick={onUpVote}
         variant={currVote === 1 ? "primary" : "secondary"}
-        disabled={!isLoggedIn}
+        disabled={!userId}
         size="sm"
       >
         ^
@@ -28,7 +28,7 @@ export default function VoteSection(props: VoteSectionProps) {
       <Button
         onClick={onDownVote}
         variant={currVote === -1 ? "primary" : "secondary"}
-        disabled={!isLoggedIn}
+        disabled={!userId}
         size="sm"
         className="w-100"
       >
