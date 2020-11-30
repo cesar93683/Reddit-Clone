@@ -14,7 +14,7 @@ export default function CommentWithPostTitle(props: CommentWithPostTitleProps) {
 
   return (
     <Card className={className}>
-      <Card.Body>
+      <Card.Body className="p-2">
         <div>
           <Link
             className="text-body font-weight-bold"

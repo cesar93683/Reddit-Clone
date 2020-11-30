@@ -166,7 +166,7 @@ export default function Comment(props: CommentProps) {
 
   return (
     <Card className={className}>
-      <Card.Body className="d-flex">
+      <Card.Body className="p-2 d-flex">
         {showVoteSection ? (
           <VoteSection
             numVotes={numVotes}
