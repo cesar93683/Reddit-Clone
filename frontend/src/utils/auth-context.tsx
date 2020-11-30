@@ -3,7 +3,7 @@ import React, { ReactNode, useCallback, useEffect, useState } from "react";
 export const AuthContext = React.createContext({
   userId: "",
   token: "",
-  login: (uid: string, token: string) => {},
+  login: (userId: string, token: string) => {},
   logout: () => {},
 });
 
@@ -13,18 +13,17 @@ interface AuthProviderInterface {
 
 export function AuthProvider({ children }: AuthProviderInterface) {
   const [loading, setIsLoading] = useState(true);
-
   const [token, setToken] = useState("");
   const [userId, setUserId] = useState("");
 
-  const login = useCallback((uid: string, token: string) => {
+  const login = useCallback((userId: string, token: string) => {
     setToken(token);
-    setUserId(uid);
+    setUserId(userId);
     localStorage.setItem(
       "userData",
       JSON.stringify({
-        userId: uid,
-        token: token,
+        userId,
+        token,
       })
     );
   }, []);
