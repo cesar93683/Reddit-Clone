@@ -1,7 +1,7 @@
 import IPost from "./IPost";
 
 export default interface IComment {
-  id: string;
+  id: number;
   author: {
     id: number;
     username: string;

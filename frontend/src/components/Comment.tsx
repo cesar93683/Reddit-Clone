@@ -50,7 +50,7 @@ interface CommentProps {
 }
 
 export default function Comment(props: CommentProps) {
-  let {
+  const {
     comment: {
       id,
       author: { id: authorId, username },
@@ -75,7 +75,7 @@ export default function Comment(props: CommentProps) {
   const [currVote, setCurrVote] = useState(0);
 
   const { data, loading: isVoteLoading } = useQuery(COMMENT_VOTE_QUERY, {
-    variables: { commentId: Number(id) },
+    variables: { commentId: id },
     skip: !userId,
   });
 
@@ -131,7 +131,7 @@ export default function Comment(props: CommentProps) {
   };
 
   const onDownVote = async () => {
-    let value = currVote === -1 ? 0 : -1;
+    const value = currVote === -1 ? 0 : -1;
     await voteComment({ variables: { commentId: id, value } })
       .then(() => {
         downVote();
@@ -140,7 +140,7 @@ export default function Comment(props: CommentProps) {
   };
 
   const onUpVote = async () => {
-    let value = currVote === 1 ? 0 : 1;
+    const value = currVote === 1 ? 0 : 1;
     await voteComment({ variables: { commentId: id, value } })
       .then(() => {
         upVote();

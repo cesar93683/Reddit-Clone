@@ -1,5 +1,5 @@
 const timeSince = (currentDate: number, date: number) => {
-  let seconds = Math.floor((currentDate - date) / 1000);
+  const seconds = Math.floor((currentDate - date) / 1000);
 
   let interval = seconds / 31536000;
 

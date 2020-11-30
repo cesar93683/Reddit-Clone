@@ -50,10 +50,10 @@ const USER_QUERY = gql`
 `;
 
 export default function User() {
-  let userIdFromParam = Number(useParams<UserParams>().id);
+  const id = Number(useParams<UserParams>().id);
   const currentDate = Date.now();
   const { loading, data, error } = useQuery(USER_QUERY, {
-    variables: { id: userIdFromParam },
+    variables: { id },
   });
   const [posts, setPosts] = useState<IPost[]>([]);
   const [comments, setComments] = useState<IComment[]>([]);

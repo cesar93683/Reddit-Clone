@@ -26,13 +26,13 @@ interface PostParams {
 }
 
 export default function EditPost() {
-  const id = useParams<PostParams>().id;
+  const id = Number(useParams<PostParams>().id);
   const history = useHistory();
   const [content, setContent] = useState("");
   const [editPost] = useMutation(EDIT_POST_MUTATION);
 
   const { loading, data, error } = useQuery(POST_QUERY, {
-    variables: { id: Number(id) },
+    variables: { id },
   });
 
   useMemo(() => {

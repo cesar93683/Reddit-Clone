@@ -59,7 +59,7 @@ export default function CustomCard(props: CustomCardProps) {
 
   const [votePost] = useMutation(VOTE_POST_MUTATION);
   const { data, loading: isVoteLoading } = useQuery(POST_VOTE_QUERY, {
-    variables: { postId: Number(postId) },
+    variables: { postId },
     skip: !userId,
   });
 
@@ -90,7 +90,7 @@ export default function CustomCard(props: CustomCardProps) {
   };
 
   const onDownVote = async () => {
-    let value = currVote === -1 ? 0 : -1;
+    const value = currVote === -1 ? 0 : -1;
     await votePost({ variables: { postId, value } })
       .then(() => {
         downVote();
@@ -99,7 +99,7 @@ export default function CustomCard(props: CustomCardProps) {
   };
 
   const onUpVote = async () => {
-    let value = currVote === 1 ? 0 : 1;
+    const value = currVote === 1 ? 0 : 1;
     await votePost({ variables: { postId, value } })
       .then(() => {
         upVote();
