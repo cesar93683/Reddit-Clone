@@ -1,9 +1,9 @@
-import React, { useMemo, useState } from "react";
-import IPost from "../utils/interfaces/IPost";
 import { gql, useQuery } from "@apollo/client";
+import React, { useMemo, useState } from "react";
 import LoadingSpinner from "../components/LoadingSpinner";
 import CustomCard from "../components/PostCard";
 import SortDropDown from "../components/SortDropDown";
+import IPost from "../utils/interfaces/IPost";
 
 const POSTS_QUERY = gql`
   query {

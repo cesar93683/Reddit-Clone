@@ -2,12 +2,12 @@ import { gql, useQuery } from "@apollo/client";
 import React, { useMemo, useState } from "react";
 import { Tab, Tabs } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import CustomCard from "../components/PostCard";
+import CommentWithPostTitle from "../components/CommentWithPostTitle";
 import LoadingSpinner from "../components/LoadingSpinner";
+import CustomCard from "../components/PostCard";
 import SortDropDown from "../components/SortDropDown";
 import IComment from "../utils/interfaces/IComment";
 import IPost from "../utils/interfaces/IPost";
-import CommentWithPostTitle from "../components/CommentWithPostTitle";
 
 interface UserParams {
   id: string;

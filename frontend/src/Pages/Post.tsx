@@ -1,13 +1,13 @@
-import React, { useMemo, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { gql, useMutation, useQuery } from "@apollo/client";
+import React, { useContext, useMemo, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
-import { gql, useMutation, useQuery } from "@apollo/client";
-import IComment from "../utils/interfaces/IComment";
 import LoadingSpinner from "../components/LoadingSpinner";
 import CustomCard from "../components/PostCard";
 import SortDropDown from "../components/SortDropDown";
-import { useAuth } from "../utils/auth-hook";
+import { AuthContext } from "../utils/auth-context";
+import IComment from "../utils/interfaces/IComment";
 
 const POST_QUERY = gql`
   query($id: Int!) {
@@ -67,7 +67,7 @@ interface PostParams {
 }
 
 export default function Post() {
-  const { userId } = useAuth();
+  const { userId } = useContext(AuthContext);
   const id = Number(useParams<PostParams>().id);
   const history = useHistory();
   const currentDate = Date.now();

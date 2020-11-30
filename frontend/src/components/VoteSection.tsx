@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button } from "react-bootstrap";
-import { useAuth } from "../utils/auth-hook";
+import { AuthContext } from "../utils/auth-context";
 
 interface VoteSectionProps {
   numVotes: number;
@@ -12,7 +12,7 @@ interface VoteSectionProps {
 
 export default function VoteSection(props: VoteSectionProps) {
   const { numVotes, className, onUpVote, onDownVote, currVote } = props;
-  const { userId } = useAuth();
+  const { userId } = useContext(AuthContext);
 
   return (
     <div className={"d-flex flex-column align-items-center " + className}>

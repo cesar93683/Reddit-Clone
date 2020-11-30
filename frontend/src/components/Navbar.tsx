@@ -1,10 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
 import { Button, Container, Navbar } from "react-bootstrap";
-import { useAuth } from "../utils/auth-hook";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../utils/auth-context";
 
 export default function NavBar() {
-  const { userId, logout } = useAuth();
+  const { userId, logout } = useContext(AuthContext);
 
   return (
     <Navbar bg="light" variant="light">

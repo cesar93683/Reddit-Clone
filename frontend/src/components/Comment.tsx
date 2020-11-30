@@ -1,14 +1,14 @@
-import React, { useMemo, useState } from "react";
-import timeSince from "../utils/timeSince";
-import IComment from "../utils/interfaces/IComment";
 import { gql, useMutation, useQuery } from "@apollo/client";
+import React, { useContext, useMemo, useState } from "react";
 import { Button, Card } from "react-bootstrap";
+import { AuthContext } from "../utils/auth-context";
+import IComment from "../utils/interfaces/IComment";
+import timeSince from "../utils/timeSince";
+import CommentForm from "./CommentForm";
 import CustomCardSubtitle from "./CustomCardSubtitle";
 import DeleteModalWithButton from "./DeleteModalWithButton";
-import CommentForm from "./CommentForm";
 import LoadingSpinner from "./LoadingSpinner";
 import VoteSection from "./VoteSection";
-import { useAuth } from "../utils/auth-hook";
 
 const COMMENT_VOTE_QUERY = gql`
   query($commentId: Int!) {
@@ -64,7 +64,7 @@ export default function Comment(props: CommentProps) {
     className,
   } = props;
 
-  const { userId } = useAuth();
+  const { userId } = useContext(AuthContext);
   const [deleteComment] = useMutation(DELETE_COMMENT_MUTATION);
   const [editComment] = useMutation(EDIT_COMMENT_MUTATION);
   const [voteComment] = useMutation(VOTE_COMMENT_MUTATION);

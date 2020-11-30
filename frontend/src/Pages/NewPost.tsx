@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import "./EditPost";
 import { gql, useMutation } from "@apollo/client";
-import LoadingSpinner from "../components/LoadingSpinner";
+import React, { useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner";
+import "./EditPost";
 
 const NEW_POST_MUTATION = gql`
   mutation($title: String!, $content: String!) {

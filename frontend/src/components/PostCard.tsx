@@ -1,14 +1,14 @@
-import React, { useMemo, useState } from "react";
+import { gql, useMutation, useQuery } from "@apollo/client";
+import React, { useContext, useMemo, useState } from "react";
+import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../utils/auth-context";
 import IPost from "../utils/interfaces/IPost";
 import timeSince from "../utils/timeSince";
-import { Button, Card } from "react-bootstrap";
 import CustomCardSubtitle from "./CustomCardSubtitle";
 import DeleteModalWithButton from "./DeleteModalWithButton";
-import VoteSection from "./VoteSection";
-import { gql, useMutation, useQuery } from "@apollo/client";
 import LoadingSpinner from "./LoadingSpinner";
-import { useAuth } from "../utils/auth-hook";
+import VoteSection from "./VoteSection";
 
 const POST_VOTE_QUERY = gql`
   query($postId: Int!) {
@@ -52,7 +52,7 @@ export default function CustomCard(props: CustomCardProps) {
     className,
   } = props;
 
-  const { userId } = useAuth();
+  const { userId } = useContext(AuthContext);
 
   const [numVotes, setNumVotes] = useState(numVotesFromProps);
   const [currVote, setCurrVote] = useState(0);

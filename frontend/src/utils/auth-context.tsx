@@ -1,12 +1,6 @@
-import React, {
-  useState,
-  useCallback,
-  useEffect,
-  useContext,
-  ReactNode,
-} from "react";
+import React, { ReactNode, useCallback, useEffect, useState } from "react";
 
-const AuthContext = React.createContext({
+export const AuthContext = React.createContext({
   userId: "",
   token: "",
   login: (uid: string, token: string) => {},
@@ -56,8 +50,4 @@ export function AuthProvider({ children }: AuthProviderInterface) {
       {!loading ? children : null}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  return useContext(AuthContext);
 }
