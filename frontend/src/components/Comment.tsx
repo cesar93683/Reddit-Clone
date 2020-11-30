@@ -95,7 +95,7 @@ export default function Comment(props: CommentProps) {
       .catch(() => {});
   };
 
-  const handleEdit = () => {
+  const onEditClick = () => {
     setIsEditing(true);
   };
 
@@ -190,7 +190,7 @@ export default function Comment(props: CommentProps) {
           {!isEditing && userId === authorId ? (
             <div className="d-flex justify-content-end">
               <Button
-                onClick={handleEdit}
+                onClick={onEditClick}
                 className="mr-2"
                 variant="outline-primary"
               >

@@ -22,9 +22,7 @@ export default function LogIn() {
   const [logIn] = useMutation(LOGIN_MUTATION);
   const history = useHistory();
 
-  const logInSubmitHandler = async (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
+  const onLogInSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!email) {
@@ -48,27 +46,25 @@ export default function LogIn() {
       .catch(() => {});
   };
 
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
 
-  const handlePassswordChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const onPassswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
 
   return (
     <Row className="justify-content-md-center">
       <Col xl={6} lg={8}>
-        <Form onSubmit={logInSubmitHandler}>
+        <Form onSubmit={onLogInSubmit}>
           <Form.Group>
             <Form.Label>Email address</Form.Label>
             <Form.Control
               type="email"
               placeholder="Enter email"
               value={email}
-              onChange={handleEmailChange}
+              onChange={onEmailChange}
             />
           </Form.Group>
           <Form.Group>
@@ -77,7 +73,7 @@ export default function LogIn() {
               type="password"
               placeholder="Enter password"
               value={password}
-              onChange={handlePassswordChange}
+              onChange={onPassswordChange}
             />
           </Form.Group>
           {error ? <Alert variant="danger">{error}</Alert> : null}

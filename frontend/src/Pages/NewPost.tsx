@@ -20,15 +20,13 @@ export default function NewPost() {
   const [content, setContent] = useState("");
   const history = useHistory();
 
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
-  const handleContentChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
+  const onContentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(event.target.value);
   };
-  const postSubmitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+  const onPostSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!title) {
@@ -48,14 +46,14 @@ export default function NewPost() {
   }
 
   return (
-    <Form onSubmit={postSubmitHandler}>
+    <Form onSubmit={onPostSubmit}>
       <Form.Group>
         <Form.Label>Title</Form.Label>
         <Form.Control
           type="text"
           placeholder="Enter title"
           value={title}
-          onChange={handleTitleChange}
+          onChange={onTitleChange}
         />
       </Form.Group>
       <Form.Group>
@@ -65,7 +63,7 @@ export default function NewPost() {
           rows={3}
           placeholder="Enter content"
           value={content}
-          onChange={handleContentChange}
+          onChange={onContentChange}
         />
       </Form.Group>
       {error ? <Alert variant="danger">{error}</Alert> : null}

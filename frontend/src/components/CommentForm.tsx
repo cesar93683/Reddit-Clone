@@ -14,13 +14,11 @@ export default function CommentForm(props: CommentFormProps) {
   const [content, setContent] = useState(defaultContent ? defaultContent : "");
   const [error, setError] = useState("");
 
-  const handleContentChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
+  const onContentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(event.target.value);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitClick = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!content) {
       setError("Please Enter A Comment.");
@@ -31,12 +29,12 @@ export default function CommentForm(props: CommentFormProps) {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={onSubmitClick}>
       <Form.Control
         as="textarea"
         rows={3}
         value={content}
-        onChange={handleContentChange}
+        onChange={onContentChange}
       />
       <div className="d-flex justify-content-end mt-1">
         <Button type="submit" disabled={enableSubmit}>
