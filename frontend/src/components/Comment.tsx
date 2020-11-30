@@ -80,7 +80,7 @@ export default function Comment(props: CommentProps) {
   });
 
   useMemo(() => {
-    if (data && data.commentVote && data.commentVote.value) {
+    if (data?.commentVote?.value) {
       setCurrVote(data.commentVote.value);
     }
   }, [data]);

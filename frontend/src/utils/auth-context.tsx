@@ -36,7 +36,7 @@ export function AuthProvider({ children }: AuthProviderInterface) {
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("userData") || "{}");
-    if (storedData && storedData.token) {
+    if (storedData?.token) {
       login(storedData.userId, storedData.token);
     }
     setIsLoading(false);

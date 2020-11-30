@@ -64,7 +64,7 @@ export default function User() {
   const [newActive, setNewActive] = useState(true);
 
   useMemo(() => {
-    if (data && data.user) {
+    if (data?.user) {
       setPosts(
         [...data.user.posts].sort(
           (a: IPost, b: IPost) => b.dateCreated - a.dateCreated

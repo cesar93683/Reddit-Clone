@@ -29,7 +29,6 @@ export default function EditPost() {
   const id = Number(useParams<PostParams>().id);
   const history = useHistory();
   const [content, setContent] = useState("");
-  const [title, setTitle] = useState("");
   const [editPost] = useMutation(EDIT_POST_MUTATION);
 
   const { loading, data, error } = useQuery(POST_QUERY, {
@@ -39,7 +38,6 @@ export default function EditPost() {
   useMemo(() => {
     if (data?.post) {
       setContent(data.post.content);
-      setTitle(data.post.title);
     }
   }, [data]);
 
@@ -61,7 +59,7 @@ export default function EditPost() {
     return <LoadingSpinner />;
   }
 
-  if (error || !title) {
+  if (error || !data.post) {
     return <h1>An error occured.</h1>;
   }
 
@@ -69,7 +67,7 @@ export default function EditPost() {
     <Form onSubmit={onSubmitPostUpdate}>
       <Form.Group>
         <Form.Label>Title</Form.Label>
-        <Form.Control disabled type="text" value={title} />
+        <Form.Control disabled type="text" value={data.post.title} />
       </Form.Group>
       <Form.Group>
         <Form.Label>Content</Form.Label>

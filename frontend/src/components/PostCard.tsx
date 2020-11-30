@@ -64,7 +64,9 @@ export default function CustomCard(props: CustomCardProps) {
   });
 
   useMemo(() => {
-    setCurrVote(data && data.postVote ? data.postVote.value : 0);
+    if (data?.postVote?.value) {
+      setCurrVote(data.postVote.value);
+    }
   }, [data]);
 
   const downVote = () => {
