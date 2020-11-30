@@ -14,13 +14,13 @@ import {
   Switch,
 } from "react-router-dom";
 import NavBar from "./components/Navbar";
-import EditPost from "./Pages/EditPost";
-import Home from "./Pages/Home";
-import LogIn from "./Pages/LogIn";
-import NewPost from "./Pages/NewPost";
-import Post from "./Pages/Post";
-import SignUp from "./Pages/SignUp";
-import User from "./Pages/User";
+import EditPost from "./pages/EditPost";
+import Home from "./pages/Home";
+import LogIn from "./pages/LogIn";
+import NewPost from "./pages/NewPost";
+import Post from "./pages/Post";
+import SignUp from "./pages/SignUp";
+import User from "./pages/User";
 import { AuthProvider } from "./utils/auth-context";
 
 const httpLink = new HttpLink({ uri: "http://localhost:4000" });
