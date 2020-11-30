@@ -157,7 +157,7 @@ export default function CustomCard(props: CustomCardProps) {
               </div>
             )}
 
-            {onDelete && authorId === Number(userId) ? (
+            {onDelete && authorId === userId ? (
               <div>
                 <Link className="mr-2" to={`/post/${postId}/edit`}>
                   <Button variant="outline-primary">EDIT</Button>

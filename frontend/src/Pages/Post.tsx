@@ -137,12 +137,12 @@ export default function Post() {
         currentDate={currentDate}
         onDelete={onDeletePost}
       />
-      {userId && (
+      {userId ? (
         <CommentForm
           onSubmit={onSubmitComment}
           enableSubmit={hasNewCommentBeenAdded}
         />
-      )}
+      ) : null}
       <SortDropDown
         sortByVotes={sortByVotes}
         topActive={topActive}
