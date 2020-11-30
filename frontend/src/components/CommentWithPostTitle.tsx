@@ -18,22 +18,23 @@ export default function CommentWithPostTitle(props: CommentWithPostTitleProps) {
         <div>
           <Link
             className="text-body font-weight-bold"
-            to={"user/" + comment.author.id}
+            to={"/user/" + comment.author.id}
           >
             {comment.author.username}
           </Link>
           {" commented on "}
           <Link
             className="text-body font-weight-bold"
-            to={"post/" + comment.post.id}
+            to={"/post/" + comment.post.id}
           >
             {comment.post.title}
           </Link>
         </div>
         <Comment
-          currentDate={currentDate}
           comment={comment}
+          currentDate={currentDate}
           postId={comment.post.id}
+          showVoteSection={false}
         />
       </Card.Body>
     </Card>

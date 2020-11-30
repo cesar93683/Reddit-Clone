@@ -46,6 +46,7 @@ interface CommentProps {
   comment: IComment;
   currentDate: number;
   postId: number;
+  showVoteSection: boolean;
   className?: string;
 }
 
@@ -61,6 +62,7 @@ export default function Comment(props: CommentProps) {
     },
     currentDate,
     postId,
+    showVoteSection,
     className,
   } = props;
 
@@ -165,13 +167,15 @@ export default function Comment(props: CommentProps) {
   return (
     <Card className={className}>
       <Card.Body className="d-flex">
-        <VoteSection
-          numVotes={numVotes}
-          className="mr-2"
-          onUpVote={onUpVote}
-          onDownVote={onDownVote}
-          currVote={currVote}
-        />
+        {showVoteSection ? (
+          <VoteSection
+            numVotes={numVotes}
+            className="mr-2"
+            onUpVote={onUpVote}
+            onDownVote={onDownVote}
+            currVote={currVote}
+          />
+        ) : null}
         <div className="w-100">
           <CustomCardSubtitle
             authorId={authorId}

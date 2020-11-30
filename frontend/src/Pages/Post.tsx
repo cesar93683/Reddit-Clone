@@ -154,11 +154,12 @@ export default function Post() {
       <div className="px-3">
         {comments.map((comment: IComment) => (
           <Comment
-            className="my-2"
             key={comment.id}
             comment={comment}
             currentDate={currentDate}
             postId={id}
+            showVoteSection
+            className="my-2"
           />
         ))}
       </div>
