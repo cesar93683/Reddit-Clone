@@ -35,6 +35,7 @@ export default function CommentForm(props: CommentFormProps) {
         rows={3}
         value={content}
         onChange={onContentChange}
+        placeholder={"Enter Comment"}
       />
       <div className="d-flex justify-content-end mt-1">
         <Button type="submit" disabled={enableSubmit}>
