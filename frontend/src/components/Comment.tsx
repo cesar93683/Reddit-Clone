@@ -10,7 +10,7 @@ import DeleteModalWithButton from "./DeleteModalWithButton";
 import LoadingSpinner from "./LoadingSpinner";
 import VoteSection from "./VoteSection";
 
-const COMMENT_VOTE_QUERY = gql`
+export const COMMENT_VOTE_QUERY = gql`
   query($commentId: Int!) {
     commentVote(commentId: $commentId) {
       value
@@ -18,7 +18,7 @@ const COMMENT_VOTE_QUERY = gql`
   }
 `;
 
-const DELETE_COMMENT_MUTATION = gql`
+export const DELETE_COMMENT_MUTATION = gql`
   mutation($id: Int!, $postId: Int!) {
     deleteComment(id: $id, postId: $postId) {
       message
@@ -26,7 +26,7 @@ const DELETE_COMMENT_MUTATION = gql`
   }
 `;
 
-const EDIT_COMMENT_MUTATION = gql`
+export const EDIT_COMMENT_MUTATION = gql`
   mutation($id: Int!, $content: String!) {
     editComment(id: $id, content: $content) {
       id
@@ -34,7 +34,7 @@ const EDIT_COMMENT_MUTATION = gql`
   }
 `;
 
-const VOTE_COMMENT_MUTATION = gql`
+export const VOTE_COMMENT_MUTATION = gql`
   mutation($commentId: Int!, $value: Int!) {
     voteComment(commentId: $commentId, value: $value) {
       message
