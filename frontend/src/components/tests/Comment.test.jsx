@@ -1,7 +1,8 @@
 import { MockedProvider } from "@apollo/client/testing";
 import "@testing-library/jest-dom/extend-expect";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
+import { act } from "react-dom/test-utils";
 import { BrowserRouter as Router } from "react-router-dom";
 import { AuthProvider } from "../../utils/auth-context";
 import Comment, {
@@ -27,8 +28,8 @@ const mocks = [
     request: {
       query: DELETE_COMMENT_MUTATION,
       variables: {
-        id: 3,
-        postId: 4,
+        id: 1,
+        postId: 1,
       },
     },
     result: {
@@ -41,13 +42,13 @@ const mocks = [
     request: {
       query: EDIT_COMMENT_MUTATION,
       variables: {
-        id: 5,
+        id: 1,
         content: "content",
       },
     },
     result: {
       data: {
-        editComment: { id: 6 },
+        editComment: { id: 1 },
       },
     },
   },
@@ -55,8 +56,8 @@ const mocks = [
     request: {
       query: VOTE_COMMENT_MUTATION,
       variables: {
-        commentId: 7,
-        value: 8,
+        commentId: 1,
+        value: 1,
       },
     },
     result: {
@@ -68,41 +69,51 @@ const mocks = [
 ];
 
 describe("<Comment />", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     localStorage.setItem(
       "userData",
       JSON.stringify({ userId: 1, token: "token" })
     );
-    render(
-      <Router>
-        <MockedProvider mocks={mocks} addTypename={false}>
-          <AuthProvider>
-            <Comment
-              comment={{
-                id: 1,
-                author: { id: 1, username: "username" },
-                dateCreated: 1,
-                dateUpdated: 1,
-                content: "content",
-                numVotes: 1,
-              }}
-              currentDate={1}
-              postId={1}
-              showVoteSection
-            />
-          </AuthProvider>
-        </MockedProvider>
-      </Router>
-    );
+    act(() => {
+      render(
+        <Router>
+          <MockedProvider mocks={mocks} addTypename={false}>
+            <AuthProvider>
+              <Comment
+                comment={{
+                  id: 1,
+                  author: { id: 1, username: "username" },
+                  dateCreated: 1,
+                  dateUpdated: 1,
+                  content: "content",
+                  numVotes: 1,
+                }}
+                currentDate={1}
+                postId={1}
+                showVoteSection
+              />
+            </AuthProvider>
+          </MockedProvider>
+        </Router>
+      );
+    });
+    await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
   });
   test("should be able to set curr vote from query", async () => {
-    await new Promise((resolve) => setTimeout(resolve, 0));
-    screen.debug();
     expect(screen.getByText("^")).toHaveClass("btn-primary");
+  });
+  test("should be able to delete", async () => {
+    act(() => {
+      fireEvent.click(screen.getByText("Delete"));
+    });
+    act(() => {
+      fireEvent.click(screen.getByText("Yes"));
+    });
+    await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
+    expect(screen.getByText("Comment deleted")).toBeInTheDocument();
   });
 });
 // should increment votes
 // should decrement vote
 // should be able to edit
-// should be able to delete
 // should not give error if user has not voted
