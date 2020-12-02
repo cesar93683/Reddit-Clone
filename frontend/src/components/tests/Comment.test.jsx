@@ -15,13 +15,11 @@ const mocks = [
   {
     request: {
       query: COMMENT_VOTE_QUERY,
-      variables: {
-        commentId: 1,
-      },
+      variables: { commentId: 1 },
     },
     result: {
       data: {
-        value: 1,
+        commentVote: { value: 1 },
       },
     },
   },
@@ -29,13 +27,13 @@ const mocks = [
     request: {
       query: DELETE_COMMENT_MUTATION,
       variables: {
-        id: 1,
-        postId: 1,
+        id: 3,
+        postId: 4,
       },
     },
     result: {
       data: {
-        message: "Success",
+        deleteComment: { message: "Success" },
       },
     },
   },
@@ -43,13 +41,13 @@ const mocks = [
     request: {
       query: EDIT_COMMENT_MUTATION,
       variables: {
-        id: 1,
+        id: 5,
         content: "content",
       },
     },
     result: {
       data: {
-        id: 1,
+        editComment: { id: 6 },
       },
     },
   },
@@ -57,13 +55,13 @@ const mocks = [
     request: {
       query: VOTE_COMMENT_MUTATION,
       variables: {
-        commentId: 1,
-        value: 1,
+        commentId: 7,
+        value: 8,
       },
     },
     result: {
       data: {
-        message: "Success",
+        voteComment: { message: "Success" },
       },
     },
   },
@@ -71,6 +69,10 @@ const mocks = [
 
 describe("<Comment />", () => {
   beforeEach(() => {
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({ userId: 1, token: "token" })
+    );
     render(
       <Router>
         <MockedProvider mocks={mocks} addTypename={false}>
@@ -93,7 +95,14 @@ describe("<Comment />", () => {
       </Router>
     );
   });
-  test("error is shown when submitting empty comment", async () => {
-    expect(screen.getByText("username")).toBeInTheDocument();
+  test("should be able to set curr vote from query", async () => {
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    screen.debug();
+    expect(screen.getByText("^")).toHaveClass("btn-primary");
   });
 });
+// should increment votes
+// should decrement vote
+// should be able to edit
+// should be able to delete
+// should not give error if user has not voted
