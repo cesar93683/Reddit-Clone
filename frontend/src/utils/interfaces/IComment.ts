@@ -10,6 +10,6 @@ export default interface IComment {
   numVotes: number;
   dateCreated: number;
   dateUpdated: number;
-  post: IPost;
-  __typename: string;
+  post?: IPost;
+  __typename?: string;
 }

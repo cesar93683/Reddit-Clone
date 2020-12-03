@@ -4,7 +4,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { BrowserRouter as Router } from "react-router-dom";
-import { AuthProvider } from "../../utils/auth-context";
+import { AuthContext } from "../../utils/auth-context";
 import Comment, {
   COMMENT_VOTE_QUERY,
   DELETE_COMMENT_MUTATION,
@@ -100,7 +100,14 @@ test("should be able to set curr vote from query", async () => {
     render(
       <Router>
         <MockedProvider mocks={mocks} addTypename={false}>
-          <AuthProvider>
+          <AuthContext.Provider
+            value={{
+              userId: 1,
+              token: "token",
+              login: (userId: number, token: string) => {},
+              logout: () => {},
+            }}
+          >
             <Comment
               comment={{
                 id: 1,
@@ -114,7 +121,7 @@ test("should be able to set curr vote from query", async () => {
               postId={1}
               showVoteSection
             />
-          </AuthProvider>
+          </AuthContext.Provider>
         </MockedProvider>
       </Router>
     );
@@ -133,7 +140,14 @@ describe("<Comment />", () => {
       render(
         <Router>
           <MockedProvider mocks={mocks} addTypename={false}>
-            <AuthProvider>
+            <AuthContext.Provider
+              value={{
+                userId: 1,
+                token: "token",
+                login: (userId: number, token: string) => {},
+                logout: () => {},
+              }}
+            >
               <Comment
                 comment={{
                   id: 2,
@@ -147,7 +161,7 @@ describe("<Comment />", () => {
                 postId={1}
                 showVoteSection
               />
-            </AuthProvider>
+            </AuthContext.Provider>
           </MockedProvider>
         </Router>
       );
