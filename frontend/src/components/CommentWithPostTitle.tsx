@@ -11,6 +11,8 @@ interface CommentWithPostTitleProps {
 }
 export default function CommentWithPostTitle(props: CommentWithPostTitleProps) {
   const { className, comment, currentDate } = props;
+  const postId = comment?.post?.id ? comment.post.id : 0;
+  const postTitle = comment?.post?.title ? comment.post.title : "";
 
   return (
     <Card className={className}>
@@ -23,17 +25,14 @@ export default function CommentWithPostTitle(props: CommentWithPostTitleProps) {
             {comment.author.username}
           </Link>
           {" commented on "}
-          <Link
-            className="text-body font-weight-bold"
-            to={"/post/" + comment.post.id}
-          >
-            {comment.post.title}
+          <Link className="text-body font-weight-bold" to={"/post/" + postId}>
+            {postTitle}
           </Link>
         </div>
         <Comment
           comment={comment}
           currentDate={currentDate}
-          postId={comment.post.id}
+          postId={postId}
           showVoteSection={false}
         />
       </Card.Body>
