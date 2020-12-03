@@ -26,9 +26,20 @@ const mocks = [
   },
   {
     request: {
+      query: COMMENT_VOTE_QUERY,
+      variables: { commentId: 2 },
+    },
+    result: {
+      data: {
+        // commentVote: { value: 1 },
+      },
+    },
+  },
+  {
+    request: {
       query: DELETE_COMMENT_MUTATION,
       variables: {
-        id: 1,
+        id: 2,
         postId: 1,
       },
     },
@@ -42,7 +53,7 @@ const mocks = [
     request: {
       query: EDIT_COMMENT_MUTATION,
       variables: {
-        id: 1,
+        id: 2,
         content: "content",
       },
     },
@@ -56,7 +67,7 @@ const mocks = [
     request: {
       query: VOTE_COMMENT_MUTATION,
       variables: {
-        commentId: 1,
+        commentId: 2,
         value: 1,
       },
     },
@@ -66,7 +77,53 @@ const mocks = [
       },
     },
   },
+  {
+    request: {
+      query: VOTE_COMMENT_MUTATION,
+      variables: {
+        commentId: 2,
+        value: -1,
+      },
+    },
+    result: {
+      data: {
+        voteComment: { message: "Success" },
+      },
+    },
+  },
 ];
+
+test("should be able to set curr vote from query", async () => {
+  act(() => {
+    localStorage.setItem(
+      "userData",
+      JSON.stringify({ userId: 1, token: "token" })
+    );
+    render(
+      <Router>
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <AuthProvider>
+            <Comment
+              comment={{
+                id: 1,
+                author: { id: 1, username: "username" },
+                dateCreated: 1,
+                dateUpdated: 1,
+                content: "content",
+                numVotes: 1,
+              }}
+              currentDate={1}
+              postId={1}
+              showVoteSection
+            />
+          </AuthProvider>
+        </MockedProvider>
+      </Router>
+    );
+  });
+  await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
+  expect(screen.getByText("^")).toHaveClass("btn-primary");
+});
 
 describe("<Comment />", () => {
   beforeEach(async () => {
@@ -81,12 +138,12 @@ describe("<Comment />", () => {
             <AuthProvider>
               <Comment
                 comment={{
-                  id: 1,
+                  id: 2,
                   author: { id: 1, username: "username" },
                   dateCreated: 1,
                   dateUpdated: 1,
                   content: "content",
-                  numVotes: 1,
+                  numVotes: 623,
                 }}
                 currentDate={1}
                 postId={1}
@@ -99,9 +156,6 @@ describe("<Comment />", () => {
     });
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
   });
-  test("should be able to set curr vote from query", async () => {
-    expect(screen.getByText("^")).toHaveClass("btn-primary");
-  });
   test("should be able to delete", async () => {
     act(() => {
       fireEvent.click(screen.getByText("Delete"));
@@ -112,8 +166,33 @@ describe("<Comment />", () => {
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
     expect(screen.getByText("Comment deleted")).toBeInTheDocument();
   });
+  test("should be able to edit", async () => {
+    act(() => {
+      fireEvent.click(screen.getByText("Edit"));
+    });
+    act(() => {
+      fireEvent.change(screen.getByPlaceholderText("Enter Comment"), {
+        target: { value: "new comment" },
+      });
+    });
+    act(() => {
+      fireEvent.click(screen.getByText("Update"));
+    });
+    await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
+    expect(screen.getByText("new comment")).toBeInTheDocument();
+  });
+  test("should be able to increment vote", async () => {
+    act(() => {
+      fireEvent.click(screen.getByText("^"));
+    });
+    await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
+    expect(screen.getByText("624")).toBeInTheDocument();
+  });
+  test("should be able to decrement vote", async () => {
+    act(() => {
+      fireEvent.click(screen.getByText("v"));
+    });
+    await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
+    expect(screen.getByText("622")).toBeInTheDocument();
+  });
 });
-// should increment votes
-// should decrement vote
-// should be able to edit
-// should not give error if user has not voted
