@@ -8,10 +8,10 @@ export default interface IPost {
     username: string;
   };
   content: string;
-  comments: IComment[];
+  comments?: IComment[];
   numComments: number;
   numVotes: number;
   dateCreated: number;
   dateUpdated: number;
-  __typename: string;
+  __typename?: string;
 }

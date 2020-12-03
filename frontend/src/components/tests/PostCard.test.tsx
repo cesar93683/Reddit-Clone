@@ -5,29 +5,28 @@ import React from "react";
 import { act } from "react-dom/test-utils";
 import { BrowserRouter as Router } from "react-router-dom";
 import { AuthContext } from "../../utils/auth-context";
-import Comment, {
-  COMMENT_VOTE_QUERY,
-  DELETE_COMMENT_MUTATION,
-  EDIT_COMMENT_MUTATION,
-  VOTE_COMMENT_MUTATION,
-} from "../Comment";
+import PostCard, { POST_VOTE_QUERY, VOTE_POST_MUTATION } from "../PostCard";
+
+const onDelete = jest.fn();
 
 const mocks = [
   {
     request: {
-      query: COMMENT_VOTE_QUERY,
-      variables: { commentId: 1 },
+      query: POST_VOTE_QUERY,
+      variables: { postId: 1 },
     },
-    result: {
-      data: {
-        commentVote: { value: 1 },
-      },
+    result: () => {
+      return {
+        data: {
+          postVote: { value: 1 },
+        },
+      };
     },
   },
   {
     request: {
-      query: COMMENT_VOTE_QUERY,
-      variables: { commentId: 2 },
+      query: POST_VOTE_QUERY,
+      variables: { postId: 2 },
     },
     result: {
       data: {},
@@ -35,58 +34,20 @@ const mocks = [
   },
   {
     request: {
-      query: DELETE_COMMENT_MUTATION,
-      variables: {
-        id: 2,
-        postId: 1,
-      },
+      query: VOTE_POST_MUTATION,
+      variables: { postId: 2, value: 1 },
     },
     result: {
-      data: {
-        deleteComment: { message: "Success" },
-      },
+      data: { message: "Success" },
     },
   },
   {
     request: {
-      query: EDIT_COMMENT_MUTATION,
-      variables: {
-        id: 2,
-        content: "content",
-      },
+      query: VOTE_POST_MUTATION,
+      variables: { postId: 2, value: -1 },
     },
     result: {
-      data: {
-        editComment: { id: 1 },
-      },
-    },
-  },
-  {
-    request: {
-      query: VOTE_COMMENT_MUTATION,
-      variables: {
-        commentId: 2,
-        value: 1,
-      },
-    },
-    result: {
-      data: {
-        voteComment: { message: "Success" },
-      },
-    },
-  },
-  {
-    request: {
-      query: VOTE_COMMENT_MUTATION,
-      variables: {
-        commentId: 2,
-        value: -1,
-      },
-    },
-    result: {
-      data: {
-        voteComment: { message: "Success" },
-      },
+      data: { message: "Success" },
     },
   },
 ];
@@ -104,18 +65,18 @@ test("should be able to set curr vote from query", async () => {
               logout: () => {},
             }}
           >
-            <Comment
-              comment={{
+            <PostCard
+              post={{
                 id: 1,
+                title: "title",
+                content: "content",
                 author: { id: 1, username: "username" },
+                numComments: 0,
+                numVotes: 0,
                 dateCreated: 1,
                 dateUpdated: 1,
-                content: "content",
-                numVotes: 1,
               }}
               currentDate={1}
-              postId={1}
-              showVoteSection
             />
           </AuthContext.Provider>
         </MockedProvider>
@@ -123,10 +84,11 @@ test("should be able to set curr vote from query", async () => {
     );
   });
   await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
+  screen.debug();
   expect(screen.getByText("^")).toHaveClass("btn-primary");
 });
 
-describe("<Comment />", () => {
+describe("<PostCard />", () => {
   beforeEach(async () => {
     act(() => {
       render(
@@ -134,24 +96,25 @@ describe("<Comment />", () => {
           <MockedProvider mocks={mocks} addTypename={false}>
             <AuthContext.Provider
               value={{
-                userId: 1,
+                userId: 2,
                 token: "token",
                 login: (userId: number, token: string) => {},
                 logout: () => {},
               }}
             >
-              <Comment
-                comment={{
+              <PostCard
+                post={{
                   id: 2,
-                  author: { id: 1, username: "username" },
+                  title: "title",
+                  content: "content",
+                  author: { id: 2, username: "username" },
+                  numComments: 0,
+                  numVotes: 623,
                   dateCreated: 1,
                   dateUpdated: 1,
-                  content: "content",
-                  numVotes: 623,
                 }}
                 currentDate={1}
-                postId={1}
-                showVoteSection
+                onDelete={onDelete}
               />
             </AuthContext.Provider>
           </MockedProvider>
@@ -168,22 +131,7 @@ describe("<Comment />", () => {
       fireEvent.click(screen.getByText("Yes"));
     });
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
-    expect(screen.getByText("Comment deleted")).toBeInTheDocument();
-  });
-  test("should be able to edit", async () => {
-    act(() => {
-      fireEvent.click(screen.getByText("Edit"));
-    });
-    act(() => {
-      fireEvent.change(screen.getByPlaceholderText("Enter Comment"), {
-        target: { value: "new comment" },
-      });
-    });
-    act(() => {
-      fireEvent.click(screen.getByText("Update"));
-    });
-    await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
-    expect(screen.getByText("new comment")).toBeInTheDocument();
+    expect(onDelete).toHaveBeenCalledWith();
   });
   test("should be able to increment vote", async () => {
     act(() => {

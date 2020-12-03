@@ -10,7 +10,7 @@ import DeleteModalWithButton from "./DeleteModalWithButton";
 import LoadingSpinner from "./LoadingSpinner";
 import VoteSection from "./VoteSection";
 
-const POST_VOTE_QUERY = gql`
+export const POST_VOTE_QUERY = gql`
   query($postId: Int!) {
     postVote(postId: $postId) {
       value
@@ -18,7 +18,7 @@ const POST_VOTE_QUERY = gql`
   }
 `;
 
-const VOTE_POST_MUTATION = gql`
+export const VOTE_POST_MUTATION = gql`
   mutation($postId: Int!, $value: Int!) {
     votePost(postId: $postId, value: $value) {
       message
