@@ -30,9 +30,7 @@ const mocks = [
       variables: { commentId: 2 },
     },
     result: {
-      data: {
-        // commentVote: { value: 1 },
-      },
+      data: {},
     },
   },
   {
