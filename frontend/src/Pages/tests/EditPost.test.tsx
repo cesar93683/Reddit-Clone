@@ -38,9 +38,7 @@ const mocks = [
       variables: { id: 1, content: "new content2" },
     },
     result: {
-      data: {
-        id: 1,
-      },
+      data: { editPost: { id: 1 } },
     },
   },
 ];

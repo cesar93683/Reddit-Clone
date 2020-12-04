@@ -5,7 +5,7 @@ import CustomCard from "../components/PostCard";
 import SortDropDown from "../components/SortDropDown";
 import IPost from "../utils/interfaces/IPost";
 
-const POSTS_QUERY = gql`
+export const POSTS_QUERY = gql`
   query {
     posts {
       id
@@ -72,13 +72,14 @@ export default function Home() {
         newActive={newActive}
       />
       {posts.map((post: IPost) => (
-        <CustomCard
-          className="my-2"
-          key={post.id}
-          post={post}
-          currentDate={currentDate}
-          linkable
-        />
+        <div data-testid="post" key={post.id}>
+          <CustomCard
+            className="my-2"
+            post={post}
+            currentDate={currentDate}
+            linkable
+          />
+        </div>
       ))}
     </div>
   );
