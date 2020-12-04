@@ -4,7 +4,7 @@ import { Button, Form } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
 
-const POST_QUERY = gql`
+export const POST_QUERY = gql`
   query($id: Int!) {
     post(id: $id) {
       title
@@ -13,7 +13,7 @@ const POST_QUERY = gql`
   }
 `;
 
-const EDIT_POST_MUTATION = gql`
+export const EDIT_POST_MUTATION = gql`
   mutation($id: Int!, $content: String!) {
     editPost(id: $id, content: $content) {
       id
@@ -59,7 +59,7 @@ export default function EditPost() {
     return <LoadingSpinner />;
   }
 
-  if (error || !data.post) {
+  if (error || !data?.post) {
     return <h1>An error occured.</h1>;
   }
 
