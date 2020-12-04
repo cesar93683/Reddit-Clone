@@ -128,74 +128,58 @@ test("should be able to set curr vote from query", async () => {
 
 describe("<Comment />", () => {
   beforeEach(async () => {
-    act(() => {
-      render(
-        <Router>
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <AuthContext.Provider
-              value={{
-                userId: 1,
-                token: "token",
-                login: (userId: number, token: string) => {},
-                logout: () => {},
+    render(
+      <Router>
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <AuthContext.Provider
+            value={{
+              userId: 1,
+              token: "token",
+              login: (userId: number, token: string) => {},
+              logout: () => {},
+            }}
+          >
+            <Comment
+              comment={{
+                id: 2,
+                author: { id: 1, username: "username" },
+                dateCreated: 1,
+                dateUpdated: 1,
+                content: "content",
+                numVotes: 623,
               }}
-            >
-              <Comment
-                comment={{
-                  id: 2,
-                  author: { id: 1, username: "username" },
-                  dateCreated: 1,
-                  dateUpdated: 1,
-                  content: "content",
-                  numVotes: 623,
-                }}
-                currentDate={1}
-                postId={1}
-                showVoteSection
-              />
-            </AuthContext.Provider>
-          </MockedProvider>
-        </Router>
-      );
-    });
+              currentDate={1}
+              postId={1}
+              showVoteSection
+            />
+          </AuthContext.Provider>
+        </MockedProvider>
+      </Router>
+    );
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
   });
   test("should be able to delete", async () => {
-    act(() => {
-      fireEvent.click(screen.getByText("Delete"));
-    });
-    act(() => {
-      fireEvent.click(screen.getByText("Yes"));
-    });
+    fireEvent.click(screen.getByText("Delete"));
+    fireEvent.click(screen.getByText("Yes"));
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
     expect(screen.getByText("Comment deleted")).toBeInTheDocument();
   });
   test("should be able to edit", async () => {
-    act(() => {
-      fireEvent.click(screen.getByText("Edit"));
+    fireEvent.click(screen.getByText("Edit"));
+    fireEvent.change(screen.getByPlaceholderText("Enter Comment"), {
+      target: { value: "new comment" },
     });
-    act(() => {
-      fireEvent.change(screen.getByPlaceholderText("Enter Comment"), {
-        target: { value: "new comment" },
-      });
-    });
-    act(() => {
-      fireEvent.click(screen.getByText("Update"));
-    });
+    fireEvent.click(screen.getByText("Update"));
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
     expect(screen.getByText("new comment")).toBeInTheDocument();
   });
   test("should be able to increment vote", async () => {
-    act(() => {
-      fireEvent.click(screen.getByText("^"));
-    });
+    fireEvent.click(screen.getByText("^"));
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
     expect(screen.getByText("624")).toBeInTheDocument();
   });
   test("should be able to decrement vote", async () => {
-    act(() => {
-      fireEvent.click(screen.getByText("v"));
-    });
+    fireEvent.click(screen.getByText("v"));
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
     expect(screen.getByText("622")).toBeInTheDocument();
   });

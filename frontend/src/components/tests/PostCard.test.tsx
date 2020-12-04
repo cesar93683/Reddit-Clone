@@ -53,13 +53,46 @@ const mocks = [
 ];
 
 test("should be able to set curr vote from query", async () => {
-  act(() => {
+  render(
+    <Router>
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <AuthContext.Provider
+          value={{
+            userId: 1,
+            token: "token",
+            login: (userId: number, token: string) => {},
+            logout: () => {},
+          }}
+        >
+          <PostCard
+            post={{
+              id: 1,
+              title: "title",
+              content: "content",
+              author: { id: 1, username: "username" },
+              numComments: 0,
+              numVotes: 0,
+              dateCreated: 1,
+              dateUpdated: 1,
+            }}
+            currentDate={1}
+          />
+        </AuthContext.Provider>
+      </MockedProvider>
+    </Router>
+  );
+  await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
+  expect(screen.getByText("^")).toHaveClass("btn-primary");
+});
+
+describe("<PostCard />", () => {
+  beforeEach(async () => {
     render(
       <Router>
         <MockedProvider mocks={mocks} addTypename={false}>
           <AuthContext.Provider
             value={{
-              userId: 1,
+              userId: 2,
               token: "token",
               login: (userId: number, token: string) => {},
               logout: () => {},
@@ -67,83 +100,37 @@ test("should be able to set curr vote from query", async () => {
           >
             <PostCard
               post={{
-                id: 1,
+                id: 2,
                 title: "title",
                 content: "content",
-                author: { id: 1, username: "username" },
+                author: { id: 2, username: "username" },
                 numComments: 0,
-                numVotes: 0,
+                numVotes: 623,
                 dateCreated: 1,
                 dateUpdated: 1,
               }}
               currentDate={1}
+              onDelete={onDelete}
             />
           </AuthContext.Provider>
         </MockedProvider>
       </Router>
     );
-  });
-  await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
-  screen.debug();
-  expect(screen.getByText("^")).toHaveClass("btn-primary");
-});
-
-describe("<PostCard />", () => {
-  beforeEach(async () => {
-    act(() => {
-      render(
-        <Router>
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <AuthContext.Provider
-              value={{
-                userId: 2,
-                token: "token",
-                login: (userId: number, token: string) => {},
-                logout: () => {},
-              }}
-            >
-              <PostCard
-                post={{
-                  id: 2,
-                  title: "title",
-                  content: "content",
-                  author: { id: 2, username: "username" },
-                  numComments: 0,
-                  numVotes: 623,
-                  dateCreated: 1,
-                  dateUpdated: 1,
-                }}
-                currentDate={1}
-                onDelete={onDelete}
-              />
-            </AuthContext.Provider>
-          </MockedProvider>
-        </Router>
-      );
-    });
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
   });
   test("should be able to delete", async () => {
-    act(() => {
-      fireEvent.click(screen.getByText("Delete"));
-    });
-    act(() => {
-      fireEvent.click(screen.getByText("Yes"));
-    });
+    fireEvent.click(screen.getByText("Delete"));
+    fireEvent.click(screen.getByText("Yes"));
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
     expect(onDelete).toHaveBeenCalledWith();
   });
   test("should be able to increment vote", async () => {
-    act(() => {
-      fireEvent.click(screen.getByText("^"));
-    });
+    fireEvent.click(screen.getByText("^"));
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
     expect(screen.getByText("624")).toBeInTheDocument();
   });
   test("should be able to decrement vote", async () => {
-    act(() => {
-      fireEvent.click(screen.getByText("v"));
-    });
+    fireEvent.click(screen.getByText("v"));
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
     expect(screen.getByText("622")).toBeInTheDocument();
   });

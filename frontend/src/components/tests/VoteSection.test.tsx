@@ -9,37 +9,31 @@ const onDownVote = jest.fn();
 
 describe("<VoteSection />", () => {
   beforeEach(async () => {
-    act(() => {
-      render(
-        <AuthContext.Provider
-          value={{
-            userId: 1,
-            token: "token",
-            login: (userId: number, token: string) => {},
-            logout: () => {},
-          }}
-        >
-          <VoteSection
-            numVotes={623}
-            currVote={0}
-            onDownVote={onDownVote}
-            onUpVote={onUpVote}
-          />
-        </AuthContext.Provider>
-      );
-    });
+    render(
+      <AuthContext.Provider
+        value={{
+          userId: 1,
+          token: "token",
+          login: (userId: number, token: string) => {},
+          logout: () => {},
+        }}
+      >
+        <VoteSection
+          numVotes={623}
+          currVote={0}
+          onDownVote={onDownVote}
+          onUpVote={onUpVote}
+        />
+      </AuthContext.Provider>
+    );
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
   });
   test("onUpVote is called", () => {
-    act(() => {
-      fireEvent.click(screen.getByText("^"));
-    });
+    fireEvent.click(screen.getByText("^"));
     expect(onUpVote).toHaveBeenCalled();
   });
   test("onDownVote is called", () => {
-    act(() => {
-      fireEvent.click(screen.getByText("v"));
-    });
+    fireEvent.click(screen.getByText("v"));
     expect(onDownVote).toHaveBeenCalled();
   });
 });

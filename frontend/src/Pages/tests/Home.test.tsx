@@ -1,8 +1,7 @@
 import { MockedProvider } from "@apollo/client/testing";
 import "@testing-library/jest-dom/extend-expect";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
-import { act } from "react-dom/test-utils";
 import { BrowserRouter as Router } from "react-router-dom";
 import Home, { POSTS_QUERY } from "../Home";
 
@@ -70,15 +69,13 @@ const mocks = [
 
 describe("<Home />", () => {
   beforeEach(async () => {
-    act(() => {
-      render(
-        <Router>
-          <MockedProvider mocks={mocks} addTypename={false}>
-            <Home />
-          </MockedProvider>
-        </Router>
-      );
-    });
+    render(
+      <Router>
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <Home />
+        </MockedProvider>
+      </Router>
+    );
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
   });
   test("should be able to query posts", async () => {
@@ -87,26 +84,16 @@ describe("<Home />", () => {
     expect(screen.getByText("title3")).toBeInTheDocument();
   });
   test("should be able to sort posts by votes", async () => {
-    act(() => {
-      fireEvent.click(screen.getByText("Sort By"));
-    });
-    await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
-    act(() => {
-      fireEvent.click(screen.getByText("Top"));
-    });
+    fireEvent.click(screen.getByText("Sort By"));
+    fireEvent.click(screen.getByText("Top"));
     const posts = screen.getAllByTestId("post");
     expect(posts[0]).toHaveTextContent("title1");
     expect(posts[1]).toHaveTextContent("title3");
     expect(posts[2]).toHaveTextContent("title2");
   });
   test("should be able to sort posts by new", async () => {
-    act(() => {
-      fireEvent.click(screen.getByText("Sort By"));
-    });
-    await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
-    act(() => {
-      fireEvent.click(screen.getByText("New"));
-    });
+    fireEvent.click(screen.getByText("Sort By"));
+    fireEvent.click(screen.getByText("New"));
     const posts = screen.getAllByTestId("post");
     expect(posts[0]).toHaveTextContent("title3");
     expect(posts[1]).toHaveTextContent("title1");
