@@ -9,7 +9,7 @@ import SortDropDown from "../components/SortDropDown";
 import { AuthContext } from "../utils/auth-context";
 import IComment from "../utils/interfaces/IComment";
 
-const POST_QUERY = gql`
+export const POST_QUERY = gql`
   query($id: Int!) {
     post(id: $id) {
       id
@@ -38,7 +38,7 @@ const POST_QUERY = gql`
   }
 `;
 
-const CREATE_COMMENT_MUTATION = gql`
+export const CREATE_COMMENT_MUTATION = gql`
   mutation($postId: Int!, $content: String!) {
     createComment(postId: $postId, content: $content) {
       id
@@ -54,7 +54,7 @@ const CREATE_COMMENT_MUTATION = gql`
   }
 `;
 
-const DELETE_POST_MUTATION = gql`
+export const DELETE_POST_MUTATION = gql`
   mutation($id: Int!) {
     deletePost(id: $id) {
       message
