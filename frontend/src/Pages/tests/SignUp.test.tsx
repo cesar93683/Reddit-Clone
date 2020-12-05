@@ -3,7 +3,7 @@ import "@testing-library/jest-dom/extend-expect";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import LogIn, { LOGIN_MUTATION } from "../LogIn";
+import SignUp, { SIGNUP_MUTATION } from "../SignUp";
 
 const mockHistoryPush = jest.fn();
 
@@ -17,16 +17,17 @@ jest.mock("react-router-dom", () => ({
 const mocks = [
   {
     request: {
-      query: LOGIN_MUTATION,
+      query: SIGNUP_MUTATION,
       variables: {
         email: "a@a.com",
+        username: "username",
         password: "password",
       },
     },
     result: () => {
       return {
         data: {
-          logIn: {
+          signUp: {
             token: "token",
             userId: 1,
             error: "",
@@ -37,16 +38,17 @@ const mocks = [
   },
   {
     request: {
-      query: LOGIN_MUTATION,
+      query: SIGNUP_MUTATION,
       variables: {
         email: "b@b.com",
+        username: "username",
         password: "password",
       },
     },
     result: () => {
       return {
         data: {
-          logIn: {
+          signUp: {
             token: "",
             userId: 1,
             error: "Error",
@@ -62,7 +64,7 @@ describe("<Home />", () => {
     render(
       <Router>
         <MockedProvider mocks={mocks} addTypename={false}>
-          <LogIn />
+          <SignUp />
         </MockedProvider>
       </Router>
     );
@@ -72,24 +74,43 @@ describe("<Home />", () => {
     fireEvent.change(screen.getByPlaceholderText("Enter password"), {
       target: { value: "password" },
     });
-    fireEvent.click(screen.getByText("Log In"));
+    fireEvent.change(screen.getByPlaceholderText("Enter username"), {
+      target: { value: "username" },
+    });
+    fireEvent.click(screen.getByText("Sign Up"));
     expect(screen.getByText("Please enter your email")).toBeInTheDocument();
+  });
+  test("error should show up if no username entered", async () => {
+    fireEvent.change(screen.getByPlaceholderText("Enter email"), {
+      target: { value: "email" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Enter password"), {
+      target: { value: "password" },
+    });
+    fireEvent.click(screen.getByText("Sign Up"));
+    expect(screen.getByText("Please enter your username")).toBeInTheDocument();
   });
   test("error should show up if no password entered", async () => {
     fireEvent.change(screen.getByPlaceholderText("Enter email"), {
       target: { value: "email" },
     });
-    fireEvent.click(screen.getByText("Log In"));
+    fireEvent.change(screen.getByPlaceholderText("Enter username"), {
+      target: { value: "username" },
+    });
+    fireEvent.click(screen.getByText("Sign Up"));
     expect(screen.getByText("Please enter your password")).toBeInTheDocument();
   });
-  test("should be able to log in", async () => {
+  test("should be able to sign up", async () => {
     fireEvent.change(screen.getByPlaceholderText("Enter email"), {
       target: { value: "a@a.com" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Enter username"), {
+      target: { value: "username" },
     });
     fireEvent.change(screen.getByPlaceholderText("Enter password"), {
       target: { value: "password" },
     });
-    fireEvent.click(screen.getByText("Log In"));
+    fireEvent.click(screen.getByText("Sign Up"));
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
     expect(mockHistoryPush).toHaveBeenCalledWith("/");
   });
@@ -97,10 +118,13 @@ describe("<Home />", () => {
     fireEvent.change(screen.getByPlaceholderText("Enter email"), {
       target: { value: "b@b.com" },
     });
+    fireEvent.change(screen.getByPlaceholderText("Enter username"), {
+      target: { value: "username" },
+    });
     fireEvent.change(screen.getByPlaceholderText("Enter password"), {
       target: { value: "password" },
     });
-    fireEvent.click(screen.getByText("Log In"));
+    fireEvent.click(screen.getByText("Sign Up"));
     await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
     expect(screen.getByText("Error")).toBeInTheDocument();
   });
