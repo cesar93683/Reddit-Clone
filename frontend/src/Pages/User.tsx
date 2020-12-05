@@ -13,7 +13,7 @@ interface UserParams {
   id: string;
 }
 
-const USER_QUERY = gql`
+export const USER_QUERY = gql`
   query($id: Int!) {
     user(id: $id) {
       id
@@ -126,6 +126,8 @@ export default function User() {
       newActive={newActive}
     />
   );
+
+  console.log(postsAndComments);
 
   return (
     <div>
