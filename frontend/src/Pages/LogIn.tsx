@@ -4,7 +4,7 @@ import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../utils/auth-context";
 
-const LOGIN_MUTATION = gql`
+export const LOGIN_MUTATION = gql`
   mutation logIn($email: String!, $password: String!) {
     logIn(email: $email, password: $password) {
       token
