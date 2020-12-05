@@ -127,8 +127,6 @@ export default function User() {
     />
   );
 
-  console.log(postsAndComments);
-
   return (
     <div>
       <Tabs defaultActiveKey="overview">

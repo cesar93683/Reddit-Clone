@@ -7,7 +7,6 @@ import IPost from "../utils/interfaces/IPost";
 import timeSince from "../utils/timeSince";
 import CustomCardSubtitle from "./CustomCardSubtitle";
 import DeleteModalWithButton from "./DeleteModalWithButton";
-import LoadingSpinner from "./LoadingSpinner";
 import VoteSection from "./VoteSection";
 
 export const POST_VOTE_QUERY = gql`
@@ -108,17 +107,6 @@ export default function CustomCard(props: CustomCardProps) {
       })
       .catch(() => {});
   };
-
-  if (isVoteLoading) {
-    return (
-      <Card className={className}>
-        <Card.Body className="d-flex">
-          <LoadingSpinner />
-        </Card.Body>
-      </Card>
-    );
-  }
-
   return (
     <Card className={className}>
       <Card.Body className="d-flex">
@@ -128,6 +116,7 @@ export default function CustomCard(props: CustomCardProps) {
           onUpVote={onUpVote}
           onDownVote={onDownVote}
           currVote={currVote}
+          isVoteLoading={isVoteLoading}
         />
         <div className="w-100">
           <CustomCardSubtitle

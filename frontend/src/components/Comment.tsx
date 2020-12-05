@@ -7,7 +7,6 @@ import timeSince from "../utils/timeSince";
 import CommentForm from "./CommentForm";
 import CustomCardSubtitle from "./CustomCardSubtitle";
 import DeleteModalWithButton from "./DeleteModalWithButton";
-import LoadingSpinner from "./LoadingSpinner";
 import VoteSection from "./VoteSection";
 
 export const COMMENT_VOTE_QUERY = gql`
@@ -150,16 +149,6 @@ export default function Comment(props: CommentProps) {
       .catch(() => {});
   };
 
-  if (isVoteLoading) {
-    return (
-      <Card className={className}>
-        <Card.Body className="d-flex">
-          <LoadingSpinner />
-        </Card.Body>
-      </Card>
-    );
-  }
-
   if (isCommentDeleted) {
     return <div className={className}>Comment deleted</div>;
   }
@@ -174,6 +163,7 @@ export default function Comment(props: CommentProps) {
             onUpVote={onUpVote}
             onDownVote={onDownVote}
             currVote={currVote}
+            isVoteLoading={isVoteLoading}
           />
         ) : null}
         <div className="w-100">
