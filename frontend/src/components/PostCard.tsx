@@ -41,7 +41,7 @@ export default function CustomCard(props: CustomCardProps) {
       content,
       author: { id: authorId, username },
       numComments,
-      numVotes: numVotesFromProps,
+      numVotes,
       dateCreated,
       dateUpdated,
     },
@@ -53,7 +53,6 @@ export default function CustomCard(props: CustomCardProps) {
 
   const { userId } = useContext(AuthContext);
 
-  const [numVotes, setNumVotes] = useState(numVotesFromProps);
   const [currVote, setCurrVote] = useState(0);
 
   const [votePost] = useMutation(VOTE_POST_MUTATION);
@@ -68,33 +67,11 @@ export default function CustomCard(props: CustomCardProps) {
     }
   }, [data]);
 
-  const downVote = () => {
-    if (currVote === 1) {
-      setNumVotes(numVotes - 2);
-    } else if (currVote === -1) {
-      setNumVotes(numVotes + 1);
-    } else {
-      setNumVotes(numVotes - 1);
-    }
-    setCurrVote(currVote === -1 ? 0 : -1);
-  };
-
-  const upVote = () => {
-    if (currVote === 1) {
-      setNumVotes(numVotes - 1);
-    } else if (currVote === -1) {
-      setNumVotes(numVotes + 2);
-    } else {
-      setNumVotes(numVotes + 1);
-    }
-    setCurrVote(currVote === 1 ? 0 : 1);
-  };
-
   const onDownVote = async () => {
     const value = currVote === -1 ? 0 : -1;
     await votePost({ variables: { postId, value } })
       .then(() => {
-        downVote();
+        setCurrVote(currVote === -1 ? 0 : -1);
       })
       .catch(() => {});
   };
@@ -103,10 +80,11 @@ export default function CustomCard(props: CustomCardProps) {
     const value = currVote === 1 ? 0 : 1;
     await votePost({ variables: { postId, value } })
       .then(() => {
-        upVote();
+        setCurrVote(currVote === 1 ? 0 : 1);
       })
       .catch(() => {});
   };
+
   return (
     <Card className={className}>
       <Card.Body className="d-flex">

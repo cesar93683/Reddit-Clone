@@ -57,7 +57,7 @@ export default function Comment(props: CommentProps) {
       dateCreated,
       dateUpdated,
       content: contentFromProps,
-      numVotes: numVotesFromProps,
+      numVotes,
     },
     currentDate,
     postId,
@@ -72,7 +72,6 @@ export default function Comment(props: CommentProps) {
   const [content, setContent] = useState(contentFromProps);
   const [isCommentDeleted, setIsCommentDeleted] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [numVotes, setNumVotes] = useState(numVotesFromProps);
   const [currVote, setCurrVote] = useState(0);
 
   const { data, loading: isVoteLoading } = useQuery(COMMENT_VOTE_QUERY, {
@@ -109,33 +108,11 @@ export default function Comment(props: CommentProps) {
       .catch(() => {});
   };
 
-  const downVote = () => {
-    if (currVote === 1) {
-      setNumVotes(numVotes - 2);
-    } else if (currVote === -1) {
-      setNumVotes(numVotes + 1);
-    } else {
-      setNumVotes(numVotes - 1);
-    }
-    setCurrVote(currVote === -1 ? 0 : -1);
-  };
-
-  const upVote = () => {
-    if (currVote === 1) {
-      setNumVotes(numVotes - 1);
-    } else if (currVote === -1) {
-      setNumVotes(numVotes + 2);
-    } else {
-      setNumVotes(numVotes + 1);
-    }
-    setCurrVote(currVote === 1 ? 0 : 1);
-  };
-
   const onDownVote = async () => {
     const value = currVote === -1 ? 0 : -1;
     await voteComment({ variables: { commentId: id, value } })
       .then(() => {
-        downVote();
+        setCurrVote(currVote === -1 ? 0 : -1);
       })
       .catch(() => {});
   };
@@ -144,7 +121,7 @@ export default function Comment(props: CommentProps) {
     const value = currVote === 1 ? 0 : 1;
     await voteComment({ variables: { commentId: id, value } })
       .then(() => {
-        upVote();
+        setCurrVote(currVote === 1 ? 0 : 1);
       })
       .catch(() => {});
   };
