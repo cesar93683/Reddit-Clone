@@ -88,7 +88,7 @@ export default function User() {
     setPosts([...posts].sort((a, b) => b.numVotes - a.numVotes));
     setComments([...comments].sort((a, b) => b.numVotes - a.numVotes));
     setPostsAndComments(
-      [...data.user.comments, ...data.user.posts].sort(
+      [...postsAndComments].sort(
         (a: IPost | IComment, b: IPost | IComment) => b.numVotes - a.numVotes
       )
     );
@@ -100,7 +100,7 @@ export default function User() {
     setPosts([...posts].sort((a, b) => b.dateCreated - a.dateCreated));
     setComments([...comments].sort((a, b) => b.dateCreated - a.dateCreated));
     setPostsAndComments(
-      [...data.user.comments, ...data.user.posts].sort(
+      [...postsAndComments].sort(
         (a: IPost | IComment, b: IPost | IComment) =>
           b.dateCreated - a.dateCreated
       )
