@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
 import "./EditPost";
 
-const NEW_POST_MUTATION = gql`
+export const NEW_POST_MUTATION = gql`
   mutation($title: String!, $content: String!) {
     createPost(title: $title, content: $content) {
       id

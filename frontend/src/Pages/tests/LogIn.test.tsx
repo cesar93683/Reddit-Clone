@@ -57,7 +57,7 @@ const mocks = [
   },
 ];
 
-describe("<Home />", () => {
+describe("<LogIn />", () => {
   beforeEach(async () => {
     render(
       <Router>
