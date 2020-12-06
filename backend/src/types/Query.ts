@@ -5,14 +5,22 @@ export const Query = queryType({
   definition(t) {
     t.list.field('posts', {
       type: 'Post',
-      resolve: (_parent, _args, ctx) => {
-        return ctx.prisma.post.findMany();
+      args: { cursor: intArg() },
+      resolve: (_parent, { cursor }, ctx) => {
+        if (cursor) {
+          return ctx.prisma.post.findMany({
+            take: 2,
+            skip: 1,
+            cursor: { id: cursor },
+          });
+        } else {
+          return ctx.prisma.post.findMany({ take: 2 });
+        }
       },
     });
 
     t.field('post', {
       type: 'Post',
-      nullable: true,
       args: { id: intArg({ nullable: false }) },
       resolve: (_parent, { id }, ctx) => {
         return ctx.prisma.post.findOne({
