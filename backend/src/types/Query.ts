@@ -5,7 +5,7 @@ export const Query = queryType({
   definition(t) {
     t.list.field('posts', {
       type: 'Post',
-      resolve: (parent, args, ctx) => {
+      resolve: (_parent, _args, ctx) => {
         return ctx.prisma.post.findMany();
       },
     });
@@ -14,7 +14,7 @@ export const Query = queryType({
       type: 'Post',
       nullable: true,
       args: { id: intArg() },
-      resolve: (parent, { id }, ctx) => {
+      resolve: (_parent, { id }, ctx) => {
         return ctx.prisma.post.findOne({
           where: { id },
         });
@@ -23,7 +23,7 @@ export const Query = queryType({
     t.field('user', {
       type: 'User',
       args: { id: intArg() },
-      resolve: (parent, { id }, ctx) => {
+      resolve: (_parent, { id }, ctx) => {
         return ctx.prisma.user.findOne({
           where: { id },
         });
@@ -32,7 +32,7 @@ export const Query = queryType({
     t.field('postVote', {
       type: 'PostVote',
       args: { postId: intArg() },
-      resolve: (parent, { postId }, ctx) => {
+      resolve: (_parent, { postId }, ctx) => {
         const userId = Number(getUserId(ctx));
         return ctx.prisma.postVote.findFirst({
           where: { postId, authorId: userId },
@@ -42,7 +42,7 @@ export const Query = queryType({
     t.field('commentVote', {
       type: 'CommentVote',
       args: { commentId: intArg() },
-      resolve: (parent, { commentId }, ctx) => {
+      resolve: (_parent, { commentId }, ctx) => {
         const userId = Number(getUserId(ctx));
         return ctx.prisma.commentVote.findFirst({
           where: { commentId, authorId: userId },

@@ -24,7 +24,7 @@ import User from "./pages/User";
 import { AuthProvider } from "./utils/auth-context";
 
 const httpLink = new HttpLink({ uri: "http://localhost:4000" });
-const authLink = setContext(async (req, { headers }) => {
+const authLink = setContext(async (_req, { headers }) => {
   const token = JSON.parse(localStorage.getItem("userData") || "{}").token;
 
   return {

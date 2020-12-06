@@ -2,18 +2,18 @@ import { rule, shield } from 'graphql-shield';
 import { getUserId } from '../utils';
 
 const rules = {
-  isAuthenticatedUser: rule()((parent, args, context) => {
+  isAuthenticatedUser: rule()((_parent, _args, context) => {
     const userId = getUserId(context);
     return Boolean(userId);
   }),
-  isPostOwner: rule()(async (parent, { id: postId }, context) => {
+  isPostOwner: rule()(async (_parent, { id: postId }, context) => {
     const userId = getUserId(context);
     const author = await context.prisma.post
       .findOne({ where: { id: Number(postId) } })
       .author();
     return userId === author.id;
   }),
-  isCommentOwner: rule()(async (parent, { id: commentId }, context) => {
+  isCommentOwner: rule()(async (_parent, { id: commentId }, context) => {
     const userId = getUserId(context);
     const author = await context.prisma.comment
       .findOne({ where: { id: Number(commentId) } })

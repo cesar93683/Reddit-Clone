@@ -1,7 +1,7 @@
 import { GraphQLServer } from 'graphql-yoga';
+import { createContext } from './context';
 import { permissions } from './permissions';
 import { schema } from './schema';
-import { createContext } from './context';
 
 new GraphQLServer({
   schema,

@@ -12,7 +12,7 @@ export const Mutation = mutationType({
         email: stringArg({ nullable: false }),
         password: stringArg({ nullable: false }),
       },
-      resolve: async (parent, { username, email, password }, ctx) => {
+      resolve: async (_parent, { username, email, password }, ctx) => {
         let existingUser = await ctx.prisma.user.findOne({ where: { email } });
         if (existingUser) {
           return {
@@ -50,7 +50,7 @@ export const Mutation = mutationType({
         email: stringArg({ nullable: false }),
         password: stringArg({ nullable: false }),
       },
-      resolve: async (parent, { email, password }, ctx) => {
+      resolve: async (_parent, { email, password }, ctx) => {
         const user = await ctx.prisma.user.findOne({
           where: {
             email,
@@ -82,7 +82,7 @@ export const Mutation = mutationType({
         title: stringArg({ nullable: false }),
         content: stringArg({ nullable: false }),
       },
-      resolve: async (parent, { title, content }, ctx) => {
+      resolve: async (_parent, { title, content }, ctx) => {
         const userId = Number(getUserId(ctx));
         return ctx.prisma.post.create({
           data: {
@@ -104,7 +104,7 @@ export const Mutation = mutationType({
         content: stringArg({ nullable: false }),
         id: intArg({ nullable: false }),
       },
-      resolve: async (parent, { content, id: postId }, ctx) => {
+      resolve: async (_parent, { content, id: postId }, ctx) => {
         return ctx.prisma.post.update({
           data: { content, dateUpdated: String(Date.now()) },
           where: { id: postId },
@@ -116,7 +116,7 @@ export const Mutation = mutationType({
       type: 'Message',
       nullable: true,
       args: { id: intArg({ nullable: false }) },
-      resolve: async (parent, { id }, ctx) => {
+      resolve: async (_parent, { id }, ctx) => {
         await ctx.prisma.commentVote.deleteMany({
           where: { comment: { post: { id } } },
         });
@@ -136,7 +136,7 @@ export const Mutation = mutationType({
         postId: intArg({ nullable: false }),
         content: stringArg({ nullable: false }),
       },
-      resolve: async (parent, { postId, content }, ctx) => {
+      resolve: async (_parent, { postId, content }, ctx) => {
         const userId = Number(getUserId(ctx));
         const post = await ctx.prisma.post.findOne({ where: { id: postId } });
         if (!post) {
@@ -167,7 +167,7 @@ export const Mutation = mutationType({
         id: intArg({ nullable: false }),
         postId: intArg({ nullable: false }),
       },
-      resolve: async (parent, { id, postId }, ctx) => {
+      resolve: async (_parent, { id, postId }, ctx) => {
         const post = await ctx.prisma.post.findOne({ where: { id: postId } });
         if (!post) {
           throw new Error();
@@ -192,7 +192,7 @@ export const Mutation = mutationType({
         content: stringArg({ nullable: false }),
         id: intArg({ nullable: false }),
       },
-      resolve: async (parent, { content, id }, ctx) => {
+      resolve: async (_parent, { content, id }, ctx) => {
         return await ctx.prisma.comment.update({
           data: { content, dateUpdated: String(Date.now()) },
           where: { id },
@@ -206,7 +206,7 @@ export const Mutation = mutationType({
         postId: intArg({ nullable: false }),
         value: intArg({ nullable: false }),
       },
-      resolve: async (parent, { postId, value }, ctx) => {
+      resolve: async (_parent, { postId, value }, ctx) => {
         if (value < -1 || value > 1) {
           throw new Error();
         }
@@ -264,7 +264,7 @@ export const Mutation = mutationType({
         commentId: intArg({ nullable: false }),
         value: intArg({ nullable: false }),
       },
-      resolve: async (parent, { commentId, value }, ctx) => {
+      resolve: async (_parent, { commentId, value }, ctx) => {
         if (value < -1 || value > 1) {
           throw new Error();
         }
