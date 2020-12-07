@@ -31,6 +31,7 @@ export default function Home() {
   const [topActive, setTopActive] = useState(false);
   const [newActive, setNewActive] = useState(true);
   const [morePostsActive, setMorePostsActive] = useState(true);
+  const limit = 10;
 
   useMemo(() => {
     if (data?.posts?.length > 0) {
@@ -40,7 +41,7 @@ export default function Home() {
         )
       );
       setLastId(data.posts[data.posts.length - 1].id);
-      if (data.posts.length !== 10) {
+      if (data.posts.length !== limit) {
         setMorePostsActive(false);
       }
     }
@@ -74,7 +75,7 @@ export default function Home() {
         } else {
           setMorePostsActive(false);
         }
-        if (fetchMoreResult?.posts?.length !== 10) {
+        if (fetchMoreResult?.posts?.length !== limit) {
           setMorePostsActive(false);
         }
       },

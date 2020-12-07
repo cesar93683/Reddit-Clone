@@ -12,9 +12,13 @@ export const Query = queryType({
             take: 10,
             skip: 1,
             cursor: { id: cursor },
+            orderBy: [{ id: 'desc' }],
           });
         } else {
-          return ctx.prisma.post.findMany({ take: 10 });
+          return ctx.prisma.post.findMany({
+            take: 10,
+            orderBy: [{ id: 'desc' }],
+          });
         }
       },
     });
