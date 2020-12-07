@@ -1,13 +1,14 @@
 import { gql, useQuery } from "@apollo/client";
 import React, { useMemo, useState } from "react";
+import { Button } from "react-bootstrap";
 import LoadingSpinner from "../components/LoadingSpinner";
 import CustomCard from "../components/PostCard";
 import SortDropDown from "../components/SortDropDown";
 import IPost from "../utils/interfaces/IPost";
 
 export const POSTS_QUERY = gql`
-  query {
-    posts {
+  query($cursor: Int) {
+    posts(cursor: $cursor) {
       id
       title
       numComments
@@ -24,18 +25,24 @@ export const POSTS_QUERY = gql`
 
 export default function Home() {
   const currentDate = Date.now();
-  const { loading, data, error } = useQuery(POSTS_QUERY);
+  const { loading, data, error, fetchMore } = useQuery(POSTS_QUERY);
   const [posts, setPosts] = useState<IPost[]>([]);
+  const [lastId, setLastId] = useState(0);
   const [topActive, setTopActive] = useState(false);
   const [newActive, setNewActive] = useState(true);
+  const [morePostsActive, setMorePostsActive] = useState(true);
 
   useMemo(() => {
-    if (data) {
+    if (data?.posts?.length > 0) {
       setPosts(
         [...data.posts].sort(
           (a: IPost, b: IPost) => b.dateCreated - a.dateCreated
         )
       );
+      setLastId(data.posts[data.posts.length - 1].id);
+      if (data.posts.length !== 10) {
+        setMorePostsActive(false);
+      }
     }
   }, [data]);
 
@@ -49,6 +56,29 @@ export default function Home() {
     setPosts([...posts].sort((a, b) => b.dateCreated - a.dateCreated));
     setTopActive(false);
     setNewActive(true);
+  };
+
+  const onFetchMore = () => {
+    fetchMore({
+      query: POSTS_QUERY,
+      variables: { cursor: lastId },
+      updateQuery: (_previousResult, { fetchMoreResult }) => {
+        if (fetchMoreResult?.posts?.length > 0) {
+          const newPosts = [
+            ...data.posts,
+            ...fetchMoreResult.posts,
+          ].sort((a: IPost, b: IPost) =>
+            newActive ? b.dateCreated - a.dateCreated : b.numVotes - a.numVotes
+          );
+          setPosts(newPosts);
+        } else {
+          setMorePostsActive(false);
+        }
+        if (fetchMoreResult?.posts?.length !== 10) {
+          setMorePostsActive(false);
+        }
+      },
+    });
   };
 
   if (loading) {
@@ -81,6 +111,9 @@ export default function Home() {
           />
         </div>
       ))}
+      {morePostsActive ? (
+        <Button onClick={onFetchMore}>More Posts</Button>
+      ) : null}
     </div>
   );
 }

@@ -9,12 +9,12 @@ export const Query = queryType({
       resolve: (_parent, { cursor }, ctx) => {
         if (cursor) {
           return ctx.prisma.post.findMany({
-            take: 2,
+            take: 10,
             skip: 1,
             cursor: { id: cursor },
           });
         } else {
-          return ctx.prisma.post.findMany({ take: 2 });
+          return ctx.prisma.post.findMany({ take: 10 });
         }
       },
     });
