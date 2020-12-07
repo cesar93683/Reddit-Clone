@@ -28,8 +28,8 @@ export default function Home() {
   const { loading, data, error, fetchMore } = useQuery(POSTS_QUERY);
   const [posts, setPosts] = useState<IPost[]>([]);
   const [lastId, setLastId] = useState(0);
-  const [topActive, setTopActive] = useState(false);
-  const [newActive, setNewActive] = useState(true);
+  const [votesActive, setVotesActive] = useState(false);
+  const [datePostedActive, setDatePostedActive] = useState(true);
   const [morePostsActive, setMorePostsActive] = useState(true);
   const limit = 10;
 
@@ -49,14 +49,14 @@ export default function Home() {
 
   const sortByVotes = () => {
     setPosts([...posts].sort((a, b) => b.numVotes - a.numVotes));
-    setTopActive(true);
-    setNewActive(false);
+    setVotesActive(true);
+    setDatePostedActive(false);
   };
 
-  const sortByNew = () => {
+  const sortByDatePosted = () => {
     setPosts([...posts].sort((a, b) => b.dateCreated - a.dateCreated));
-    setTopActive(false);
-    setNewActive(true);
+    setVotesActive(false);
+    setDatePostedActive(true);
   };
 
   const onFetchMore = () => {
@@ -69,7 +69,9 @@ export default function Home() {
             ...data.posts,
             ...fetchMoreResult.posts,
           ].sort((a: IPost, b: IPost) =>
-            newActive ? b.dateCreated - a.dateCreated : b.numVotes - a.numVotes
+            datePostedActive
+              ? b.dateCreated - a.dateCreated
+              : b.numVotes - a.numVotes
           );
           setPosts(newPosts);
         } else {
@@ -98,9 +100,9 @@ export default function Home() {
     <div>
       <SortDropDown
         sortByVotes={sortByVotes}
-        topActive={topActive}
-        sortByNew={sortByNew}
-        newActive={newActive}
+        votesActive={votesActive}
+        sortByDatePosted={sortByDatePosted}
+        datePostedActive={datePostedActive}
       />
       {posts.map((post: IPost) => (
         <div data-testid="post" key={post.id}>

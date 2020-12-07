@@ -60,8 +60,8 @@ export default function User() {
   const [postsAndComments, setPostsAndComments] = useState<
     IPost[] & IComment[]
   >([]);
-  const [topActive, setTopActive] = useState(false);
-  const [newActive, setNewActive] = useState(true);
+  const [votesActive, setVotesActive] = useState(false);
+  const [datePostedActive, setDatePostedActive] = useState(true);
 
   useMemo(() => {
     if (data?.user) {
@@ -92,11 +92,11 @@ export default function User() {
         (a: IPost | IComment, b: IPost | IComment) => b.numVotes - a.numVotes
       )
     );
-    setTopActive(true);
-    setNewActive(false);
+    setVotesActive(true);
+    setDatePostedActive(false);
   };
 
-  const sortByNew = () => {
+  const sortByDatePosted = () => {
     setPosts([...posts].sort((a, b) => b.dateCreated - a.dateCreated));
     setComments([...comments].sort((a, b) => b.dateCreated - a.dateCreated));
     setPostsAndComments(
@@ -105,8 +105,8 @@ export default function User() {
           b.dateCreated - a.dateCreated
       )
     );
-    setTopActive(false);
-    setNewActive(true);
+    setVotesActive(false);
+    setDatePostedActive(true);
   };
 
   if (loading) {
@@ -121,9 +121,9 @@ export default function User() {
     <SortDropDown
       className="mt-2"
       sortByVotes={sortByVotes}
-      topActive={topActive}
-      sortByNew={sortByNew}
-      newActive={newActive}
+      votesActive={votesActive}
+      sortByDatePosted={sortByDatePosted}
+      datePostedActive={datePostedActive}
     />
   );
 

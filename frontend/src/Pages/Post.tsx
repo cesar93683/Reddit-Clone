@@ -75,8 +75,8 @@ export default function Post() {
   const [deletePost] = useMutation(DELETE_POST_MUTATION);
   const [comments, setComments] = useState<IComment[]>([]);
   const [hasNewCommentBeenAdded, setHasNewCommentBeenAdded] = useState(false);
-  const [topActive, setTopActive] = useState(false);
-  const [newActive, setNewActive] = useState(true);
+  const [votesActive, setVotesActive] = useState(false);
+  const [datePostedActive, setDatePostedActive] = useState(true);
 
   const { loading, data, error } = useQuery(POST_QUERY, {
     variables: { id },
@@ -94,14 +94,14 @@ export default function Post() {
 
   const sortByVotes = () => {
     setComments([...comments].sort((a, b) => b.numVotes - a.numVotes));
-    setTopActive(true);
-    setNewActive(false);
+    setVotesActive(true);
+    setDatePostedActive(false);
   };
 
-  const sortByNew = () => {
+  const sortByDatePosted = () => {
     setComments([...comments].sort((a, b) => b.dateCreated - a.dateCreated));
-    setTopActive(false);
-    setNewActive(true);
+    setVotesActive(false);
+    setDatePostedActive(true);
   };
 
   const onDeletePost = async () => {
@@ -145,9 +145,9 @@ export default function Post() {
       ) : null}
       <SortDropDown
         sortByVotes={sortByVotes}
-        topActive={topActive}
-        sortByNew={sortByNew}
-        newActive={newActive}
+        votesActive={votesActive}
+        sortByDatePosted={sortByDatePosted}
+        datePostedActive={datePostedActive}
         disabled={comments.length === 0}
       />
       {comments.length === 0 ? <h2>No Comments</h2> : null}

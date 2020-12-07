@@ -11,20 +11,20 @@ describe("<SortDropDown />", () => {
     render(
       <SortDropDown
         sortByVotes={sortByVotes}
-        topActive={false}
-        sortByNew={sortByNew}
-        newActive
+        votesActive={false}
+        sortByDatePosted={sortByNew}
+        datePostedActive
       />
     );
   });
   test("should call sortByVotes", async () => {
     fireEvent.click(screen.getByText("Sort By"));
-    fireEvent.click(screen.getByText("Top"));
+    fireEvent.click(screen.getByText("Votes"));
     expect(sortByVotes).toHaveBeenCalled();
   });
   test("should call sortByNew", async () => {
     fireEvent.click(screen.getByText("Sort By"));
-    fireEvent.click(screen.getByText("New"));
+    fireEvent.click(screen.getByText("Date Posted"));
     expect(sortByNew).toHaveBeenCalled();
   });
 });

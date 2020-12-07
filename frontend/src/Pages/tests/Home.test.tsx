@@ -85,7 +85,7 @@ describe("<Home />", () => {
   });
   test("should be able to sort posts by votes", async () => {
     fireEvent.click(screen.getByText("Sort By"));
-    fireEvent.click(screen.getByText("Top"));
+    fireEvent.click(screen.getByText("Votes"));
     const posts = screen.getAllByTestId("post");
     expect(posts[0]).toHaveTextContent("title1");
     expect(posts[1]).toHaveTextContent("title3");
@@ -93,7 +93,7 @@ describe("<Home />", () => {
   });
   test("should be able to sort posts by new", async () => {
     fireEvent.click(screen.getByText("Sort By"));
-    fireEvent.click(screen.getByText("New"));
+    fireEvent.click(screen.getByText("Date Posted"));
     const posts = screen.getAllByTestId("post");
     expect(posts[0]).toHaveTextContent("title3");
     expect(posts[1]).toHaveTextContent("title1");

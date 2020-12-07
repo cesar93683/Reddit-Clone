@@ -5,9 +5,9 @@ interface SortDropDownProps {
   className?: string;
   disabled?: boolean;
   sortByVotes: () => void;
-  topActive: boolean;
-  sortByNew: () => void;
-  newActive: boolean;
+  votesActive: boolean;
+  sortByDatePosted: () => void;
+  datePostedActive: boolean;
 }
 
 export default function SortDropDown(props: SortDropDownProps) {
@@ -15,17 +15,17 @@ export default function SortDropDown(props: SortDropDownProps) {
     className,
     disabled,
     sortByVotes,
-    topActive,
-    sortByNew,
-    newActive,
+    votesActive,
+    sortByDatePosted,
+    datePostedActive,
   } = props;
   return (
     <DropdownButton className={className} disabled={disabled} title="Sort By">
-      <Dropdown.Item onClick={sortByVotes} active={topActive}>
-        Top
+      <Dropdown.Item onClick={sortByVotes} active={votesActive}>
+        Votes
       </Dropdown.Item>
-      <Dropdown.Item onClick={sortByNew} active={newActive}>
-        New
+      <Dropdown.Item onClick={sortByDatePosted} active={datePostedActive}>
+        Date Posted
       </Dropdown.Item>
     </DropdownButton>
   );
