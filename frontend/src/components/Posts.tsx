@@ -8,7 +8,6 @@ import CustomCard from "./PostCard";
 interface PostsProps {
   query: DocumentNode;
   currentDate: number;
-  className?: string;
 }
 
 export default function Posts({ query, currentDate, className }: PostsProps) {
@@ -59,7 +58,7 @@ export default function Posts({ query, currentDate, className }: PostsProps) {
   }
 
   return (
-    <div className={className}>
+    <div>
       {posts.map((post: IPost) => (
         <div data-testid="post" key={post.id}>
           <CustomCard
