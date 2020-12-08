@@ -8,7 +8,7 @@ import IPost from "../utils/interfaces/IPost";
 
 export const POSTS_QUERY = gql`
   query($cursor: Int) {
-    posts(cursor: $cursor, limit: 2) {
+    posts(cursor: $cursor, limit: 10) {
       id
       title
       numComments
