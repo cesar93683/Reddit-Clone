@@ -3,7 +3,7 @@ import "@testing-library/jest-dom/extend-expect";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import Home, { POSTS_QUERY } from "../Home";
+import Home, { POSTS_BY_DATE_CREATED_QUERY } from "../Home";
 
 const mockHistoryPush = jest.fn();
 
@@ -17,7 +17,7 @@ jest.mock("react-router-dom", () => ({
 const mocks = [
   {
     request: {
-      query: POSTS_QUERY,
+      query: POSTS_BY_DATE_CREATED_QUERY,
       variables: {},
     },
     result: () => {
