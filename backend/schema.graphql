@@ -59,6 +59,12 @@ type Post {
   votes(after: PostVoteWhereUniqueInput, before: PostVoteWhereUniqueInput, first: Int, last: Int): [PostVote!]!
 }
 
+type PostPagination {
+  cursor: Int
+  hasMore: Boolean
+  posts: [Post]
+}
+
 type PostVote {
   author: User!
   id: Int!
@@ -77,7 +83,7 @@ input PostWhereUniqueInput {
 type Query {
   commentVote(commentId: Int!): CommentVote
   post(id: Int!): Post
-  posts(cursor: Int, limit: Int): [Post]
+  posts(cursor: Int, limit: Int): PostPagination
   postVote(postId: Int!): PostVote
   user(id: Int!): User
 }

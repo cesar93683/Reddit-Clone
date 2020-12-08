@@ -15,3 +15,12 @@ export const Post = objectType({
     t.model.dateUpdated();
   },
 });
+
+export const PostPagination = objectType({
+  name: 'PostPagination',
+  definition(t) {
+    t.list.field('posts', { type: 'Post' });
+    t.int('cursor');
+    t.boolean('hasMore');
+  },
+});

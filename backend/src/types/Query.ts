@@ -3,25 +3,34 @@ import { getUserId } from '../utils';
 
 export const Query = queryType({
   definition(t) {
-    t.list.field('posts', {
-      type: 'Post',
+    t.field('posts', {
+      type: 'PostPagination',
       args: { cursor: intArg(), limit: intArg() },
-      resolve: (_parent, { cursor, limit }, ctx) => {
-        limit = limit ? limit : 10;
-        limit = Math.min(10, limit);
+      resolve: async (_parent, { cursor, limit }, ctx) => {
+        limit = Math.min(10, limit ? limit : 10);
+        let posts;
         if (cursor) {
-          return ctx.prisma.post.findMany({
-            take: limit,
+          posts = await ctx.prisma.post.findMany({
+            take: limit + 1,
             skip: 1,
             cursor: { id: cursor },
             orderBy: [{ dateCreated: 'desc' }],
           });
         } else {
-          return ctx.prisma.post.findMany({
-            take: limit,
+          posts = await ctx.prisma.post.findMany({
+            take: limit + 1,
             orderBy: [{ dateCreated: 'desc' }],
           });
         }
+        const hasMore = posts.length === limit + 1;
+        posts = posts.length
+          ? posts.slice(0, Math.min(posts.length, limit))
+          : [];
+        return {
+          posts,
+          cursor: posts.length ? posts[posts.length - 1].id : null,
+          hasMore,
+        };
       },
     });
 
