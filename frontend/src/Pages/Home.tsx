@@ -8,7 +8,7 @@ import IPost from "../utils/interfaces/IPost";
 
 export const POSTS_QUERY = gql`
   query($cursor: Int) {
-    posts(cursor: $cursor) {
+    posts(cursor: $cursor, limit: 2) {
       id
       title
       numComments
@@ -22,6 +22,7 @@ export const POSTS_QUERY = gql`
     }
   }
 `;
+const LIMIT = 10;
 
 export default function Home() {
   const currentDate = Date.now();
@@ -31,7 +32,6 @@ export default function Home() {
   const [votesActive, setVotesActive] = useState(false);
   const [datePostedActive, setDatePostedActive] = useState(true);
   const [morePostsActive, setMorePostsActive] = useState(true);
-  const limit = 10;
 
   useMemo(() => {
     if (data?.posts?.length > 0) {
@@ -41,7 +41,7 @@ export default function Home() {
         )
       );
       setLastId(data.posts[data.posts.length - 1].id);
-      if (data.posts.length !== limit) {
+      if (data.posts.length !== LIMIT) {
         setMorePostsActive(false);
       }
     }
@@ -77,7 +77,7 @@ export default function Home() {
         } else {
           setMorePostsActive(false);
         }
-        if (fetchMoreResult?.posts?.length !== limit) {
+        if (fetchMoreResult?.posts?.length !== LIMIT) {
           setMorePostsActive(false);
         }
       },

@@ -5,19 +5,21 @@ export const Query = queryType({
   definition(t) {
     t.list.field('posts', {
       type: 'Post',
-      args: { cursor: intArg() },
-      resolve: (_parent, { cursor }, ctx) => {
+      args: { cursor: intArg(), limit: intArg() },
+      resolve: (_parent, { cursor, limit }, ctx) => {
+        limit = limit ? limit : 10;
+        limit = Math.min(10, limit);
         if (cursor) {
           return ctx.prisma.post.findMany({
-            take: 10,
+            take: limit,
             skip: 1,
             cursor: { id: cursor },
-            orderBy: [{ id: 'desc' }],
+            orderBy: [{ dateCreated: 'desc' }],
           });
         } else {
           return ctx.prisma.post.findMany({
-            take: 10,
-            orderBy: [{ id: 'desc' }],
+            take: limit,
+            orderBy: [{ dateCreated: 'desc' }],
           });
         }
       },
