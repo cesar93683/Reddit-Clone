@@ -83,7 +83,7 @@ input PostWhereUniqueInput {
 type Query {
   commentVote(commentId: Int!): CommentVote
   post(id: Int!): Post
-  posts(cursor: Int, limit: Int): PostPagination
+  posts(by: String, cursor: Int, limit: Int): PostPagination
   postVote(postId: Int!): PostVote
   user(id: Int!): User
 }

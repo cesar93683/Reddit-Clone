@@ -1,27 +1,22 @@
-import { intArg, queryType } from '@nexus/schema';
+import { intArg, queryType, stringArg } from '@nexus/schema';
 import { getUserId } from '../utils';
 
 export const Query = queryType({
   definition(t) {
     t.field('posts', {
       type: 'PostPagination',
-      args: { cursor: intArg(), limit: intArg() },
-      resolve: async (_parent, { cursor, limit }, ctx) => {
+      args: { by: stringArg(), cursor: intArg(), limit: intArg() },
+      resolve: async (_parent, { by, cursor, limit }, ctx) => {
         limit = Math.min(10, limit ? limit : 10);
-        let posts;
-        if (cursor) {
-          posts = await ctx.prisma.post.findMany({
-            take: limit + 1,
-            skip: 1,
-            cursor: { id: cursor },
-            orderBy: [{ dateCreated: 'desc' }],
-          });
-        } else {
-          posts = await ctx.prisma.post.findMany({
-            take: limit + 1,
-            orderBy: [{ dateCreated: 'desc' }],
-          });
-        }
+        let posts = await ctx.prisma.post.findMany({
+          take: limit + 1,
+          skip: cursor ? 1 : undefined,
+          cursor: cursor ? { id: cursor } : undefined,
+          orderBy: [
+            by === 'numVotes' ? { numVotes: 'desc' } : { dateCreated: 'desc' },
+            { id: 'desc' },
+          ],
+        });
         const hasMore = posts.length === limit + 1;
         posts = posts.length
           ? posts.slice(0, Math.min(posts.length, limit))
