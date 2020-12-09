@@ -10,7 +10,7 @@ interface PostsProps {
   currentDate: number;
 }
 
-export default function Posts({ query, currentDate, className }: PostsProps) {
+export default function Posts({ query, currentDate }: PostsProps) {
   const { loading, data, error, fetchMore } = useQuery(query);
   const [posts, setPosts] = useState<IPost[]>([]);
   const [cursor, setCursor] = useState(0);
