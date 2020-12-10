@@ -84,7 +84,7 @@ export default function User() {
     }
   }, [data]);
 
-  const sortByVotes = () => {
+  const onSortByVotes = () => {
     setPosts([...posts].sort((a, b) => b.numVotes - a.numVotes));
     setComments([...comments].sort((a, b) => b.numVotes - a.numVotes));
     setPostsAndComments(
@@ -96,7 +96,7 @@ export default function User() {
     setDatePostedActive(false);
   };
 
-  const sortByDatePosted = () => {
+  const onSortByDatePosted = () => {
     setPosts([...posts].sort((a, b) => b.dateCreated - a.dateCreated));
     setComments([...comments].sort((a, b) => b.dateCreated - a.dateCreated));
     setPostsAndComments(
@@ -120,9 +120,9 @@ export default function User() {
   const sortDropDown = (
     <SortDropDown
       className="mt-2"
-      sortByVotes={sortByVotes}
+      onSortByVotes={onSortByVotes}
       votesActive={votesActive}
-      sortByDatePosted={sortByDatePosted}
+      onSortByDatePosted={onSortByDatePosted}
       datePostedActive={datePostedActive}
     />
   );

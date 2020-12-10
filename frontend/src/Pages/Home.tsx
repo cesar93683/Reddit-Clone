@@ -50,12 +50,12 @@ export default function Home() {
   const [votesActive, setVotesActive] = useState(false);
   const [datePostedActive, setDatePostedActive] = useState(true);
 
-  const sortByVotes = () => {
+  const onSortByVotes = () => {
     setVotesActive(true);
     setDatePostedActive(false);
   };
 
-  const sortByDatePosted = () => {
+  const onSortByDatePosted = () => {
     setVotesActive(false);
     setDatePostedActive(true);
   };
@@ -63,9 +63,9 @@ export default function Home() {
   return (
     <div>
       <SortDropDown
-        sortByVotes={sortByVotes}
+        onSortByVotes={onSortByVotes}
         votesActive={votesActive}
-        sortByDatePosted={sortByDatePosted}
+        onSortByDatePosted={onSortByDatePosted}
         datePostedActive={datePostedActive}
       />
       <Posts

@@ -92,13 +92,13 @@ export default function Post() {
     }
   }, [data]);
 
-  const sortByVotes = () => {
+  const onSortByVotes = () => {
     setComments([...comments].sort((a, b) => b.numVotes - a.numVotes));
     setVotesActive(true);
     setDatePostedActive(false);
   };
 
-  const sortByDatePosted = () => {
+  const onSortByDatePosted = () => {
     setComments([...comments].sort((a, b) => b.dateCreated - a.dateCreated));
     setVotesActive(false);
     setDatePostedActive(true);
@@ -144,9 +144,9 @@ export default function Post() {
         />
       ) : null}
       <SortDropDown
-        sortByVotes={sortByVotes}
+        onSortByVotes={onSortByVotes}
         votesActive={votesActive}
-        sortByDatePosted={sortByDatePosted}
+        onSortByDatePosted={onSortByDatePosted}
         datePostedActive={datePostedActive}
         disabled={comments.length === 0}
       />

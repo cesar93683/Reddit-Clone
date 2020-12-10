@@ -4,9 +4,9 @@ import { Dropdown, DropdownButton } from "react-bootstrap";
 interface SortDropDownProps {
   className?: string;
   disabled?: boolean;
-  sortByVotes: () => void;
+  onSortByVotes: () => void;
   votesActive: boolean;
-  sortByDatePosted: () => void;
+  onSortByDatePosted: () => void;
   datePostedActive: boolean;
 }
 
@@ -14,9 +14,9 @@ export default function SortDropDown(props: SortDropDownProps) {
   const {
     className,
     disabled,
-    sortByVotes,
+    onSortByVotes: sortByVotes,
     votesActive,
-    sortByDatePosted,
+    onSortByDatePosted: sortByDatePosted,
     datePostedActive,
   } = props;
   return (
