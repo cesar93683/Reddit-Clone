@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgres"
-  url      = "postgresql://postgres:postgres@localhost:5432/reddit-clone"
+  url      = env("DATABASE_URL")
 }
 
 model Post {
