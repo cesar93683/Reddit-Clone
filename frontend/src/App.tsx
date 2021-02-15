@@ -23,7 +23,9 @@ import SignUp from "./pages/SignUp";
 import User from "./pages/User";
 import { AuthProvider } from "./utils/auth-context";
 
-const httpLink = new HttpLink({ uri: "http://localhost:4000" });
+// const httpLink = new HttpLink({ uri: "http://localhost:4000" });
+const httpLink = new HttpLink({ uri: "https://morning-meadow-46081.herokuapp.com/" });
+
 const authLink = setContext(async (_req, { headers }) => {
   const token = JSON.parse(localStorage.getItem("userData") || "{}").token;
 

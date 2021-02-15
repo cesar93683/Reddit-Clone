@@ -14,4 +14,5 @@ export function getUserId(context: Context) {
     const verifiedToken = verify(token, APP_SECRET) as Token;
     return verifiedToken?.userId;
   }
+  return undefined;
 }
